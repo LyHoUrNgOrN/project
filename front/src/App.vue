@@ -1,15 +1,14 @@
 <template>
- 
+  <div id="app">
+    <sign-in></sign-in>
+    <router-view></router-view>
+  </div>
 </template>
-
 <script>
-
-
+// import axios from 'http.js';
 export default {
   name: 'App',
-  components: {
-   
-  }
+  
 }
 </script>
 
