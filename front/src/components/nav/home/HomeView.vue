@@ -16,11 +16,10 @@ export default {
 }
 </script>
 
-<style scoped>
+<style>
     body{
         background-image: url('https://s3.amazonaws.com/images.productionhub.com/posts/53453fb457_a1otazmjc1.jpg');
         background-size: cover;
-        
     }
     .homeContainer{
         display: flex;
