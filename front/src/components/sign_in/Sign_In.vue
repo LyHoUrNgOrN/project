@@ -4,22 +4,22 @@
             <h1>Login Here</h1>
             <div class="textbox">
                 <i class="fa fa-user" aria-hidden="true"></i>
-                <input type="text" placeholder="Username ">
+                <input type="text" v-model="userName" placeholder="Username ">
             </div>
             <div class="textbox">
                 <i class="fa fa-lock" aria-hidden="true"></i>
-                <input type="password" placeholder="Password">
+                <input type="password" v-model="password" placeholder="Password">
             </div>
             <a id="forogt-password" href="#">Forgot password</a>
             <br>
-            <BottonWidget :valueButton="value" ></BottonWidget>
+            <botton-widget :valueButton="value" @click="signIn"></botton-widget>
 
             <div class="or">
                 <div id="ruler"></div>
                 <p>Or</p>
                 <div id="ruler"></div>
             </div>
-            <p>Don't have account yet: <a href="#">Sign Up</a></p>
+            <p>Don't have account yet: <router-link class="signUp" to="/signUp" >Sign Up</router-link></p>
 
         </form>
     </div>
@@ -27,9 +27,20 @@
 
 <script>
 export default {
+    emits:["sign-in"],
     data(){
         return {
             value : "Sign In",
+            userName:null,
+            password:null,
+        }
+    },
+    methods: {
+        signIn(event){
+            event.preventDefault();
+            this.$emit("sign-in",this.userName,this.password);
+            this.userName = null;
+            this.password = null;
         }
     },   
 }
@@ -116,5 +127,8 @@ form{
         #forogt-password{
             color: white;
             margin-left: -50%;
+        }
+        .signUp{
+            color: sandybrown;
         }
 </style>

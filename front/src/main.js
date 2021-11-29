@@ -7,7 +7,7 @@ import SignUp from './components/signUp/SignUp.vue';
 // import 'bootstrap/dist/css/bootstrap.min.css'
 
 const app = createApp(App);
-app.component("BottonWidget", BottonWidget);
+app.component("botton-widget", BottonWidget);
 app.component("sign-in", SignIn);
 app.component('sign-up', SignUp);
 
@@ -15,12 +15,12 @@ app.component('sign-up', SignUp);
 const router = createRouter({
     history: createWebHistory(),
     routes: [
-      
+      { path: '/', component: SignIn },
       { path: '/signIn', component: SignIn },
-      { path: '/signUn', component: SignUp },
+      { path: '/signUp', component: SignUp },
    
     ]
 })
 app.use(router);
-const app = createApp(App);
+
 app.mount('#app');

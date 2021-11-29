@@ -13,7 +13,7 @@
                 :valueButton="value"
                 @click="signUp"
             ></botton-widget>
-            <p>Have account: <router-link class="signIn" to="/signUp" >Sign In</router-link></p>
+            <p>Have account: <router-link class="signIn" to="/signIn" >Sign In</router-link></p>
         </form>
 
         
@@ -24,6 +24,7 @@
 import BottonWidget from "./../button_widget/Button.vue";
 export default {
     components: {BottonWidget},
+    emits:["sign-up"],
     data(){
         return{
             value : "Sign Up",
@@ -44,8 +45,19 @@ export default {
             }
             console.log(this.profile);
         },
-        signUp(){
-            
+        signUp(event){
+            event.preventDefault();
+            let user = {
+                name : this.userName,
+                email: this.email,
+                password:this.password,
+                profile : this.profile,
+            }
+            this.$emit("sign-up",user);
+            this.name = "";
+            this.email = "";
+            this.password = "";
+            this.profile = "";
         }
     }
 }
