@@ -4,12 +4,19 @@ import App from "./App.vue";
 import BottonWidget from "./components/button_widget/Button.vue";
 import SignIn from "./components/sign_in/Sign_In.vue";
 import SignUp from './components/signUp/SignUp.vue';
+
+import MenuBar from './components/nav/Navigation.vue'
+import Home from './components/nav/home/HomeView.vue'
+import Event from './components/nav/event/Event.vue'
+import MyEvent from './components/nav/myEvent/MyEvent.vue'
+import CreateEvent from './components/nav/myEvent/EventForm.vue'
 // import 'bootstrap/dist/css/bootstrap.min.css'
 
 const app = createApp(App);
 app.component("botton-widget", BottonWidget);
 app.component("sign-in", SignIn);
 app.component('sign-up', SignUp);
+app.component('menu-bar', MenuBar);
 
 
 const router = createRouter({
@@ -18,9 +25,15 @@ const router = createRouter({
       { path: '/', component: SignIn },
       { path: '/signIn', component: SignIn },
       { path: '/signUp', component: SignUp },
+      { path: '/home', component: Home },
+      { path: '/event', component: Event },
+      { path: '/myEvent', component: MyEvent },
+      { path: '/createEvent', component: CreateEvent },
+       //   { path: '/students/:studentId', component: StudentDetails, props: true },
+      //   { path: '/:notFound(.*)', component: StudentNotFound },
    
     ]
 })
-app.use(router);
 
+app.use(router);
 app.mount('#app');

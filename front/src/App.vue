@@ -2,6 +2,7 @@
   <div id="app">
     <!-- <sign-in @sign-in="userSignIn"></sign-in> -->
     <!-- <sign-up @sign-up="userSignUp"></sign-up> -->
+    <!-- <menu-bar></menu-bar> -->
     <router-view @sign-in="userSignIn" @sign-up="userSignUp"></router-view>
   </div>
 </template>
