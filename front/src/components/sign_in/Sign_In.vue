@@ -1,44 +1,69 @@
 <template>
     <div class="form">
         <form action="#">
-            <h1>Login Here</h1>
+            <h1>SignIn Here</h1>
             <div class="textbox">
                 <i class="fa fa-user" aria-hidden="true"></i>
-                <input type="text" v-model="userName" placeholder="Username ">
+                <input type="text" id="name" v-model="userName" placeholder="Username ">
             </div>
             <div class="textbox">
                 <i class="fa fa-lock" aria-hidden="true"></i>
-                <input type="password" v-model="password" placeholder="Password">
+                <input type="password" id="password" v-model="password" placeholder="Password">
             </div>
+            <small>{{messageError}}</small>
+            <br>
             <a id="forogt-password" href="#">Forgot password</a>
             <br>
-            <botton-widget :valueButton="value" @click="signIn"></botton-widget>
-
+            <router-link  to='/' @click="signIn"><botton-widget >Sign In</botton-widget></router-link>
             <div class="or">
                 <div id="ruler"></div>
                 <p>Or</p>
                 <div id="ruler"></div>
             </div>
-            <p>Don't have account yet: <router-link class="signUp" to="/signUp" >Sign Up</router-link></p>
+            <p>Don't have account yet: <router-link class="signUp" to="/signUp">Sign Up</router-link></p>
 
         </form>
     </div>
 </template>
 
 <script>
+import BottonWidget from "./../button_widget/Button.vue";
+import axios from "axios";
+const URL = 'http://127.0.0.1:8000/api'
 export default {
+    components: {'botton-widget':BottonWidget},
     emits:["sign-in"],
     data(){
         return {
             value : "Sign In",
             userName:null,
             password:null,
+            userList : [
+            ],
+            loginResult: false,
+            messageError:null,
         }
     },
     methods: {
         signIn(event){
             event.preventDefault();
-            this.$emit("sign-in",this.userName,this.password);
+            let user = {
+                name:this.userName,
+                password:this.password,
+            }
+            axios.post(URL+'/signin',user).then(res=>{
+                let user = res.data;
+                localStorage.setItem('user',JSON.stringify(user));
+                this.$emit("sign-in",user);
+                this.$router.push('/home');
+            }).catch(error=>{
+                if (error.response) {
+                    this.messageError = error.response.data.message;
+                    console.log(error.response.data.message);
+                    console.log(error.response.status);
+                    console.log(error.response.headers);
+                }
+            });
             this.userName = null;
             this.password = null;
         }
@@ -65,8 +90,8 @@ form{
             margin: auto;
             
         }
-        input[type="text"],
-        input[type="password"]{
+        #name,
+        #password{
             width: 90%;
             padding: 15px;
             margin-bottom: 10px;
@@ -130,5 +155,9 @@ form{
         }
         .signUp{
             color: sandybrown;
+        }
+        small{
+            color:red;
+            margin:2px;
         }
 </style>

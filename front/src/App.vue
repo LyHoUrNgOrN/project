@@ -2,42 +2,57 @@
   <div id="app">
     <!-- <sign-in @sign-in="userSignIn"></sign-in> -->
     <!-- <sign-up @sign-up="userSignUp"></sign-up> -->
-    <!-- <menu-bar></menu-bar> -->
+    <menu-bar v-show="isIignIn"></menu-bar>
     <router-view @sign-in="userSignIn" @sign-up="userSignUp"></router-view>
   </div>
 </template>
 <script>
 // import axios from 'http.js';
+import axios from "axios";
+const URL = 'http://127.0.0.1:8000/api'
 export default {
   data(){
     return{
       userList : [
-        {name:"dara",password:"12"},
-        {name:"da",password:"124"},
-        {name:"da",password:"121"},
-        {name:"rada",password:"123"},
       ],
       loginResult:null,
+      isIignIn:false,
+      activeUser:{},
     }
     
   },
   methods: {
-      userSignIn(userName,password){
-        for (let user of this.userList){
-          if(user.name === userName && user.password === password){
-            this.loginResult = "Success!"
-          }
-        }
-        if(this.loginResult === null){
-          this.loginResult = "Fail!"
-        }
-        console.log(this.loginResult);
+      userSignIn(user){
+        // console.log(user);
+        this.isIignIn = true;
+        this.activeUser = user;
+        // localStorage.id = user.id;
       },
       userSignUp(user){
-        this.userList.push(user);
-        console.log(this.userList);
-      }
+        this.isIignIn = true;
+        this.activeUser = user;
+
+        // console.log(user);
+        
+        // localStorage.id = user.id;
+      },
+
   },
+  mounted() {
+    //  localStorage.id = 1;
+    if (localStorage.getItem("user")){
+      this.isIignIn = true;
+      this.activeUser = JSON.parse(localStorage.getItem("user"));
+    }
+    console.log(JSON.parse(localStorage.getItem("user")));
+    console.log("signIn");
+    axios.get(URL+'/users').then(res=>{
+      this.userList = res.data;
+      console.log(this.userList);
+    });
+    
+  },
+  
   
 }
 </script>

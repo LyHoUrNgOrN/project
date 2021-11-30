@@ -9,9 +9,8 @@
             <li><router-link id="menu" to="/event">Event</router-link></li>
             <li><router-link id="menu" to="/myEvent">My Event</router-link></li>
             <li class="search">
-                <input type="text" placeholder="Search...">
+                <input id="input" type="text" placeholder="Search...">
                 <button class="search-btn">
-                    <i class="fa fa-search" aria-hidden="true"></i>
                 </button>
             </li>
             <li>
@@ -29,7 +28,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
     #menu{
         color: white;
         text-decoration: none;
@@ -65,13 +64,16 @@ export default {
         padding-right: 4%;
         display: flex;
     }
-    nav ul li input{
+    nav ul .search #input{
         padding: 8px;
         width: 190%;
-        /* margin-bottom: -20px; */
+        /* margin-bottom: -10px; */
         border-radius: 8px 0 0 8px;
         border: 1px solid gray;
-    }
+        background: rgba(184, 184, 185, 0.534);
+        outline: none;
+        color: white;
+    } 
     nav ul .search{
         width: 40%;
     }
@@ -82,6 +84,8 @@ export default {
         border-radius: 0 8px 8px 0;
         background: rgb(15, 135, 233);
         color: white;
+        
+        
     }
     nav ul li .profile {
         width: 50px;

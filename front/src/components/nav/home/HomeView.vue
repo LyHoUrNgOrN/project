@@ -1,5 +1,7 @@
 <template>
-  <div class="homeContainer">
+<section>
+    <!-- <menu-bar></menu-bar> -->
+    <div class="homeContainer">
         <div class="text">
             <h2>INTERNATIONAL DIGITAL
                 BUSINESS EVENT
@@ -8,6 +10,8 @@
             <button><router-link id="btn" to="/event">View More Detail</router-link></button>
         </div>
     </div>
+</section>
+
 </template>
 
 <script>

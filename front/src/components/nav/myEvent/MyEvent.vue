@@ -1,19 +1,23 @@
 <template>
+<section>
+  <!-- <menu-bar></menu-bar> -->
   <div class="main">
-    <sub-navigation></sub-navigation>
-    <my-event-card></my-event-card>
+    <!-- <sub-navigation></sub-navigation> -->
+    <!-- <my-event-card></my-event-card> -->
   </div>
+</section>
+
 </template>
 
 <script>
-import SubNavigation from './../SubNavigation.vue'
-import MyEventCard from './MyEventCard.vue'
+// import SubNavigation from './../SubNavigation.vue'
+// import MyEventCard from './MyEventCard.vue'
 
 export default {
-    components:{
-        SubNavigation,
-        MyEventCard
-    }
+    // components:{
+        // SubNavigation,
+        // MyEventCard
+    // }
 }
 </script>
 

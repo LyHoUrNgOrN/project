@@ -1,9 +1,9 @@
 <template>
-    <button class="btn">{{valueButton}}</button>
+    <button class="btn"><slot></slot></button>
 </template>
 <script>
 export default {
-    props:['valueButton'],
+    // props:['valueButton'],
 }
 </script>
 <style>
