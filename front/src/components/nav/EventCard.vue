@@ -39,6 +39,39 @@
                     <button class="join-btn">Join</button>
                 </div>
             </div>
+            <div class="card">
+                <img src="https://media.smallbiztrends.com/2014/11/Business-eventEDIT.jpg" alt="">
+                <h3>Lorem ipsum dolor sit amet consectetur ad</h3>
+                <p>November 12, 2021</p>
+                <p>Member: 120 people</p>
+                <p>Interested: 120 people</p>
+                <div class="">
+                    <button class="interested-btn">Interested</button>
+                    <button class="join-btn">Join</button>
+                </div>
+            </div>
+            <div class="card">
+                <img src="https://media.smallbiztrends.com/2014/11/Business-eventEDIT.jpg" alt="">
+                <h3>Lorem ipsum dolor sit amet consectetur ad</h3>
+                <p>November 12, 2021</p>
+                <p>Member: 120 people</p>
+                <p>Interested: 120 people</p>
+                <div class="">
+                    <button class="interested-btn">Interested</button>
+                    <button class="join-btn">Join</button>
+                </div>
+            </div>
+            <div class="card">
+                <img src="https://media.smallbiztrends.com/2014/11/Business-eventEDIT.jpg" alt="">
+                <h3>Lorem ipsum dolor sit amet consectetur ad</h3>
+                <p>November 12, 2021</p>
+                <p>Member: 120 people</p>
+                <p>Interested: 120 people</p>
+                <div class="">
+                    <button class="interested-btn">Interested</button>
+                    <button class="join-btn">Join</button>
+                </div>
+            </div>
         </div>
     </div>
 </template>
@@ -51,22 +84,28 @@ export default {
 
 <style scoped>
     .mainRight{
-        margin-left: 19%;
+        margin-left: 21%;
+        /* border: 1px solid gray; */
+        /* margin-top: 200px; */
     }
     .cardHead{
-        margin-top: 60px;
-        margin-bottom: 20px;
-        margin-left: 55px;
+        margin-bottom: 90px;
+        margin-left: 50px;
         border-bottom: 2px solid gray;
-        width: 90%;
+        width: 93%;
         /* margin: auto; */
         display: flex;
         justify-content: space-between;
         align-items: end;
-
+        position: sticky;
+        top: 105px;
+        height: 100px;
+        background: rgb(43, 42, 42);
     }
     .cardHead h3{
         color: white;
+        margin-left: 10;
+        
     }
     .cardHead .btn-create{
         padding: 12px;
@@ -90,6 +129,8 @@ export default {
         margin: auto;
         display: flex;
         justify-content: space-around;
+        flex-wrap: wrap;
+        z-index: -111;
     }
     .card{
         width: 30%;
@@ -98,9 +139,12 @@ export default {
         color: white;
         border-radius: 10px;
         padding: 10px;
+        margin-top: 10px;
         box-shadow: 0 0 10px rgba(0, 0, 0, 0.7);
         filter: drop-shadow(0 0 10px rgba(66, 66, 66, 0.7));
         font-family: Arial, Helvetica, sans-serif;
+        z-index: -111;
+
     }
     .card img{
         width: 100%;

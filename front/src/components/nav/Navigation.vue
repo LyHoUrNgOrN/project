@@ -8,12 +8,19 @@
             <li><router-link id="menu" to="/home">Home</router-link></li>
             <li><router-link id="menu" to="/event">Event</router-link></li>
             <li><router-link id="menu" to="/myEvent">My Event</router-link></li>
-            <li class="search">
-                <input id="input" type="text" placeholder="Search...">
+            <!-- <li class="search"> -->
+                <!-- <input id="input" type="text" placeholder="Search...">
                 <button class="search-btn">
                     <i class="fa fa-search"></i>
-                </button>
-            </li>
+                </button> -->
+               
+            <!-- </li> -->
+             <li class="searchBox">
+                    <input class="searchInput" type="text" name="" placeholder="Search">
+                    <button class="searchButton" href="#">
+                        <i class="fa fa-search"></i>
+                    </button>
+                </li>
             <li>
                 <img class="profile" src="" alt="">
             </li>
@@ -46,23 +53,27 @@ export default {
         padding-bottom: 5px;
     }
     nav{
-        margin-top: -35px;
+        margin-top: -50px;
         display: flex;
         justify-content: space-between;
         border-bottom: 1px solid rgb(214, 212, 212);
         color: white;
+        position: sticky;
+        top: 0;
+        background: rgb(43, 42, 42);
     }
     
     nav ul {
         display: flex;
         width: 50%;
-        /* justify-content: space-between; */
+        justify-content: space-around;
         align-items: end;
     }
     nav ul h2{
         margin-bottom: -10px;
         font-size: 36px;
         font-weight: bold;
+        margin-left: -65%;
     }
     nav ul li {
         list-style: none;
@@ -70,20 +81,12 @@ export default {
         margin-top: 20px;
         padding-right: 4%;
         display: flex;
+        
     }
-    nav ul .search #input{
-        padding: 8px;
-        width: 190%;
-        /* margin-bottom: -10px; */
-        border-radius: 8px 0 0 8px;
-        border: 1px solid gray;
-        background: rgba(184, 184, 185, 0.534);
-        outline: none;
-        color: white;
-    } 
-    nav ul .search{
+    
+    /* nav ul .search{
         width: 40%;
-    }
+    } */
     nav ul .search .search-btn{
         width: 70px;
         border-left: none;
@@ -102,4 +105,48 @@ export default {
         border: 1px solid gray;
 
     }
+
+
+
+
+    .searchBox {
+    
+    height: 40px;
+    border-radius: 40px;
+    border: 1px solid #2f3640;
+    padding-right: 0;
+
+}
+.searchBox:hover{
+    border: 1px solid steelblue;
+
+}
+.searchBox:hover > .searchInput {
+    width: 200px;
+    padding: 0 6px;
+}
+
+
+.searchButton {
+    color: white;
+    float: right;
+    width: 50px;
+    border-radius: 40%;
+    background: #2f3640;
+    transition: 0.4s;
+}
+
+.searchInput {
+    border:none;
+    background: none;
+    outline:none;
+    float:left;
+    padding: 0;
+    color: white;
+    font-size: 16px;
+    transition: 0.4s;
+    width: 0px;
+    border-radius: 30px;
+
+}
 </style>

@@ -22,8 +22,8 @@ export default {
 
 <style>
     body{
-        background-image: url('https://s3.amazonaws.com/images.productionhub.com/posts/53453fb457_a1otazmjc1.jpg');
-        background-size: cover;
+        
+        background: rgb(43, 42, 42);
     }
     .homeContainer{
         display: flex;
@@ -32,7 +32,8 @@ export default {
         width: 80%;
         height: 85vh;
         /* background: yellowgreen; */
-        
+        /* background-image: url('https://s3.amazonaws.com/images.productionhub.com/posts/53453fb457_a1otazmjc1.jpg');
+        background-size: cover; */
         margin: auto;
     }
     .text{

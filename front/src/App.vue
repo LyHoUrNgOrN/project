@@ -2,7 +2,7 @@
   <div id="app">
     <!-- <sign-in @sign-in="userSignIn"></sign-in> -->
     <!-- <sign-up @sign-up="userSignUp"></sign-up> -->
-    <menu-bar v-show="isIignIn"></menu-bar>
+    <menu-bar v-show="isSignIn"></menu-bar>
     <router-view @sign-in="userSignIn" @sign-up="userSignUp"></router-view>
     
   </div>
@@ -17,7 +17,7 @@ export default {
       userList : [
       ],
       loginResult:null,
-      isIignIn:false,
+      isSignIn:false,
       activeUser:{},
     }
     
@@ -25,12 +25,12 @@ export default {
   methods: {
       userSignIn(user){
         // console.log(user);
-        this.isIignIn = true;
+        this.isSignIn = true;
         this.activeUser = user;
         // localStorage.id = user.id;
       },
       userSignUp(user){
-        this.isIignIn = true;
+        this.isSignIn = true;
         this.activeUser = user;
 
         // console.log(user);
@@ -42,7 +42,7 @@ export default {
   mounted() {
     //  localStorage.id = 1;
     if (localStorage.getItem("user")){
-      this.isIignIn = true;
+      this.isSignIn = true;
       this.activeUser = JSON.parse(localStorage.getItem("user"));
     }
     console.log(JSON.parse(localStorage.getItem("user")));
