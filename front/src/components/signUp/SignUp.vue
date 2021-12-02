@@ -75,7 +75,8 @@ export default {
             axios.post(URL+'/signup',user).then(res=>{
                 // console.log(res.data);
                 let user = res.data.user
-                localStorage.setItem('user',JSON.stringify(user));
+                localStorage.setItem('user',JSON.stringify(user.name));
+                localStorage.setItem('login',true);
                 this.$emit("sign-up",user);
                 this.$router.push('/home');
             }).catch(error=>{

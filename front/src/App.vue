@@ -27,33 +27,33 @@ export default {
         this.isIignIn = true;
         this.activeUser = user;
         // localStorage.id = user.id;
+
       },
       userSignUp(user){
+        localStorage.clear();
         this.isIignIn = true;
         this.activeUser = user;
 
         // console.log(user);
         
         // localStorage.id = user.id;
+        this.isLogin();
       },
 
   },
   mounted() {
     //  localStorage.id = 1;
+    localStorage.clear();
     if (localStorage.getItem("user")){
       this.isIignIn = true;
       this.activeUser = JSON.parse(localStorage.getItem("user"));
     }
-    console.log(JSON.parse(localStorage.getItem("user")));
-    console.log("signIn");
     axios.get(URL+'/users').then(res=>{
       this.userList = res.data;
       console.log(this.userList);
     });
     
   },
-  
-  
 }
 </script>
 

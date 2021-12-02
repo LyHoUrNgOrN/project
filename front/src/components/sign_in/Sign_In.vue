@@ -27,9 +27,9 @@
 </template>
 
 <script>
+const URL = 'http://127.0.0.1:8000/api'
 import BottonWidget from "./../button_widget/Button.vue";
 import axios from "axios";
-const URL = 'http://127.0.0.1:8000/api'
 export default {
     components: {'botton-widget':BottonWidget},
     emits:["sign-in"],
@@ -53,7 +53,9 @@ export default {
             }
             axios.post(URL+'/signin',user).then(res=>{
                 let user = res.data;
-                localStorage.setItem('user',JSON.stringify(user));
+                console.log(user);
+                localStorage.setItem('user',JSON.stringify(user.user.name));
+                localStorage.setItem('login',true);
                 this.$emit("sign-in",user);
                 this.$router.push('/home');
             }).catch(error=>{
@@ -67,7 +69,10 @@ export default {
             this.userName = null;
             this.password = null;
         }
-    },   
+    },  
+    mounted() {
+        
+    }, 
 }
 </script>
 

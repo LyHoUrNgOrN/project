@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\CategoryController;
 
 /*
 |--------------------------------------------------------------------------
@@ -29,3 +30,13 @@ Route::get('users/{id}',[UserController::class, "getUser"]);
 Route::post('users',[UserController::class, "createUser"]);
 Route::put('users/{id}',[UserController::class, "updateUser"]);
 Route::delete('users/{id}',[UserController::class, "deleteUser"]);
+
+
+// CATEGORY 
+
+Route::get('category',[CategoryController::class,'index']);
+Route::post('category',[CategoryController::class,'store']);
+Route::get('category/{id}',[CategoryController::class,'show']);
+Route::put('category/{id}',[CategoryController::class,'update']);
+Route::delete('category/{id}',[CategoryController::class,'destroy']);
+Route::get('/category/search/{name}', [CategoryController::class, 'search']);
