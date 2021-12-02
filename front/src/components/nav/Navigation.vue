@@ -11,6 +11,7 @@
             <li class="search">
                 <input id="input" type="text" placeholder="Search...">
                 <button class="search-btn">
+                    <i class="fa fa-search"></i>
                 </button>
             </li>
             <li>
@@ -22,11 +23,17 @@
     </nav>
 </template>
 
-<script>
-export default {
 
+<script>
+
+export default {
+  components: {
+    
+  }
 }
 </script>
+
+
 
 <style scoped>
     #menu{

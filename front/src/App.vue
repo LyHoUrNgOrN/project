@@ -4,6 +4,7 @@
     <!-- <sign-up @sign-up="userSignUp"></sign-up> -->
     <menu-bar v-show="isIignIn"></menu-bar>
     <router-view @sign-in="userSignIn" @sign-up="userSignUp"></router-view>
+    
   </div>
 </template>
 <script>
