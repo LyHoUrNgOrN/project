@@ -15,7 +15,7 @@
                 </button> -->
                
             <!-- </li> -->
-             <li class="searchBox">
+             <li class="searchBoxIcon">
                     <input class="searchInput" type="text" name="" placeholder="Search">
                     <button class="searchButton" href="#">
                         <i class="fa fa-search"></i>
@@ -40,8 +40,6 @@ export default {
 }
 </script>
 
-
-
 <style scoped>
     #menu{
         color: white;
@@ -53,7 +51,7 @@ export default {
         padding-bottom: 5px;
     }
     nav{
-        margin-top: -50px;
+        /* margin-top: -30px; */
         display: flex;
         justify-content: space-between;
         border-bottom: 1px solid rgb(214, 212, 212);
@@ -87,16 +85,7 @@ export default {
     /* nav ul .search{
         width: 40%;
     } */
-    nav ul .search .search-btn{
-        width: 70px;
-        border-left: none;
-        border: 1px solid gray;
-        border-radius: 0 8px 8px 0;
-        background: rgb(15, 135, 233);
-        color: white;
-        
-        
-    }
+    
     nav ul li .profile {
         width: 50px;
         height: 50px;
@@ -109,44 +98,45 @@ export default {
 
 
 
-    .searchBox {
-    
-    height: 40px;
-    border-radius: 40px;
-    border: 1px solid #2f3640;
-    padding-right: 0;
+    .searchBoxIcon {
+        height: 40px;
+        border-radius: 40px;
+        border: 1px solid #2f3640;
+        padding-right: 0;
 
-}
-.searchBox:hover{
-    border: 1px solid steelblue;
+    }
+    .searchBoxIcon:hover{
+        border: 1px solid steelblue;
 
-}
-.searchBox:hover > .searchInput {
-    width: 200px;
-    padding: 0 6px;
-}
+    }
+    .searchBoxIcon:hover > .searchInput {
+        width: 200px;
+        padding: 0 6px;
+    }
 
 
-.searchButton {
-    color: white;
-    float: right;
-    width: 50px;
-    border-radius: 40%;
-    background: #2f3640;
-    transition: 0.4s;
-}
+    .searchButton {
+        color: white;
+        float: right;
+        width: 50px;
+        border-radius: 40%;
+        background: #2f3640;
+        transition: 0.4s;
+        border: none;
 
-.searchInput {
-    border:none;
-    background: none;
-    outline:none;
-    float:left;
-    padding: 0;
-    color: white;
-    font-size: 16px;
-    transition: 0.4s;
-    width: 0px;
-    border-radius: 30px;
+    }
 
-}
+    .searchInput {
+        border:none;
+        background: none;
+        outline:none;
+        float:left;
+        padding: 0;
+        color: white;
+        font-size: 16px;
+        transition: 0.4s;
+        width: 0px;
+        border-radius: 30px;
+
+    }
 </style>

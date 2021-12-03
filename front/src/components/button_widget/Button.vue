@@ -1,5 +1,5 @@
 <template>
-    <button class="btn"><slot></slot></button>
+    <button class="btn-widget"><slot></slot></button>
 </template>
 <script>
 export default {
@@ -7,7 +7,7 @@ export default {
 }
 </script>
 <style>
-    .btn{
+    .btn-widget{
                 padding: 12px;
                 width: 40%;
                 font-size: 15px;

@@ -11,12 +11,12 @@
 
 <script>
 import SubNavigation from './../SubNavigation.vue'
-import EventCard from './../EventCard.vue'
+// import EventCard from './../EventCard.vue'
 
 export default {
     components:{
         SubNavigation,
-        EventCard
+        // EventCard
     },
     
     data() {

@@ -12,7 +12,7 @@
 <script>
 export default {
     props: ['category'],
-    emits: ['delete'],
+    emits: ['delete','edit-category'],
     data(){
         return{
             more: "show more",
@@ -25,7 +25,8 @@ export default {
             this.isShow = !this.isShow;
         },
         editeCategory(){
-
+            this.$emit('edit-category',this.category.name,this.category.id);
+           
         },
         deleteCategory(){
             this.$emit('delete', this.category.id);
