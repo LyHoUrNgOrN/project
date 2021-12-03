@@ -15,31 +15,21 @@
             ></category-card>
         </ul>
         <div class="addCategory">
-            
         </div>
-        
     </div>
 </template>
 <script>
 import CategoryCard from './CategoryCard.vue';
 // import 'bootstrap/dist/css/bootstrap.min.css'
-
 export default {
     components: {CategoryCard},
     data(){
         return{
-            
             categoryList: [
                 {id: 1, name: "Music"},
                 {id: 2, name: "Business"},
                 {id: 3, name: "Sport"},
-                {id: 4, name: "Wedding"},
-                // {id: 5, name: "Wedding"},
-                // {id: 6, name: "Wedding"},
-                // {id: 7, name: "Wedding"},
-                // {id: 8, name: "Wedding"},
-                
-                
+                {id: 4, name: "Wedding"}  
             ]
         }
     },
@@ -50,15 +40,14 @@ export default {
     }
 }
 </script>
-
 <style >
     .sidebar{
         position: fixed;
         width: 22%;
-        margin-left: -10px;
-        margin-top: 41px;
+        /* margin-left: -10px; */
+        margin-top: 45px;
         height: 78.5vh;
-        background: rgb(92, 95, 94);
+        background: rgb(51, 51, 51);
         padding-top: 40px;
         overflow: auto;
         
