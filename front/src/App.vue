@@ -51,13 +51,9 @@ export default {
       this.userList = res.data;
       console.log(this.userList);
     });
-    
   },
-  
-  
 }
 </script>
-
 <style>
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;

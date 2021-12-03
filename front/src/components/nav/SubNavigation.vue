@@ -44,12 +44,17 @@ export default {
     data(){
         return{
             
-            categoryList: [],
             showForm: false,
             isCreate:false,
             errorCategoryMessage : null,
             title:null,
             cat_id:null,
+            categoryList: [
+                {id: 1, name: "Music"},
+                {id: 2, name: "Business"},
+                {id: 3, name: "Sport"},
+                {id: 4, name: "Wedding"}  
+            ]
         }
     },
     methods: {
@@ -115,15 +120,14 @@ export default {
     },
 }
 </script>
-
 <style >
     .sidebarCategory{
         position: fixed;
         width: 22%;
-        margin-left: -10px;
-        /* margin-top: 4+1px; */
-        height: 90vh;
-        background: rgb(92, 95, 94);
+        /* margin-left: -10px; */
+        margin-top: 45px;
+        height: 78.5vh;
+        background: rgb(51, 51, 51);
         padding-top: 40px;
         overflow: auto;
         

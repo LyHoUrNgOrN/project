@@ -58,7 +58,9 @@ export default {
         color: white;
         position: sticky;
         top: 0;
-        background: rgb(43, 42, 42);
+        /* background: rgb(43, 42, 42); */
+        background-image: url('https://ak.picdn.net/shutterstock/videos/9134405/thumb/1.jpg');
+        background-size: cover;
     }
     
     nav ul {
