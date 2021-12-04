@@ -12,20 +12,48 @@
                 v-for="category of categoryList" :key="category.id"
                 :category="category"
                 @delete="deleteCategory"
-                @category-name="getCategoryName"
+                @category-name="updateCategory"
+                
+                
             ></category-card>
         </ul>
+        <!-- @edit-category="editCategory" -->
         <div class="addCategory">
+            <button @click="displayForm">create</button>
         </div>
+        <!-- <category-form 
+        v-if="showForm"
+        @cancle-create-category="cancelAddCategory"
+        @create-category="addCategory"
+        @update-category="updateCategory"
+        :error="errorCategoryMessage"
+        :isCreate="isCreate"
+        :title ="title"
+        :categoryId="cat_id"
+        ></category-form> -->
+        
     </div>
 </template>
 <script>
+
 import CategoryCard from './CategoryCard.vue';
+// import CategoryForm from './CategoryForm.vue';
 // import 'bootstrap/dist/css/bootstrap.min.css'
+import axios from "axios";
+const URL = 'http://127.0.0.1:8000/api'
 export default {
-    components: {CategoryCard},
+    components: {
+        CategoryCard, 
+        // CategoryForm
+    },
     data(){
         return{
+            
+            showForm: false,
+            isCreate:false,
+            errorCategoryMessage : null,
+            title:null,
+            cat_id:null,
             categoryList: [
                 {id: 1, name: "Music"},
                 {id: 2, name: "Business"},
@@ -43,23 +71,79 @@ export default {
         deleteCategory(categoryId){
             this.categoryList = this.categoryList.filter((category) => category.id !== categoryId);
         },
-        getCategoryName(categoryId, categoryName){
-            let categories = [];
-            for (let category of this.categoryList){
-                if (category.id === categoryId){
-                    let categoryUpdate = {
-                        id: categoryId,
-                        name: categoryName
-                    }
+        // getCategoryName(categoryId, categoryName){
+        //     let categories = [];
+        //     for (let category of this.categoryList){
+        //         if (category.id === categoryId){
+        //             let categoryUpdate = {
+        //                 id: categoryId,
+        //                 name: categoryName
+        //             }
 
-                    categories.push(categoryUpdate);
-                }else{
-                    categories.push(category);
+        //             categories.push(categoryUpdate);
+        //         }else{
+        //             categories.push(category);
+        //         }
+        //     }
+        //     this.categoryList = categories;
+        // },
+        displayForm(){
+            this.showForm = true;
+            this.isCreate= true;
+        },
+        cancelAddCategory(){
+            this.errorCategoryMessage = null;
+            this.title = null;
+            this.showForm = false;
+        },
+        addCategory(title){
+            axios.post(URL + '/category', {name:title}).then(res=>{
+                this.categoryList= res.data;
+                this.showForm = false;
+                this.errorCategoryMessage = null;
+                this.displayAllCategory();
+            }).catch(error=>{
+                if (error.response) {
+                    this.errorCategoryMessage = error.response.data.errors.name[0];
+                }
+            });
+        },
+
+        displayAllCategory(){
+            axios.get(URL + "/category").then(res=>{
+            console.log("Running...",res.data);
+            this.categoryList = res.data;
+            })
+
+        },
+        // editCategory(name,id){
+        //     console.log(name)
+        //     this.showForm = true;
+        //     this.isCreate = false;
+        //     this.title = name;
+        //     this.cat_id= id;
+        // },
+        updateCategory(cat_id, cat_name){
+            for(let category of this.categoryList){
+                if(category.id===cat_id){
+                    axios.put(URL+'/category/'+cat_id, {name:cat_name}).then(res=>{
+                        this.categoryList=res.data;
+                        this.displayAllCategory();
+                        this.showForm = false;
+                        this.title = null;
+                    })
+                    .catch(error=>{
+                        if (error.response) {
+                            this.errorCategoryMessage = error.response.data.errors.name[0];
+                        }
+                    });
                 }
             }
-            this.categoryList = categories;
         }
-    }
+    },
+    mounted() {
+        this.displayAllCategory();
+    },
 }
 </script>
 <style>
@@ -112,10 +196,6 @@ export default {
     .sidebarCategory ul li i{
         margin-right: 10px;
     }
-    /* ul li:hover a{ */
-        /* padding-left: 50px; */
-        
-    /* } */
     
     #searchCategory {
         background: none;
@@ -123,7 +203,7 @@ export default {
         padding: 8px;
         outline: none;
         color: white;
-        left: 3%;
+        left: 9%;
         top: 6%;
         border-radius: 15px;
         position: absolute;

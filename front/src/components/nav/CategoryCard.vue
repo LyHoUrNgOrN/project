@@ -36,6 +36,7 @@ export default {
     components: {
         DialogBox
     },
+    // emits: ['delete','edit-category'],
     data(){
         return{
             more: "show more",
@@ -60,6 +61,9 @@ export default {
         },
         closeDialog() {
         this.dialogDisplayed = false;
+        // editeCategory(){
+        //     this.$emit('edit-category',this.category.name,this.category.id);
+           
         },
         showEditCategory() {
         this.dialogTextField = this.category.name;
