@@ -10,10 +10,10 @@
             <!-- <button class="btn-create">+ Create</button> -->
         </div>
         <div class="sidebarContainer">
-            <event-card
+            <!-- <event-card
               v-for="event of eventList" :key="event.id"
               :event-datas="event"
-            ></event-card>
+            ></event-card> -->
            
         </div>
     </div>
@@ -24,12 +24,12 @@
 
 <script>
 import SubNavigation from './../SubNavigation.vue'
-import EventCard from './../EventCard.vue'
+// import EventCard from './../EventCard.vue'
 
 export default {
     components:{
         SubNavigation,
-        EventCard
+        // EventCard
     },
     
     data() {
@@ -67,6 +67,7 @@ export default {
         justify-content: space-between;
         align-items: end;
         position: sticky;
+
 
     }
     .cardHead h3{

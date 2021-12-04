@@ -1,20 +1,12 @@
 <template>
   <nav>
         <ul>
-            <!-- <img src="sspllogocir-Sani-Software-Private-Limited.png" alt=""> -->
             <h2>Event-Me</h2>
         </ul>
         <ul>
             <li><router-link id="menu" to="/home">Home</router-link></li>
             <li><router-link id="menu" to="/event">Event</router-link></li>
             <li><router-link id="menu" to="/myEvent">My Event</router-link></li>
-            <!-- <li class="search"> -->
-                <!-- <input id="input" type="text" placeholder="Search...">
-                <button class="search-btn">
-                    <i class="fa fa-search"></i>
-                </button> -->
-               
-            <!-- </li> -->
              <li class="searchBox">
                     <input class="searchInput" type="text" name="" placeholder="Search">
                     <button class="searchButton" href="#">
@@ -53,7 +45,7 @@ export default {
         padding-bottom: 5px;
     }
     nav{
-        margin-top: -50px;
+        margin-top: -8px;
         display: flex;
         justify-content: space-between;
         border-bottom: 1px solid rgb(214, 212, 212);
