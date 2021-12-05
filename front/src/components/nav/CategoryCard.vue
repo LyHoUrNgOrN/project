@@ -29,13 +29,10 @@
 </template>
 
 <script>
-import DialogBox from './DialogBox.vue'
 export default {
     props: ['category'],
     emits: ['delete', 'category-name'],
-    components: {
-        DialogBox
-    },
+
     // emits: ['delete','edit-category'],
     data(){
         return{
@@ -144,8 +141,7 @@ export default {
         color: red;
         margin-right: 10px;
     }
-    input:focus,
-    textarea:focus {
+    input:focus{
         background-color: #f0e6fd;
         outline: none;
         border-color: #3d008d;

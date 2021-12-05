@@ -11,6 +11,8 @@ import MenuBar from './components/nav/Navigation.vue'
 import Home from './components/nav/home/HomeView.vue'
 import Event from './components/nav/event/Event.vue'
 import MyEvent from './components/nav/myEvent/MyEvent.vue'
+import DialogBox from './components/nav/DialogBox.vue'
+
 // import EventCard from './components/nav/EventCard.vue'
 // import CreateEvent from './components/nav/myEvent/EventForm.vue'
 // import 'bootstrap/dist/css/bootstrap.min.css'
@@ -19,6 +21,7 @@ const app = createApp(App);
 app.component("sign-in", SignIn);
 app.component('sign-up', SignUp);
 app.component('menu-bar', MenuBar);
+app.component('dialog-box', DialogBox);
 
 
 const router = createRouter({

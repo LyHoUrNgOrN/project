@@ -19,7 +19,23 @@
         </ul>
         <!-- @edit-category="editCategory" -->
         <div class="addCategory">
-            <button @click="displayForm">create</button>
+            <button class="create_btn" @click="displayFormCategory"><i class="fa fa-plus"></i></button>
+
+            <dialog-box
+            v-if="dialogDisplayed"
+            :title="dialogTitle"
+            @close="closeDialog"
+            >
+            <hr>
+            <label for="description" >Category Name</label>
+            <input
+                v-model="newCategoryName"
+                placeholder="New Category Name"
+            />
+            <template #actions>
+                <button class="create_category_btn" @click="addCategory">Create</button>
+            </template>
+        </dialog-box>
         </div>
         <!-- <category-form 
         v-if="showForm"
@@ -31,6 +47,7 @@
         :title ="title"
         :categoryId="cat_id"
         ></category-form> -->
+        
         
     </div>
 </template>
@@ -54,6 +71,7 @@ export default {
             errorCategoryMessage : null,
             title:null,
             cat_id:null,
+            // categoryList: [],
             categoryList: [
                 {id: 1, name: "Music"},
                 {id: 2, name: "Business"},
@@ -64,49 +82,46 @@ export default {
                 {id: 7, name: "Wedding"},  
                 {id: 8, name: "Wedding"} , 
                 {id: 9, name: "Wedding"}  ,
-            ]
+            ],
+            dialogDisplayed: false,
+            newCategoryName: ""
         }
+    },
+    computed: {
+        dialogTitle() {
+            return 'CREATE A NEW CATEGORY';
+        },
     },
     methods: {
         deleteCategory(categoryId){
             this.categoryList = this.categoryList.filter((category) => category.id !== categoryId);
         },
-        // getCategoryName(categoryId, categoryName){
-        //     let categories = [];
-        //     for (let category of this.categoryList){
-        //         if (category.id === categoryId){
-        //             let categoryUpdate = {
-        //                 id: categoryId,
-        //                 name: categoryName
-        //             }
-
-        //             categories.push(categoryUpdate);
-        //         }else{
-        //             categories.push(category);
-        //         }
-        //     }
-        //     this.categoryList = categories;
-        // },
-        displayForm(){
-            this.showForm = true;
-            this.isCreate= true;
+        displayFormCategory(){
+            // this.showForm = true;
+            // this.isCreate= true;
+            this.dialogDisplayed = true;
         },
         cancelAddCategory(){
             this.errorCategoryMessage = null;
             this.title = null;
             this.showForm = false;
         },
-        addCategory(title){
-            axios.post(URL + '/category', {name:title}).then(res=>{
-                this.categoryList= res.data;
-                this.showForm = false;
-                this.errorCategoryMessage = null;
-                this.displayAllCategory();
-            }).catch(error=>{
-                if (error.response) {
-                    this.errorCategoryMessage = error.response.data.errors.name[0];
-                }
-            });
+        addCategory(){
+            console.log(this.newCategoryName);
+            // let newCategory = {
+            //     name: this.newCategoryName
+            // }
+            // axios.post(URL + '/category', newCategory).then(res=>{
+            //     this.categoryList= res.data;
+            //     this.showForm = false;
+            //     this.errorCategoryMessage = null;
+            //     this.displayAllCategory();
+            // }).catch(error=>{
+            //     if (error.response) {
+            //         this.errorCategoryMessage = error.response.data.errors.name[0];
+            //     }
+            // });
+            this.dialogDisplayed = !this.dialogDisplayed;
         },
 
         displayAllCategory(){
@@ -116,13 +131,9 @@ export default {
             })
 
         },
-        // editCategory(name,id){
-        //     console.log(name)
-        //     this.showForm = true;
-        //     this.isCreate = false;
-        //     this.title = name;
-        //     this.cat_id= id;
-        // },
+        closeDialog() {
+            this.dialogDisplayed = false;
+        },
         updateCategory(cat_id, cat_name){
             for(let category of this.categoryList){
                 if(category.id===cat_id){
@@ -149,7 +160,7 @@ export default {
 <style>
     .sidebarCategory{
         position: fixed;
-        width: 22%;
+        width: 21%;
         margin-left: -0.5%;
         height: 100vh;
         background: rgb(51, 51, 51);
@@ -161,7 +172,7 @@ export default {
         width: 10px;
     }
     .sidebarCategory ul{
-        margin-left: -16%;
+        margin-left: -14%;
         /* text-align: center; */
         margin-top: 50px;
 
@@ -172,7 +183,7 @@ export default {
         width: 91%;
         border-bottom: 1px solid white;
         text-align: left;
-        padding-left: 30px;
+        padding-left: 22px;
         color: white;
         display: flex;
         justify-content: space-around;
@@ -203,7 +214,7 @@ export default {
         padding: 8px;
         outline: none;
         color: white;
-        left: 9%;
+        left: 5%;
         top: 6%;
         border-radius: 15px;
         position: absolute;
@@ -213,9 +224,63 @@ export default {
     }
     .searchCategoryIcon{
         position: absolute;
-        left: 85%;
-        top: 8vh;
+        left: 88%;
+        top: 9vh;
         color: rgb(255, 255, 255);
+    }
+    
+    
+
+    label {
+        font-weight: bold;
+        display: block;
+        margin-top: 15px;
+    }
+    hr{
+        margin-top: -20px;
+
+    }
+    input{
+        display: block;
+        width: 95%;
+        border: 1px solid #ccc;
+        font: inherit;
+        padding: 15px;
+        border-radius: 5px;
+        margin-top: 7px;
+    }
+    .fa-exclamation-triangle{
+        color: red;
+        margin-right: 10px;
+    }
+    input:focus{
+        background-color: #f0e6fd;
+        outline: none;
+        border-color: #3d008d;
+    }
+    .create_btn,
+    .create_category_btn{
+        border: none;
+        font-weight: bold;
+    }
+    .create_btn{
+        background: rgba(255, 255, 255, 0.774);
+        padding: 12px;
+        width: 4%;
+        top: 88vh;
+        left: 16%;
+        border-radius: 50%;
+        font-size: 26px;
+        position: fixed;
+        color: rgb(42, 40, 40);
+    }
+    .create_category_btn{
+        padding: 10px;
+        background: rgb(44, 171, 209);
+        border-radius: 15px;
+        width: 18%;
+        font-size: 16px;
+
     }
 </style>
         
