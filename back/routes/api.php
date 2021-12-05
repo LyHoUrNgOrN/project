@@ -34,9 +34,9 @@ Route::delete('users/{id}',[UserController::class, "deleteUser"]);
 
 // CATEGORY 
 
-Route::get('category',[CategoryController::class,'index']);
-Route::post('category',[CategoryController::class,'store']);
-Route::get('category/{id}',[CategoryController::class,'show']);
-Route::put('category/{id}',[CategoryController::class,'update']);
-Route::delete('category/{id}',[CategoryController::class,'destroy']);
-Route::get('/category/search/{name}', [CategoryController::class, 'search']);
+Route::get('/category',[CategoryController::class,'getAllCategory']);
+Route::post('/category',[CategoryController::class,'createCategory']);
+Route::get('/category/{id}',[CategoryController::class,'getOne']);
+Route::put('/category/{id}',[CategoryController::class,'updateCategory']);
+Route::delete('category/{id}',[CategoryController::class,'deleteCategory']);
+Route::get('/category/search/{name}', [CategoryController::class, 'searchCategory']);

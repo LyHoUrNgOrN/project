@@ -22,8 +22,15 @@ export default {
 
 <style>
     body{
-        background-image: url('https://s3.amazonaws.com/images.productionhub.com/posts/53453fb457_a1otazmjc1.jpg');
+        background-image: url('https://ak.picdn.net/shutterstock/videos/9134405/thumb/1.jpg');
+        background-repeat: no-repeat;
+        background-attachment: fixed;
         background-size: cover;
+        background-position: top;
+        background-position-x: center;
+        background-position-y: top;
+        /* background: fixed; */
+        /* background: rgb(12, 10, 10); */
     }
     .homeContainer{
         display: flex;
@@ -32,7 +39,8 @@ export default {
         width: 80%;
         height: 85vh;
         /* background: yellowgreen; */
-        
+        /* background-image: url('https://images.creativemarket.com/0.1.0/ps/6332878/1820/1023/m1/fpnw/wm1/varp4qjyuyfo3acz6c6mwlpxatbxzmgvxgpn8sbvowmljs7fqm8j5wpmri5cvzlk-.jpg?1556873804&s=25eeda5e6a3619051e8561b7bb17a640');
+        background-size: cover; */
         margin: auto;
     }
     .text{

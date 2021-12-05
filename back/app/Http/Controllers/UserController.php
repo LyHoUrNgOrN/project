@@ -17,15 +17,16 @@ class UserController extends Controller
     }
 
     public function createUser(Request $request)
-    {   $validate = $request->validate([
-        "name"=>"min:2|max:30",
+    {
+        $request->validate([
+        "name"=>"required|min:2|max:30",
         "password"=>"required|confirmed|min:8|max:16",
         'email' => 'required|email|unique:users,email',
-        // "profile"=>"image|mimes:jgp,png,jpeg|max:1999",
+        "profile"=>"image|mimes:jpg,png,jpeg,gif|max:19999",
         ]);
 
         //move image to storage
-        // $request->file('profile')->store('public/images');
+        $request->file('profile')->store('public/profiles');
 
         //Get original image to storage
         // $original= $request->file('profile')->getClientOriginalName();
@@ -37,10 +38,10 @@ class UserController extends Controller
         $user->name = $request->name;
         $user->email = $request->email;
         $user->password = bcrypt($request->password);
-        $user->profile = $request->profile;
+        $user->profile = $request->file('profile')->hashName();
         $user->role = $request->role;
         $user->save();
-        return response()->json(["message"=>"User Created","user"=>$user],200);
+        return response()->json(["message"=>"User Created"],200);
     }
 
     public function updateUser(Request $request, $id)

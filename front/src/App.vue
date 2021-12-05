@@ -1,59 +1,66 @@
 <template>
-  <div id="app">
-    <!-- <sign-in @sign-in="userSignIn"></sign-in> -->
-    <!-- <sign-up @sign-up="userSignUp"></sign-up> -->
-    <menu-bar v-show="isIignIn"></menu-bar>
-    <router-view @sign-in="userSignIn" @sign-up="userSignUp"></router-view>
-  </div>
+  <section>
+    <menu-bar v-if="activeUser" @sign-out="userSignOut"></menu-bar>
+    <router-view @sign-in="userSignIn"></router-view>
+ </section>
 </template>
 <script>
 // import axios from 'http.js';
-import axios from "axios";
-const URL = 'http://127.0.0.1:8000/api'
+// import axios from "axios";
+// const URL = 'http://127.0.0.1:8000/api'
 export default {
   data(){
     return{
-      userList : [
-      ],
-      loginResult:null,
-      isIignIn:false,
-      activeUser:{},
+      activeUser:null,
     }
-    
+  },
+  watch : {
+    activeUser(){
+      return this.activeUser !== null;
+    }
   },
   methods: {
       userSignIn(user){
-        // console.log(user);
-        this.isIignIn = true;
         this.activeUser = user;
-        // localStorage.id = user.id;
-
+        localStorage.setItem('user',JSON.stringify(user));
       },
-      userSignUp(user){
-        localStorage.clear();
-        this.isIignIn = true;
-        this.activeUser = user;
-
-        // console.log(user);
-        
-        // localStorage.id = user.id;
-        this.isLogin();
-      },
-
+      userSignOut(){
+        this.activeUser = null;
+      }
   },
   mounted() {
-    //  localStorage.id = 1;
-    localStorage.clear();
-    if (localStorage.getItem("user")){
-      this.isIignIn = true;
-      this.activeUser = JSON.parse(localStorage.getItem("user"));
+    let user = JSON.parse(localStorage.getItem("user"));
+    if(user !== null){
+        this.activeUser = JSON.parse(localStorage.getItem("user"));
     }
-    axios.get(URL+'/users').then(res=>{
-      this.userList = res.data;
-      console.log(this.userList);
-    });
+    else{
+       this.activeUser = user;
+       this.$router.push('/signIn');
+    }
+    window.onpopstate = event => {
+      if (
+        (window.localStorage.getItem("user") !== null &&
+        this.$route.path == "/signIn") || this.$route.path == "/"
+      ) {
+        this.$router.push("/home"); // redirect to home, for example
+      }
+      console.log(event);
+    };
     
   },
+  // computed: {
+  //   currentRouteName() {
+  //       console.log(this.$router.path);
+  //       if(this.$router.path === '/' || this.$router === '/signIn'){
+  //         localStorage.clear();
+
+  //       }
+  //       return this.$route.path;
+  //   }
+  // },
+   provide(){
+    return {$activeUser :()=> this.activeUser};
+  }
 }
 </script>
 
@@ -64,6 +71,6 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  /* margin-top: 60px; */
+  /* / margin-top: 60px; / */
 }
 </style>

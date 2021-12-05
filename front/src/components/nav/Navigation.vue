@@ -1,50 +1,71 @@
 <template>
   <nav>
         <ul>
-            <!-- <img src="sspllogocir-Sani-Software-Private-Limited.png" alt=""> -->
             <h2>Event-Me</h2>
         </ul>
         <ul>
             <li><router-link id="menu" to="/home">Home</router-link></li>
             <li><router-link id="menu" to="/event">Event</router-link></li>
             <li><router-link id="menu" to="/myEvent">My Event</router-link></li>
-            <li class="search">
-                <input id="input" type="text" placeholder="Search...">
-                <button class="search-btn">
-                </button>
-            </li>
+            
+             <li class="searchBoxIcon">
+                    <input class="searchInput" type="text" name="" placeholder="Search">
+                    <button class="searchButton" href="#">
+                        <i class="fa fa-search"></i>
+                    </button>
+                </li>
             <li>
-                <img class="profile" src="" alt="" @click="openProfile">
+                <img class="profile" :src="displayProfile()" alt="" @click="openProfile">
             </li>
 
         </ul>
-        <div id="myModal" class="modal">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <!-- <img class="profile" src="" alt="" @click="changeProfile"> -->
-                    <h4 class="name">{{userName}}</h4>
-                    <span class="close" @click="close">&times;</span>
+                <div id="myModal" class="modal">
+                <div class="modal-content">
+                    <div class="modal-header">
+                       
+                        <span class="close" @click="close">&times;</span>
+                        </div>
+                    <div class="profile">
+                        <img :src="displayProfile()" alt="">
                     
+                    </div>
+                    
+                    <div class="modal-body">
+                        <p class="name">
+                            <i class="fa fa-user-circle-o"></i>
+                             {{activeUser.name}}
+                        </p>
+                        <p class="email">
+                            <i class="fa fa-envelope"></i>
+                             {{activeUser.email}}
+                        </p>
+                        <p class="phone">
+                            <i class="fa fa-phone-square"></i>
+                             +885 969494090
+                        </p>
+                        <p class="address">
+                            <i class="fa fa-map-marker"></i>
+                             Phnom Penh
+                        </p>
+                        <router-link to='/signIn' @click="signOut"><botton-widget>Sign Out</botton-widget></router-link>
+     
+                    </div>
                 </div>
-                <div class="modal-body">
-                    <p>Some text in the Modal Body</p>
-                    <p>Some other text...</p>
-                    <button @click="signOut" >Sign Out <i class="fa fa-sign-out"></i></button>
-                </div>
-            </div>
         </div>
     </nav>
 </template>
 
 <script>
-
+import BottonWidget from "./../button_widget/Button.vue";
 export default {
+    inject:["$activeUser"],
+    emits:['sign-out'],
+    components: {'botton-widget':BottonWidget},
     data(){
-        return {
-            userName : JSON.parse(localStorage.getItem("user")),
+        return{
+            
         }
     },
-
     methods: {
         openProfile(){
             let modal = document.getElementById("myModal");
@@ -55,16 +76,23 @@ export default {
             modal.style.display = "none";
         },
         signOut(){
-            localStorage.setItem("user"," ");
             this.close();
-            localStorage.setItem("login",false);
-            this.$router.push('/');
+            localStorage.clear();
+            this.$emit("sign-out");
+            this.$router.push('/signIn');
+        },
+        displayProfile(){
+            console.log(this.activeUser.profile);
+            return "http://127.0.0.1:8000/storage/profiles/" + this.activeUser.profile;
         }
     },
+    computed : {
+        activeUser (){
+            return this.$activeUser();
+        }
+    }
 }
-
 </script>
-
 <style scoped>
     #menu{
         color: white;
@@ -76,23 +104,28 @@ export default {
         padding-bottom: 5px;
     }
     nav{
-        margin-top: -35px;
+        margin-top: -8px;
         display: flex;
         justify-content: space-between;
         border-bottom: 1px solid rgb(214, 212, 212);
         color: white;
+        position: sticky;
+        top: 0;
+        background-image: url('https://ak.picdn.net/shutterstock/videos/9134405/thumb/1.jpg');
+        background-size: cover;
     }
     
     nav ul {
         display: flex;
         width: 50%;
-        /* justify-content: space-between; */
+        justify-content: space-around;
         align-items: end;
     }
     nav ul h2{
         margin-bottom: -10px;
         font-size: 36px;
         font-weight: bold;
+        margin-left: -65%;
     }
     nav ul li {
         list-style: none;
@@ -100,28 +133,6 @@ export default {
         margin-top: 20px;
         padding-right: 4%;
         display: flex;
-    }
-    nav ul .search #input{
-        padding: 8px;
-        width: 190%;
-        /* margin-bottom: -10px; */
-        border-radius: 8px 0 0 8px;
-        border: 1px solid gray;
-        background: rgba(184, 184, 185, 0.534);
-        outline: none;
-        color: white;
-    } 
-    nav ul .search{
-        width: 40%;
-    }
-    nav ul .search .search-btn{
-        width: 70px;
-        border-left: none;
-        border: 1px solid gray;
-        border-radius: 0 8px 8px 0;
-        background: rgb(15, 135, 233);
-        color: white;
-        
         
     }
     nav ul li .profile {
@@ -132,75 +143,139 @@ export default {
         border: 1px solid gray;
 
     }
-    body {font-family: Arial, Helvetica, sans-serif;}
+    
+    .modal-body{
+        width: 92%;
+        
+    }
+    .modal-body>p{
+        border-bottom: 1px solid gray;
+    }
+    .modal-body>.name,
+    .modal-body>.address,
+    .modal-body>.email,
+    .modal-body>.phone{
+        
+        width: 100%; 
+        padding: 10px; 
+        font-size: 16px; 
+        text-align: left;
+        
+    }
+    .fa-user-circle-o,
+    .fa-envelope,
+    .fa-phone-square,
+    .fa-map-marker {
+        font-size: 20px;
+        margin-right: 10px;
+    }
 
-/* The Modal (background) */
-.modal {
-  display: none; /* Hidden by default */
-  position: fixed; /* Stay in place */
-  z-index: 1; /* Sit on top */
-  padding-top: 100px; /* Location of the box */
-  left: 70%;
-  top: 0;
-  width: 30%; /* 30% width */
-  height: 100%; /*Full height*/
-  overflow: auto; /* Enable scroll if needed */
-  background-color: rgb(0,0,0); /* Fallback color */
-  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
-}
- 
-/* Modal Content */
-.modal-content {
-  position: relative;
-  background-color: #fefefe;
-  margin: auto;
-  padding: 0;
-  border: 1px solid #888;
-  width: 80%;
-  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
-  -webkit-animation-name: animatetop;
-  -webkit-animation-duration: 0.4s;
-  animation-name: animatetop;
-  animation-duration: 0.4s
-}
+    .modal-content img{
+        width: 150px;
+        height: 150px;
+        border-radius: 50%;
+    }
 
-/* Add Animation */
-@-webkit-keyframes animatetop {
-  from {top:-300px; opacity:0} 
-  to {top:0; opacity:1}
-}
+    .modal-header,.modal-body{
+        border: none;
+        
+    }
+    .modal { 
+        display: none; 
+        position: fixed; 
+        z-index: 1; 
+        padding-top: 100px; 
+        left: 70%;
+        top: 0;
+        width: 30%; 
+        height: 100%;
+        overflow: auto; 
+        background-color: rgba(0, 0, 0, 0.883); 
+    }
+    
+    /* / Modal Content / */
+    .modal-content {
+        position: relative;
+        margin: auto;
+        padding: 0;
+        width: 80%;
+        box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
+        -webkit-animation-name: animatetop;
+        -webkit-animation-duration: 0.4s;
+        animation-name: animatetop;
+        animation-duration: 0.4s
+    }
 
-@keyframes animatetop {
-  from {top:-300px; opacity:0}
-  to {top:0; opacity:1}
-}
+    /* / Add Animation / */
+    @-webkit-keyframes animatetop {
+    from {top:-300px; opacity:0} 
+    to {top:0; opacity:1}
+    }
 
-/* The Close Button */
-.close {
-  color: white;
-  float: right;
-  font-size: 28px;
-  font-weight: bold;
-}
+    @keyframes animatetop {
+    from {top:-300px; opacity:0}
+    to {top:0; opacity:1}
+    }
 
-.close:hover,
-.close:focus {
-  color: #000;
-  text-decoration: none;
-  cursor: pointer;
-}
+    /* / The Close Button / */
+    .close {
+        color: white;
+        float: right;
+        font-size: 28px;
+        font-weight: bold;
+        margin-top: -70px;
+    }
 
-.modal-header {
-  padding: 2px 16px;
-  display: flex;
-  justify-content: space-between;
-  background-color: #5cb85c;
-  color: white;
-}
-.name{
-    width:30%;
-}
+    .close:hover,
+    .close:focus {
+        color: #000;
+        text-decoration: none;
+        cursor: pointer;
+    }
 
-.modal-body {padding: 2px 16px;}
+    .modal-body {
+        padding: 2px 16px;
+    }
 
+    .searchBoxIcon {
+        height: 40px;
+        border-radius: 40px;
+        border: 1px solid #2f3640;
+        padding-right: 0;
+
+    }
+    .searchBoxIcon:hover{
+        border: 1px solid steelblue;
+
+    }
+    .searchBoxIcon:hover > .searchInput {
+        width: 200px;
+        padding: 0 6px;
+    }
+
+
+    .searchButton {
+        color: white;
+        float: right;
+        width: 50px;
+        border-radius: 40%;
+        background: #2f3640;
+        transition: 0.4s;
+        border: none;
+
+    }
+
+    .searchInput {
+        border:none;
+        background: none;
+        outline:none;
+        float:left;
+        padding: 0;
+        color: white;
+        font-size: 16px;
+        transition: 0.4s;
+        width: 0px;
+        border-radius: 30px;
+
+    }
 </style>

@@ -12,9 +12,9 @@ class CategoryController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function getAllCategory()
     {
-        return Category::latest()->get();
+        return Category::orderBy('name')->get();
     }
 
     /**
@@ -23,7 +23,7 @@ class CategoryController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function createCategory(Request $request)
     {
         // $user = User::where("name",$request->name)->first();
         // if(!$user||!Hash::check($request->password,$user->password)){
@@ -32,6 +32,11 @@ class CategoryController extends Controller
         // return response()->json([
         //     "user"=>$user,
         // ]);
+        $validate = $request->validate([
+            "user_id"=>"required",
+            "name"=>"required|unique:categories,name",
+        ]);
+
         $allData = Category::get();
         foreach($allData as $eachData){
             if(strToUpper($eachData->name) === strToUpper($request->name)) {
@@ -39,9 +44,10 @@ class CategoryController extends Controller
             }
         };
         $category = new Category();
+        $category->user_id = $request->user_id;
         $category->name = $request->name;
         $category->save();
-        return response()->json(['message' => 'created', 'newBook' => $category],201);
+        return response()->json(['message' => 'created', 'newCategory' => $category],201);
     }
 
     /**
@@ -50,7 +56,7 @@ class CategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function getOne($id)
     {
         return Category::findOrFail($id);
     }
@@ -62,8 +68,12 @@ class CategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function updateCategory(Request $request, $id)
     {   
+        $validate = $request->validate([
+            "user_id"=>"required",
+            "name"=>"required|unique:categories,name",
+        ]);
         $allData = Category::get();
         foreach($allData as $eachData){
             if(strToUpper($eachData->name) === strToUpper($request->name)) {
@@ -71,6 +81,7 @@ class CategoryController extends Controller
             }
         };
         $category = Category::findOrFail($id);
+        $category->user_id = $request->user_id;
         $category->name = $request->name;
         $category->save();
         return response()->json(['message' => 'update', 'updated' => $category],200);
@@ -82,7 +93,7 @@ class CategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function deleteCategory($id)
     {
         $isDelete = Category::destroy($id);
 
@@ -98,8 +109,9 @@ class CategoryController extends Controller
      * @param  int  $categoryname
      * @return \Illuminate\Http\Response
      */
-    public function search($name)
+    public function searchCategory($name)
     {
         return Category::where('name','like','%'.$name.'%')->get();
     }
 }
+

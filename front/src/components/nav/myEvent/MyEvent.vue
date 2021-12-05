@@ -2,22 +2,28 @@
 <section>
   <!-- <menu-bar></menu-bar> -->
   <div class="main">
-    <!-- <sub-navigation></sub-navigation> -->
-    <!-- <my-event-card></my-event-card> -->
+    <sub-navigation></sub-navigation>
+    <!-- <event-card></event-card> -->
   </div>
 </section>
 
 </template>
 
 <script>
-// import SubNavigation from './../SubNavigation.vue'
-// import MyEventCard from './MyEventCard.vue'
+import SubNavigation from './../SubNavigation.vue'
+// import EventCard from './../EventCard.vue'
 
 export default {
-    // components:{
-        // SubNavigation,
-        // MyEventCard
-    // }
+    components:{
+        SubNavigation,
+        // EventCard
+    },
+    
+    data() {
+      return{
+        
+      }
+    }
 }
 </script>
 
