@@ -1,7 +1,7 @@
 <template>
     <div class="form">
         <form action="#">
-            <h1>SignIn Here</h1>
+            <h1>Sign In Here</h1>
             <div class="textbox">
                 <i class="fa fa-user" aria-hidden="true"></i>
                 <input type="text" id="name" v-model="userName" placeholder="Username ">
@@ -27,19 +27,18 @@
 </template>
 
 <script>
-const URL = 'http://127.0.0.1:8000/api'
 import BottonWidget from "./../button_widget/Button.vue";
 import axios from "axios";
+const URL = 'http://127.0.0.1:8000/api'
 export default {
     components: {'botton-widget':BottonWidget},
     emits:["sign-in"],
     data(){
         return {
-            value : "Sign In",
+            // value : "Sign In",
             userName:null,
             password:null,
-            userList : [
-            ],
+            userList : [],
             loginResult: false,
             messageError:null,
         }
@@ -52,10 +51,7 @@ export default {
                 password:this.password,
             }
             axios.post(URL+'/signin',user).then(res=>{
-                let user = res.data;
-                console.log(user);
-                localStorage.setItem('user',JSON.stringify(user.user.name));
-                localStorage.setItem('login',true);
+                let user = res.data.user;
                 this.$emit("sign-in",user);
                 this.$router.push('/home');
             }).catch(error=>{
@@ -69,18 +65,15 @@ export default {
             this.userName = null;
             this.password = null;
         }
-    },  
-    mounted() {
-        
-    }, 
+    },   
 }
 </script>
 
 <style>
-body{
+/* body{
         background-image: url('https://thecolonial.org/wp-content/uploads/Event-Blogging-Strategies.jpg');
         background-size: cover;
-    }
+    } */
 .form{
             background-color: rgba(17, 17, 17, 0.308);
             border-radius: 20px;

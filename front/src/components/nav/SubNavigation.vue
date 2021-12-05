@@ -2,8 +2,8 @@
   <div class="sidebarCategory">
         <ul>
             <div class="">
-                <input type="text" id="searchCategory" placeholder="Type of search...">
-                <i class="fa fa-search searchCategoryIcon"></i>
+                <input type="text" id="searchCategory" placeholder="Type of search..." v-model="searchName" @keyup="searchCategory">
+                <i class="fa fa-search searchCategoryIcon" ></i>
             </div>
             <li>
                 <router-link to="/event/allEvent"><i id="more" class="fa fa-calendar"></i>All Event</router-link>
@@ -13,7 +13,6 @@
                 :category="category"
                 @delete="deleteCategory"
                 @category-name="updateCategory"
-                
                 
             ></category-card>
         </ul>
@@ -32,21 +31,12 @@
                 v-model="newCategoryName"
                 placeholder="New Category Name"
             />
+            <small>{{errorCategoryMessage}}</small>
             <template #actions>
                 <button class="create_category_btn" @click="addCategory">Create</button>
             </template>
         </dialog-box>
         </div>
-        <!-- <category-form 
-        v-if="showForm"
-        @cancle-create-category="cancelAddCategory"
-        @create-category="addCategory"
-        @update-category="updateCategory"
-        :error="errorCategoryMessage"
-        :isCreate="isCreate"
-        :title ="title"
-        :categoryId="cat_id"
-        ></category-form> -->
         
         
     </div>
@@ -54,37 +44,21 @@
 <script>
 
 import CategoryCard from './CategoryCard.vue';
-// import CategoryForm from './CategoryForm.vue';
-// import 'bootstrap/dist/css/bootstrap.min.css'
+
 import axios from "axios";
 const URL = 'http://127.0.0.1:8000/api'
 export default {
     components: {
         CategoryCard, 
-        // CategoryForm
     },
     data(){
         return{
-            
-            showForm: false,
-            isCreate:false,
             errorCategoryMessage : null,
-            title:null,
-            cat_id:null,
             // categoryList: [],
-            categoryList: [
-                {id: 1, name: "Music"},
-                {id: 2, name: "Business"},
-                {id: 3, name: "Sport"},
-                {id: 4, name: "Wedding"},  
-                {id: 5, name: "Wedding"}, 
-                {id: 6, name: "Wedding"},
-                {id: 7, name: "Wedding"},  
-                {id: 8, name: "Wedding"} , 
-                {id: 9, name: "Wedding"}  ,
-            ],
+            categoryList: [],
             dialogDisplayed: false,
-            newCategoryName: ""
+            newCategoryName: "",
+            searchName:"",
         }
     },
     computed: {
@@ -97,60 +71,73 @@ export default {
             this.categoryList = this.categoryList.filter((category) => category.id !== categoryId);
         },
         displayFormCategory(){
-            // this.showForm = true;
-            // this.isCreate= true;
             this.dialogDisplayed = true;
         },
-        cancelAddCategory(){
-            this.errorCategoryMessage = null;
-            this.title = null;
-            this.showForm = false;
-        },
         addCategory(){
-            console.log(this.newCategoryName);
-            // let newCategory = {
-            //     name: this.newCategoryName
-            // }
-            // axios.post(URL + '/category', newCategory).then(res=>{
-            //     this.categoryList= res.data;
-            //     this.showForm = false;
-            //     this.errorCategoryMessage = null;
-            //     this.displayAllCategory();
-            // }).catch(error=>{
-            //     if (error.response) {
-            //         this.errorCategoryMessage = error.response.data.errors.name[0];
-            //     }
-            // });
+            let newCategory = {
+                user_id:JSON.parse(localStorage.getItem("user")).id,
+                name: this.newCategoryName
+            }
+            axios.post(URL + '/category', newCategory).then(res=>{
+                this.categoryList= res.data;
+                this.errorCategoryMessage = null;
+                this.displayAllCategory();
+            }).catch(error=>{
+                if (error.response) {
+                    this.dialogDisplayed = true;
+                    this.errorCategoryMessage = error.response.data.errors.name[0];
+                }
+            });
             this.dialogDisplayed = !this.dialogDisplayed;
+            this.newCategoryName = '';
+            this.errorCategoryMessage = '';
         },
 
         displayAllCategory(){
+            if(this.searchName === ''){
+                
             axios.get(URL + "/category").then(res=>{
-            console.log("Running...",res.data);
+            // console.log("Running...",res.data);
             this.categoryList = res.data;
             })
+            }
+            else {
+                axios.get(URL + "/category/search/"+this.searchName).then(res=>{
+                // console.log("Running...",res.data);
+                this.categoryList = res.data;
+                });
+            }
 
         },
         closeDialog() {
             this.dialogDisplayed = false;
+            this.errorCategoryMessage = null;
         },
         updateCategory(cat_id, cat_name){
             for(let category of this.categoryList){
                 if(category.id===cat_id){
-                    axios.put(URL+'/category/'+cat_id, {name:cat_name}).then(res=>{
+                    let newCategory = {
+                        user_id:JSON.parse(localStorage.getItem("user")).id,
+                        name: cat_name
+                    }
+                    axios.put(URL+'/category/'+cat_id, newCategory).then(res=>{
                         this.categoryList=res.data;
                         this.displayAllCategory();
-                        this.showForm = false;
-                        this.title = null;
                     })
                     .catch(error=>{
                         if (error.response) {
+                            this.dialogDisplayed = true;
                             this.errorCategoryMessage = error.response.data.errors.name[0];
                         }
                     });
+                    this.errorCategoryMessage = '';
                 }
             }
-        }
+        },
+        searchCategory(){
+            this.displayAllCategory();
+            
+        },
     },
     mounted() {
         this.displayAllCategory();
@@ -169,7 +156,7 @@ export default {
         
     }
     ::-webkit-scrollbar {
-        width: 10px;
+        width: 0px;
     }
     .sidebarCategory ul{
         margin-left: -14%;

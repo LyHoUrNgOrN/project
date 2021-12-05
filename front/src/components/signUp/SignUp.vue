@@ -1,9 +1,9 @@
 <template>
   <div class="form">
-        <label for="image"><img class="user" :src="profile" /></label>
-        
+        <label for="image"><img class="user" :src="previewProfile" /></label>
         <form action="" enctype="multipart/form-data">
-            <input type="file" id="image" @change="selectProfile">
+            <input type="file" id="image" accept="image/jpeg, image/png, image/gif, image/jpg" @change="selectProfile" >
+            <small>{{messError.profile}}</small>
             <input type="text" id="name" placeholder="User Name" v-model="userName">
             <small>{{messError.name}}</small>
             <input type="email" id="email" placeholder="Email" v-model="email">
@@ -29,13 +29,15 @@ export default {
     emits:["sign-up"],
     data(){
         return{
-            value : "Sign Up",
-            userName: null,
+            // value : "Sign Up",
+            userName: "",
             email: null,
             password: null,
             confirmPassword: null,
-            profile: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT9Z9vjM-_Ww_rUHKOYFQ3brhBsKWniGSN7jembYtImHkPzHReyZ4zNBlPF550WjI8a_eE&usqp=CAU",
+            previewProfile: "http://127.0.0.1:8000/storage/profiles/default-profile.png",
+            profile : null,
             messError : {
+                profile:null,
                 name:null,
                 email: null,
                 password:null,
@@ -47,41 +49,44 @@ export default {
             const image = event.target.files[0];
             let reader = new FileReader();
             reader.onloadend = e =>{
-                this.profile = e.target.result;
+                this.previewProfile = e.target.result;
             }
             reader.readAsDataURL(image);
-            this.profile = event.target.files[0].name;
+            this.profile = image;
+            // console.log(this.profile);
             
         },
-        signUp(event){
-            event.preventDefault();
-            let user = {
-                name : this.userName,
-                email: this.email,
-                password:this.password,
-                password_confirmation:this.confirmPassword,
-                profile : this.profile,
-                role:"user",
-            }
-            // let user = new FormData();
-            // user.append('profie',this.profile);
-            // user.append('name',this.userName);
-            // user.append('email',this.email);
-            // user.append('password',this.password);
-            // user.append('password_confirmation',this.confirmPassword);
-            // user.append('role','user');
+        signUp(){
+            // let user = {
+            //     name : this.userName,
+            //     email: this.email,
+            //     password:this.password,
+            //     password_confirmation:this.confirmPassword,
+            //     profile : this.profile,
+            //     role:"user",
+            // }
+            let user = new FormData();
+            let author = 'user';
+            user.append('name',this.userName);
+            user.append('email',this.email);
+            user.append('password',this.password);
+            user.append('password_confirmation',this.confirmPassword);
+            user.append('profile',this.profile);
 
-            
+            user.append('role',author);
+
+            // console.log(this.profile);
+            console.log(user.get('name'));
+            // console.log(user.get('password'));
+            // console.log(user.get('profile'));
             axios.post(URL+'/signup',user).then(res=>{
-                // console.log(res.data);
-                let user = res.data.user
-                localStorage.setItem('user',JSON.stringify(user.name));
-                localStorage.setItem('login',true);
-                this.$emit("sign-up",user);
-                this.$router.push('/home');
+                console.log(res.data.message);
+                this.$router.push('/signIn');
+                // localStorage.setItem('login',true);
             }).catch(error=>{
                 if (error.response) {
                     let messError = error.response.data.errors;
+                    console.log(messError);
                     if(messError.name !== undefined){
                         this.messError.name = messError.name[0];
                     }
@@ -90,6 +95,9 @@ export default {
                     }
                     if(messError.password !== undefined){
                         this.messError.password = messError.password[0];
+                    }
+                    if(messError.profile !== undefined){
+                        this.messError.profile = 'Please choose a correct profile!';
                     }
                     console.log(error.response.data);
                     console.log(error.response.status);
@@ -101,7 +109,8 @@ export default {
             this.email = null;
             this.password = null;
             this.confirmPassword = null;
-            this.profile = 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT9Z9vjM-_Ww_rUHKOYFQ3brhBsKWniGSN7jembYtImHkPzHReyZ4zNBlPF550WjI8a_eE&usqp=CAU';
+            this.previewProfile = 'http://127.0.0.1:8000/storage/profiles/default-profile.png';
+            this.profile = null;
         }
     }
 }
