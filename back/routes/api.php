@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\CategoryController;
 
+use App\Http\Controllers\EventController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -40,3 +41,12 @@ Route::get('/category/{id}',[CategoryController::class,'getOne']);
 Route::put('/category/{id}',[CategoryController::class,'updateCategory']);
 Route::delete('category/{id}',[CategoryController::class,'deleteCategory']);
 Route::get('/category/search/{name}', [CategoryController::class, 'searchCategory']);
+
+// Event
+
+Route::get('events', [EventController::class, 'getAllEvent']);
+Route::post('events', [EventController::class, 'createEvent']);
+Route::get('events/{id}', [EventController::class, 'getOneEvent']);
+Route::put('events/{id}', [EventController::class, 'updateEvent']);
+Route::delete('events/{id}', [EventController::class, 'deleteEvent']);
+Route::get('/category/search/{title}', [EventController::class, 'searchEvent']);
