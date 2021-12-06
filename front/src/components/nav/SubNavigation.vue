@@ -6,14 +6,14 @@
                 <i class="fa fa-search searchCategoryIcon" ></i>
             </div>
             <li>
-                <router-link to="/event/allEvent"><i id="more" class="fa fa-calendar"></i>All Event</router-link>
+               <div class="categoryCard"><i id="more" class="fa fa-calendar"></i>All Event</div>
             </li>
             <category-card
                 v-for="category of categoryList" :key="category.id"
                 :category="category"
                 @delete="deleteCategory"
                 @category-name="updateCategory"
-                
+                @category="selectCategory"
             ></category-card>
         </ul>
         <!-- @edit-category="editCategory" -->
@@ -21,7 +21,7 @@
             <button class="create_btn" @click="displayFormCategory"><i class="fa fa-plus"></i></button>
 
             <dialog-box
-            v-if="dialogDisplayed"
+            v-if="diplayedDialog"
             :title="dialogTitle"
             @close="closeDialog"
             >
@@ -56,9 +56,11 @@ export default {
             errorCategoryMessage : null,
             // categoryList: [],
             categoryList: [],
-            dialogDisplayed: false,
+            diplayedDialog: false,
             newCategoryName: "",
             searchName:"",
+            oldEventCategory: '',
+            oldMyEventCategory: ''
         }
     },
     computed: {
@@ -67,11 +69,18 @@ export default {
         },
     },
     methods: {
+        
+
         deleteCategory(categoryId){
-            this.categoryList = this.categoryList.filter((category) => category.id !== categoryId);
+            // this.categoryList = this.categoryList.filter((category) => category.id !== categoryId);
+            axios.delete(URL + '/category/'+categoryId).then(()=> {
+                this.displayAllCategory();
+            })
+            this.$router.replace('/event', {silent:true})
+
         },
         displayFormCategory(){
-            this.dialogDisplayed = true;
+            this.diplayedDialog = true;
         },
         addCategory(){
             let newCategory = {
@@ -84,11 +93,11 @@ export default {
                 this.displayAllCategory();
             }).catch(error=>{
                 if (error.response) {
-                    this.dialogDisplayed = true;
+                    this.diplayedDialog = true;
                     this.errorCategoryMessage = error.response.data.errors.name[0];
                 }
             });
-            this.dialogDisplayed = !this.dialogDisplayed;
+            this.diplayedDialog = false;
             this.newCategoryName = '';
             this.errorCategoryMessage = '';
         },
@@ -110,41 +119,62 @@ export default {
 
         },
         closeDialog() {
-            this.dialogDisplayed = false;
+            this.diplayedDialog = false;
             this.errorCategoryMessage = null;
         },
         updateCategory(cat_id, cat_name){
-            for(let category of this.categoryList){
-                if(category.id===cat_id){
+            // for(let category of this.categoryList){
+                // if(category.id===cat_id){
+                    console.log(cat_name, cat_id);
                     let newCategory = {
                         user_id:JSON.parse(localStorage.getItem("user")).id,
                         name: cat_name
                     }
-                    axios.put(URL+'/category/'+cat_id, newCategory).then(res=>{
-                        this.categoryList=res.data;
+                    axios.put(URL+'/category/'+cat_id, newCategory).then(()=>{
                         this.displayAllCategory();
                     })
                     .catch(error=>{
                         if (error.response) {
-                            this.dialogDisplayed = true;
+                            // this.diplayedDialog = true;
                             this.errorCategoryMessage = error.response.data.errors.name[0];
                         }
                     });
                     this.errorCategoryMessage = '';
-                }
-            }
+                // }
+            // }
         },
         searchCategory(){
             this.displayAllCategory();
             
         },
+        selectCategory(category){
+            // console.log(this.$route.path.splice(0,5));
+            let path = this.$route.path;
+            if (path === '/event' || path === '/event/'+ this.oldEventCategory){
+                console.log(123);
+                this.$router.replace('/event/'+ category.name, {silent:true})
+                // this.$route.push('/event');
+                this.oldEventCategory = category.name;
+
+            }else if (path === '/myEvent' || path === '/myEvent/'+ this.oldMyEventCategory){
+                this.$router.replace('/myEvent/'+ category.name, {silent:true})
+                // this.$route.push('/event');
+                this.oldMyEventCategory = category.name;
+                
+            }
+            console.log(category);
+        }
     },
     mounted() {
-        this.displayAllCategory();
+        this.displayAllCategory();            
     },
 }
 </script>
 <style>
+    .categoryCard{
+        padding: 18px;
+        font-size: 21px;
+    }
     .sidebarCategory{
         position: fixed;
         width: 21%;
@@ -162,18 +192,19 @@ export default {
         margin-left: -14%;
         /* text-align: center; */
         margin-top: 50px;
+        padding-bottom: 300px;
 
     }
     .sidebarCategory ul li{
         list-style: none;
         /* padding: 5px 0 5px 0; */
-        width: 91%;
+        width: 100%;
         border-bottom: 1px solid white;
         text-align: left;
-        padding-left: 22px;
+        /* padding-left: 22px; */
         color: white;
         display: flex;
-        justify-content: space-around;
+        justify-content: space-between;
         align-items: center;
     }
     .sidebarCategory ul li:hover{

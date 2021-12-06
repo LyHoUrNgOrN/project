@@ -1,6 +1,7 @@
 <template>
-    <li>
-        <router-link :to="'/event/'+ category.name"><i id="more" class="fa fa-calendar-o"></i>{{ category.name }}</router-link>
+    <li @click="selectCategory">
+        <!-- <router-link :to="this.$route.path + '/'+ category.name"><i id="more" class="fa fa-calendar-o"></i>{{ category.name }}</router-link> -->
+        <div class="categoryCard"><i id="more" class="fa fa-calendar-o"></i>{{ category.name }}</div>
         <i class="fa fa-ellipsis-v" id="more" :title="more" @click="showMore"></i>
         <div class="icon" v-if="isShow" >
             <p @click="showEditCategory"><i class="fa fa-pencil-square-o"  ></i> Edit</p>
@@ -16,7 +17,7 @@
             <label for="description" v-if="dialogMode === 'edit' ">Category Name</label>
             <input
                 v-if="dialogMode === 'edit'"
-                v-model="dialogTextField"
+                v-model="categoryNameEdit"
 
             />
             <h4 v-if="dialogMode !== 'edit'"> <i class="fa fa-exclamation-triangle"></i> Are you sure that you want to delete this category!</h4>
@@ -31,16 +32,16 @@
 <script>
 export default {
     props: ['category'],
-    emits: ['delete', 'category-name'],
+    emits: ['delete', 'category-name', 'category'],
 
     // emits: ['delete','edit-category'],
     data(){
         return{
             more: "show more",
             isShow: false,
-            dialogMode: 'create',
+            dialogMode: 'delete',
             dialogDisplayed: false,
-            dialogTextField: '',
+            categoryNameEdit: '',
         }
     },
     computed: {
@@ -63,32 +64,36 @@ export default {
            
         },
         showEditCategory() {
-        this.dialogTextField = this.category.name;
-        this.dialogMode = 'edit';
-        this.dialogDisplayed = true;
+            this.categoryNameEdit = this.category.name;
+            this.dialogMode = 'edit';
+            this.dialogDisplayed = true;
         },
         showDeleteCategory() {
-        this.dialogMode = 'create';
-        this.dialogDisplayed = true;
+            this.dialogMode = 'delete';
+            this.dialogDisplayed = true;
         },
 
         onConfirm() {
-            console.log(this.dialogTextField);
-        if (this.dialogMode === 'create') {
-            this.$emit('delete', this.category.id);
-        } else if (this.dialogMode === 'edit') {
-            console.log(' edited ');
-            this.$emit('category-name', this.category.id, this.dialogTextField);
-        }
+            if (this.dialogMode === 'delete') {
+                this.$emit('delete', this.category.id);
+            } else if (this.dialogMode === 'edit') {
+                console.log(' edited ');
+                this.$emit('category-name', this.category.id, this.categoryNameEdit);
+            }
 
-        this.closeDialog();
+            this.closeDialog();
         },
+        selectCategory(){
+            this.$emit('category', this.category);
+        },
+
     }
     
 }
 </script>
 
 <style scoped>
+    
     li:hover{
         background: rgba(73, 172, 211, 0.582);
     }
@@ -97,9 +102,8 @@ export default {
     }
     .icon {
         background: rgba(15, 15, 15, 0.493);
-
-        margin-left: 50%;
-        margin-top: 100px;
+        margin-left: 67%;
+        margin-top: 115px;
         border-radius: 10px;
         position: absolute;
         text-align: center;

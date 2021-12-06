@@ -43,6 +43,11 @@ export default {
           {id: 1, title: "ABCDEFGHIJKLMOPQRSTUVWXZY", dateStart: 'November 12, 2021', dateEnd:'November 12, 2021', member: 123, interested: 300, image: 'https://images4.alphacoders.com/264/264676.jpg'},
         ]
       }
+    },
+    mounted(){
+      this.$router.push("/Event");
+      this.$router.replace(this.$route.path, {silent:true})
+
     }
 }
 </script>
