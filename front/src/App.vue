@@ -1,12 +1,15 @@
 <template>
 
+
+
+  <event-view></event-view>
 </template>
 
 <script>
-
+import EventView from './components/UI/EventView.vue'
 export default {
+  components: { EventView },
   name: 'App',
-
 }
 </script>
 
