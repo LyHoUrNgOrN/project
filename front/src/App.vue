@@ -47,6 +47,12 @@ export default {
       }
       console.log(event);
     };
+    // if (
+    //     (window.localStorage.getItem("user") !== null &&
+    //     this.$route.path == "/signIn") || this.$route.path == "/"
+    //   ) {
+    //     this.$router.push("/home"); // redirect to home, for example
+    //   }
     
   },
   // computed: {

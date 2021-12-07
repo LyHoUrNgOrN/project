@@ -9,7 +9,7 @@
             <li><router-link id="menu" to="/myEvent">My Event</router-link></li>
             
              <li class="searchBoxIcon">
-                    <input class="searchInput" type="text" name="" placeholder="Search">
+                    <input class="searchInput" type="text" name="" placeholder="Search Event">
                     <button class="searchButton" href="#">
                         <i class="fa fa-search"></i>
                     </button>
@@ -41,7 +41,7 @@
                         </p>
                         <p class="phone">
                             <i class="fa fa-phone-square"></i>
-                             +885 969494090
+                             +855 969494090
                         </p>
                         <p class="address">
                             <i class="fa fa-map-marker"></i>
@@ -56,11 +56,9 @@
 </template>
 
 <script>
-import BottonWidget from "./../button_widget/Button.vue";
 export default {
     inject:["$activeUser"],
     emits:['sign-out'],
-    components: {'botton-widget':BottonWidget},
     data(){
         return{
             
@@ -113,6 +111,7 @@ export default {
         top: 0;
         background-image: url('https://ak.picdn.net/shutterstock/videos/9134405/thumb/1.jpg');
         background-size: cover;
+        /* z-index: 11; */
     }
     
     nav ul {

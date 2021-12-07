@@ -16,7 +16,7 @@
                 @category="selectCategory"
             ></category-card>
         </ul>
-        <!-- @edit-category="editCategory" -->
+        
         <div class="addCategory">
             <button class="create_btn" @click="displayFormCategory"><i class="fa fa-plus"></i></button>
 
@@ -43,18 +43,13 @@
 </template>
 <script>
 
-import CategoryCard from './CategoryCard.vue';
 
 import axios from "axios";
 const URL = 'http://127.0.0.1:8000/api'
 export default {
-    components: {
-        CategoryCard, 
-    },
     data(){
         return{
             errorCategoryMessage : null,
-            // categoryList: [],
             categoryList: [],
             diplayedDialog: false,
             newCategoryName: "",
@@ -69,10 +64,7 @@ export default {
         },
     },
     methods: {
-        
-
         deleteCategory(categoryId){
-            // this.categoryList = this.categoryList.filter((category) => category.id !== categoryId);
             axios.delete(URL + '/category/'+categoryId).then(()=> {
                 this.displayAllCategory();
             })
@@ -106,13 +98,11 @@ export default {
             if(this.searchName === ''){
                 
             axios.get(URL + "/category").then(res=>{
-            // console.log("Running...",res.data);
             this.categoryList = res.data;
             })
             }
             else {
                 axios.get(URL + "/category/search/"+this.searchName).then(res=>{
-                // console.log("Running...",res.data);
                 this.categoryList = res.data;
                 });
             }
@@ -123,42 +113,35 @@ export default {
             this.errorCategoryMessage = null;
         },
         updateCategory(cat_id, cat_name){
-            // for(let category of this.categoryList){
-                // if(category.id===cat_id){
-                    console.log(cat_name, cat_id);
-                    let newCategory = {
-                        user_id:JSON.parse(localStorage.getItem("user")).id,
-                        name: cat_name
-                    }
-                    axios.put(URL+'/category/'+cat_id, newCategory).then(()=>{
-                        this.displayAllCategory();
-                    })
-                    .catch(error=>{
-                        if (error.response) {
-                            // this.diplayedDialog = true;
-                            this.errorCategoryMessage = error.response.data.errors.name[0];
-                        }
-                    });
-                    this.errorCategoryMessage = '';
-                // }
-            // }
+
+            let newCategory = {
+                user_id:JSON.parse(localStorage.getItem("user")).id,
+                name: cat_name
+            }
+            axios.put(URL+'/category/'+cat_id, newCategory).then(()=>{
+                this.displayAllCategory();
+            })
+            .catch(error=>{
+                if (error.response) {
+                    this.errorCategoryMessage = error.response.data.errors.name[0];
+                }
+            });
+            this.errorCategoryMessage = '';
+
         },
         searchCategory(){
             this.displayAllCategory();
             
         },
         selectCategory(category){
-            // console.log(this.$route.path.splice(0,5));
             let path = this.$route.path;
             if (path === '/event' || path === '/event/'+ this.oldEventCategory){
                 console.log(123);
                 this.$router.replace('/event/'+ category.name, {silent:true})
-                // this.$route.push('/event');
                 this.oldEventCategory = category.name;
 
             }else if (path === '/myEvent' || path === '/myEvent/'+ this.oldMyEventCategory){
                 this.$router.replace('/myEvent/'+ category.name, {silent:true})
-                // this.$route.push('/event');
                 this.oldMyEventCategory = category.name;
                 
             }
@@ -174,7 +157,10 @@ export default {
     .categoryCard{
         padding: 18px;
         font-size: 21px;
+        color: rgb(231, 230, 230);
+
     }
+
     .sidebarCategory{
         position: fixed;
         width: 21%;
