@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\EventController;
+use App\Http\Controllers\CountryController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -23,3 +24,5 @@ Route::get('events/{id}', [EventController::class, 'getOneEvent']);
 Route::put('events/{id}', [EventController::class, 'updateEvent']);
 Route::delete('events/{id}', [EventController::class, 'deleteEvent']);
 Route::get('/category/search/{title}', [EventController::class, 'searchEvent']);
+
+Route::get('/countries', [CountryController::class, 'getCountries']);

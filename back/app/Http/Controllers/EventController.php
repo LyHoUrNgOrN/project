@@ -32,6 +32,8 @@ class EventController extends Controller
             'description' => 'required',
             'dateStart' => 'required',
             'dateEnd' => 'required|after:dateStart',
+            'category'=>'required',
+            'picture' =>'required',
         ]);
         $event = new Event();
         $event->title = $request->title;
@@ -39,7 +41,8 @@ class EventController extends Controller
         $event->dateEnd = $request->dateEnd;
         $event->country = $request->country;
         $event->city = $request->city;
-        $event->description = $request->description;
+        $event->category_id = $request->category;
+        $event->picture = $request->picture;
         // $event->category_id = $request->category_id;
 
         $event->save();
