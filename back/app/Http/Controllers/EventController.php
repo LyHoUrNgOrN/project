@@ -25,14 +25,18 @@ class EventController extends Controller
      */
     public function createEvent(Request $request)
     {
-        $request->validate([
-            'title' => 'required',
-            'country' => 'required',
-            'city' => 'required',
-            'description' => 'required',
-            'dateStart' => 'required',
-            'dateEnd' => 'required|after:dateStart',
-        ]);
+        // $request->validate([
+        //     'title' => 'required',
+        //     'country' => 'required',
+        //     'city' => 'required',
+        //     'description' => 'required',
+        //     'startDate' => 'required',
+        //     'endDate' => 'required',
+        //     'category'=>'required',
+        //     'picture' =>'required',
+        // ]);
+        $request->file('picture')->store('public/pictures');
+
         $event = new Event();
         $event->title = $request->title;
         $event->dateStart = $request->dateStart;
@@ -40,8 +44,8 @@ class EventController extends Controller
         $event->country = $request->country;
         $event->city = $request->city;
         $event->description = $request->description;
-        // $event->category_id = $request->category_id;
-
+        $event->category_id = $request->category_id;
+        $event->picture = $request->file('picture')->hashName();
         $event->save();
         return response()->json(['message'=> 'Event Created'], 201);
     }

@@ -1,6 +1,6 @@
 <template>
   <div class="form">
-        <label for="image"><img class="user" :src="previewProfile" /></label>
+        <label for="image" id="labelForProfile"><img class="user" :src="previewProfile"/></label>
         <form action="" enctype="multipart/form-data">
             <input type="file" id="image" accept="image/jpeg, image/png, image/gif, image/jpg" @change="selectProfile" >
             <small>{{messError.profile}}</small>

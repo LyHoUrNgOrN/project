@@ -13,6 +13,8 @@ import Home from './components/nav/home/HomeView.vue'
 import Event from './components/nav/event/Event.vue'
 import MyEvent from './components/nav/myEvent/MyEvent.vue'
 import DialogBox from './components/nav/DialogBox.vue'
+import BaseButton from './components/UI/BaseButton.vue';
+import BaseDialog from './components/UI/EventBaseDialog.vue';
 
 // import EventCard from './components/nav/EventCard.vue'
 // import CreateEvent from './components/nav/myEvent/EventForm.vue'
@@ -23,7 +25,8 @@ app.component("sign-in", SignIn);
 app.component('sign-up', SignUp);
 app.component('menu-bar', MenuBar);
 app.component('dialog-box', DialogBox);
-
+app.component('base-button', BaseButton);
+app.component('base-dialog', BaseDialog);
 
 const router = createRouter({
     history: createWebHistory(),
@@ -37,6 +40,7 @@ const router = createRouter({
       { path: '/event', component: Event },
       { path: '/event/:sub', component: Event },
       { path: '/myEvent/:sub', component: MyEvent },
+      { path: '/baseDialog', component: BaseDialog },
 
       // { path: '/event/music', component: Event },
       // { path: '/event/allEvent', component: Event },
