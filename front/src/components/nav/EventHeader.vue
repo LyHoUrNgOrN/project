@@ -23,7 +23,7 @@ export default {
         align-items: end;
         position: sticky;
         top: 165px;
-        z-index: -1;
+        z-index: 5;
 
     }
     .cardHead h3{

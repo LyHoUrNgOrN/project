@@ -111,7 +111,7 @@ export default {
         top: 0;
         background-image: url('https://ak.picdn.net/shutterstock/videos/9134405/thumb/1.jpg');
         background-size: cover;
-        /* z-index: 11; */
+        z-index: 11;
     }
     
     nav ul {

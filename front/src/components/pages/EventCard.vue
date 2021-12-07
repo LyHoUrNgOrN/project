@@ -49,7 +49,7 @@ export default {
         filter: drop-shadow(0 0 10px rgba(66, 66, 66, 0.7));
         font-family: Arial, Helvetica, sans-serif;
         word-wrap: break-word;
-        z-index: -11;
+        /* z-index: -11; */
 
     }
     .card img{

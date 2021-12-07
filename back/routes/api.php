@@ -6,6 +6,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\CategoryController;
 
 use App\Http\Controllers\EventController;
+use App\Http\Controllers\CountryController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -35,18 +36,20 @@ Route::delete('users/{id}',[UserController::class, "deleteUser"]);
 
 // CATEGORY 
 
-Route::get('/category',[CategoryController::class,'getAllCategory']);
-Route::post('/category',[CategoryController::class,'createCategory']);
-Route::get('/category/{id}',[CategoryController::class,'getOne']);
-Route::put('/category/{id}',[CategoryController::class,'updateCategory']);
-Route::delete('category/{id}',[CategoryController::class,'deleteCategory']);
+Route::get('category',[CategoryController::class,'getAllCategory']);
+Route::post('category',[CategoryController::class,'createCategory']);
+Route::get('category/{category_id}',[CategoryController::class,'show']);
+Route::put('category/{category_id}',[CategoryController::class,'updateCategory']);
+Route::delete('category/{category_id}',[CategoryController::class,'deleteCategory']);
 Route::get('/category/search/{name}', [CategoryController::class, 'searchCategory']);
-
-// Event
-
+// Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+//     return $request->user();
+// });
 Route::get('events', [EventController::class, 'getAllEvent']);
 Route::post('events', [EventController::class, 'createEvent']);
 Route::get('events/{id}', [EventController::class, 'getOneEvent']);
 Route::put('events/{id}', [EventController::class, 'updateEvent']);
 Route::delete('events/{id}', [EventController::class, 'deleteEvent']);
-Route::get('/category/search/{title}', [EventController::class, 'searchEvent']);
+Route::get('/events/search/{title}', [EventController::class, 'searchEvent']);
+
+Route::get('/countries', [CountryController::class, 'getCountries']);

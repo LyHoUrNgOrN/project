@@ -18,6 +18,8 @@ import EventHeader from './components/nav/EventHeader.vue'
 import SubNavigation from './components/pages/SubNavigation.vue'
 import BottonWidget from "./components/UI/Button.vue";
 import CategoryCard from './components/pages/CategoryCard.vue';
+import BaseButton from './components/UI/BaseButton.vue';
+// import BaseDialog from './components/UI/EventBaseDialog.vue';
 
 // import EventCard from './components/nav/EventCard.vue'
 // import CreateEvent from './components/nav/myEvent/EventForm.vue'
@@ -34,6 +36,8 @@ app.component('sub-navigation', SubNavigation);
 app.component('botton-widget', BottonWidget);
 app.component('category-card', CategoryCard);
 
+app.component('base-button', BaseButton);
+// app.component('base-dialog', BaseDialog);
 
 const router = createRouter({
     history: createWebHistory(),
@@ -47,6 +51,7 @@ const router = createRouter({
       { path: '/event', component: Event },
       { path: '/event/:sub', component: Event },
       { path: '/myEvent/:sub', component: MyEvent },
+      // { path: '/baseDialog', component: BaseDialog },
 
       // { path: '/menu', component: MenuBar },
        //   { path: '/students/:studentId', component: StudentDetails, props: true },

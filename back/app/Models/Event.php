@@ -16,5 +16,7 @@ class Event extends Model
         'country',
         'city',
         'description',
+        'category_id',
+        'picture',
     ];
 }
