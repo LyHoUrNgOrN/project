@@ -15,7 +15,7 @@ class CreateEventsTable extends Migration
     {
         Schema::create('events', function (Blueprint $table) {
             $table->id();
-            // $table->foreignId('category_id')->constrained()->onDelete('CASCADE');
+            $table->foreignId('category_id')->constrained()->onDelete('CASCADE');
             $table->string('title');
             $table->datetime('dateStart');
             $table->datetime('dateEnd');
@@ -38,7 +38,4 @@ class CreateEventsTable extends Migration
         Schema::dropIfExists('events');
     }
 
-    public function user(){
-        return $this->belongTo(User::class);
-    }
 }

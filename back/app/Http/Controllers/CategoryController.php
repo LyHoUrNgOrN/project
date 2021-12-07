@@ -33,7 +33,6 @@ class CategoryController extends Controller
         //     "user"=>$user,
         // ]);
         $validate = $request->validate([
-            "user_id"=>"required",
             "name"=>"required|unique:categories,name",
         ]);
 
@@ -44,7 +43,6 @@ class CategoryController extends Controller
             }
         };
         $category = new Category();
-        $category->user_id = $request->user_id;
         $category->name = $request->name;
         $category->save();
         return response()->json(['message' => 'created', 'newCategory' => $category],201);
@@ -71,7 +69,6 @@ class CategoryController extends Controller
     public function updateCategory(Request $request, $id)
     {   
         $validate = $request->validate([
-            "user_id"=>"required",
             "name"=>"required|unique:categories,name",
         ]);
         $allData = Category::get();
@@ -81,7 +78,6 @@ class CategoryController extends Controller
             }
         };
         $category = Category::findOrFail($id);
-        $category->user_id = $request->user_id;
         $category->name = $request->name;
         $category->save();
         return response()->json(['message' => 'update', 'updated' => $category],200);

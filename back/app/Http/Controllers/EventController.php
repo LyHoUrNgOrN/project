@@ -46,6 +46,7 @@ class EventController extends Controller
         $event->description = $request->description;
         $event->category_id = $request->category_id;
         $event->picture = $request->file('picture')->hashName();
+
         $event->save();
         return response()->json(['message'=> 'Event Created'], 201);
     }
@@ -85,7 +86,7 @@ class EventController extends Controller
         $event->country = $request->country;
         $event->city = $request->city;
         $event->description = $request->description;
-        // $event->category_id = $request->category_id;
+        $event->category_id = $request->category_id;
 
         $event->save();
         return response()->json(['message'=> 'Event Updated'], 200);
@@ -110,7 +111,7 @@ class EventController extends Controller
      */
     public function searchEvent($title)
     {
-        return Category::where('title','like','%'.$title.'%')->get();
+        return Event::where('title','like','%'.$title.'%')->get();
     }
 
 }
