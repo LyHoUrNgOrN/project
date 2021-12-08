@@ -4,16 +4,17 @@
             <h2>Event-Me</h2>
         </ul>
         <ul>
-            <li><router-link id="menu" to="/home">Home</router-link></li>
+            <!-- <li><router-link id="menu" to="/home">Home</router-link></li> -->
             <li><router-link id="menu" to="/event">Event</router-link></li>
             <li><router-link id="menu" to="/myEvent">My Event</router-link></li>
+            <li><router-link id="menu" to="/category">Category</router-link></li>
             
-             <li class="searchBoxIcon">
+             <!-- <li class="searchBoxIcon">
                     <input class="searchInput" type="text" name="" placeholder="Search Event">
                     <button class="searchButton" href="#">
                         <i class="fa fa-search"></i>
                     </button>
-                </li>
+                </li> -->
             <li>
                 <img class="profile" :src="displayProfile()" alt="" @click="openProfile">
             </li>
@@ -142,7 +143,7 @@ export default {
         border: 1px solid gray;
 
     }
-    
+
     .modal-body{
         width: 92%;
         

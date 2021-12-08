@@ -17,8 +17,8 @@ export default {
                 border: none;
                 outline: none;
                 border-radius: 10px;
-                background: sandybrown;
+                background: rgb(44, 171, 209);
                 margin-top: 15px;
-                
+                color: white;
             }
 </style>

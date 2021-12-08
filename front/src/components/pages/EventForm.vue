@@ -1,19 +1,11 @@
 <template>
   <section>
     <base-dialog
-      v-if="dialogDisplayed"
+      v-if="showDialoge"
       :title="dialogTitle"
       @close="closeDialog"
     >
-      <label for="description">Description</label>
-      <textarea
-        v-model="dialogTextField"
-        id="description"
-        name="description"
-        rows="3"
-        ref="descInput"
-      ></textarea>
-
+    
       <template #actions>
         <base-button @click="onConfirm">{{ dialogButtton }}</base-button>
       </template>
@@ -41,7 +33,7 @@ export default {
   data() {
     return {
       dialogMode: 'create',
-      dialogDisplayed: false,
+      // showDialoge: false,
       dialogTextField: '',
     };
   },

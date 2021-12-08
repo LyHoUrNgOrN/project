@@ -15,11 +15,12 @@ import MyEvent from './components/pages/myEvent/MyEvent.vue'
 import DialogBox from './components/UI/DialogBox.vue'
 import EventCard from './components/pages/EventCard.vue'
 import EventHeader from './components/nav/EventHeader.vue'
-import SubNavigation from './components/pages/SubNavigation.vue'
 import BottonWidget from "./components/UI/Button.vue";
-import CategoryCard from './components/pages/CategoryCard.vue';
+// import CategoryCards from './components/pages/CategoryCards.vue';
 import BaseButton from './components/UI/BaseButton.vue';
-// import BaseDialog from './components/UI/EventBaseDialog.vue';
+import CategoryView from './components/pages/categories/category.vue';
+import EventForm from './components/pages/EventForm.vue';
+import BaseDialog from './components/UI/EventBaseDialog.vue';
 
 // import EventCard from './components/nav/EventCard.vue'
 // import CreateEvent from './components/nav/myEvent/EventForm.vue'
@@ -32,12 +33,14 @@ app.component('menu-bar', MenuBar);
 app.component('dialog-box', DialogBox);
 app.component('event-card', EventCard);
 app.component('event-header', EventHeader);
-app.component('sub-navigation', SubNavigation);
+// app.component('sub-navigation', SubNavigation);
 app.component('botton-widget', BottonWidget);
-app.component('category-card', CategoryCard);
+// app.component('category-card', CategoryCard);
+app.component('category-cards', CategoryCards);
+app.component('event-form', EventForm);
 
 app.component('base-button', BaseButton);
-// app.component('base-dialog', BaseDialog);
+app.component('base-dialog', BaseDialog);
 
 const router = createRouter({
     history: createWebHistory(),
@@ -47,6 +50,7 @@ const router = createRouter({
       { path: '/signUp', component: SignUp },
       { path: '/home', component: Home },
       // { path: '/event', component: Event },
+      { path: '/category', component: CategoryView },
       { path: '/myEvent', component: MyEvent },
       { path: '/event', component: Event },
       { path: '/event/:sub', component: Event },
