@@ -2,8 +2,8 @@
     <li @click="selectCategory">
         <!-- <router-link :to="this.$route.path + '/'+ category.name"><i id="more" class="fa fa-calendar-o"></i>{{ category.name }}</router-link> -->
         <div class="categoryCard"><i id="more" class="fa fa-calendar-o"></i>{{ category.name }}</div>
-        <i class="fa fa-ellipsis-v" id="more" :title="more" @click="showMore"></i>
-        <div class="icon" v-if="isShow" >
+        <i class="fa fa-ellipsis-v" id="more" :title="more" @click="showMore" ></i>
+        <div class="icon" v-if="isShow">
             <p @click="showEditCategory"><i class="fa fa-pencil-square-o"  ></i> Edit</p>
             <p @click="showDeleteCategory"><i class="fa fa-trash-o" ></i> Delete</p>
         </div>
@@ -37,7 +37,7 @@ export default {
     // emits: ['delete','edit-category'],
     data(){
         return{
-            more: "show more",
+            more: "show Edit & Delete",
             isShow: false,
             dialogMode: 'delete',
             dialogDisplayed: false,
@@ -54,14 +54,12 @@ export default {
     },
     methods: {
         showMore(){
-            // alert('hi');
             this.isShow = !this.isShow;
         },
         closeDialog() {
         this.dialogDisplayed = false;
-        // editeCategory(){
-        //     this.$emit('edit-category',this.category.name,this.category.id);
-           
+        this.isShow = false;
+
         },
         showEditCategory() {
             this.categoryNameEdit = this.category.name;
@@ -86,14 +84,16 @@ export default {
         selectCategory(){
             this.$emit('category', this.category);
         },
-
+        
     }
     
 }
 </script>
 
 <style scoped>
-    
+    .categoryCard{
+        color: rgb(231, 230, 230);
+    }
     li:hover{
         background: rgba(73, 172, 211, 0.582);
     }
@@ -103,7 +103,7 @@ export default {
     .icon {
         background: rgba(15, 15, 15, 0.493);
         margin-left: 67%;
-        margin-top: 115px;
+        margin-top: 110px;
         border-radius: 10px;
         position: absolute;
         text-align: center;

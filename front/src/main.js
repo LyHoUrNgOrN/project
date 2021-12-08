@@ -5,14 +5,21 @@ import App from "./App.vue";
 // import 'bootstrap/dist/css/bootstrap.min.css'
 
 
-import SignIn from "./components/sign_in/Sign_In.vue";
-import SignUp from './components/signUp/SignUp.vue';
+import SignIn from "./components/pages/sign_in/Sign_In.vue";
+import SignUp from './components/pages/signUp/SignUp.vue';
 
 import MenuBar from './components/nav/Navigation.vue'
-import Home from './components/nav/home/HomeView.vue'
-import Event from './components/nav/event/Event.vue'
-import MyEvent from './components/nav/myEvent/MyEvent.vue'
-import DialogBox from './components/nav/DialogBox.vue'
+import Home from './components/pages/home/HomeView.vue'
+import Event from './components/pages/event/Event.vue'
+import MyEvent from './components/pages/myEvent/MyEvent.vue'
+import DialogBox from './components/UI/DialogBox.vue'
+import EventCard from './components/pages/EventCard.vue'
+import EventHeader from './components/nav/EventHeader.vue'
+import SubNavigation from './components/pages/SubNavigation.vue'
+import BottonWidget from "./components/UI/Button.vue";
+import CategoryCard from './components/pages/CategoryCard.vue';
+import BaseButton from './components/UI/BaseButton.vue';
+// import BaseDialog from './components/UI/EventBaseDialog.vue';
 
 // import EventCard from './components/nav/EventCard.vue'
 // import CreateEvent from './components/nav/myEvent/EventForm.vue'
@@ -23,7 +30,14 @@ app.component("sign-in", SignIn);
 app.component('sign-up', SignUp);
 app.component('menu-bar', MenuBar);
 app.component('dialog-box', DialogBox);
+app.component('event-card', EventCard);
+app.component('event-header', EventHeader);
+app.component('sub-navigation', SubNavigation);
+app.component('botton-widget', BottonWidget);
+app.component('category-card', CategoryCard);
 
+app.component('base-button', BaseButton);
+// app.component('base-dialog', BaseDialog);
 
 const router = createRouter({
     history: createWebHistory(),
@@ -37,11 +51,8 @@ const router = createRouter({
       { path: '/event', component: Event },
       { path: '/event/:sub', component: Event },
       { path: '/myEvent/:sub', component: MyEvent },
+      // { path: '/baseDialog', component: BaseDialog },
 
-      // { path: '/event/music', component: Event },
-      // { path: '/event/allEvent', component: Event },
-      // { path: '/event/business', component: Event },
-      // { path: '/event/wedding', component: Event },
       // { path: '/menu', component: MenuBar },
        //   { path: '/students/:studentId', component: StudentDetails, props: true },
       //   { path: '/:notFound(.*)', component: StudentNotFound },

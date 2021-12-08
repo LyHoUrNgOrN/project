@@ -1,15 +1,15 @@
 <template>
 
     <div class="card">
-        <div class="moreIcon">
+        <!-- <div class="moreIcon">
             <i class="fa fa-ellipsis-h"></i>
-        </div>
-        <img src="https://www.industrialempathy.com/img/remote/ZiClJf-1920w.jpg" alt="">
-        <h3>Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequuntur, similique.</h3>
-        <p>Date Start: 12 november, 2021</p>
-        <p>Date End: 12 november, 2021</p>
-        <p>Member: 123 people</p>
-        <p>Interested: 502 people</p>
+        </div> -->
+        <img src="https://cdn.pixabay.com/photo/2018/08/21/23/29/forest-3622519__340.jpg" alt="">
+        <h4>{{ eventData.title }}</h4>
+        <p>Date Start: {{ eventData.dateStart }}</p>
+        <p>Date End: {{ eventData.dateEnd }}</p>
+        <p>Member: {{ eventData.member }} people</p>
+        <p>Interested: {{ eventData.interested }} people</p>
         <div class="">
             <slot></slot>
         </div>
@@ -19,7 +19,7 @@
 
 <script>
 export default {
-    props: ['eventDatas'],
+    props: ['eventData'],
 }
 </script>
 
@@ -33,6 +33,7 @@ export default {
         position: absolute;
         top: 20px;
         left: 85%;
+        color: white;
     }
     .moreIcon:hover {
         background: rgba(112, 114, 112, 0.726);
@@ -42,25 +43,33 @@ export default {
         width: 30%;
         background: rgb(51, 51, 51);
         margin-top: 10px;
-        color: white;
         border-radius: 10px;
         padding: 10px;
         box-shadow: 0 0 10px rgba(0, 0, 0, 0.7);
         filter: drop-shadow(0 0 10px rgba(66, 66, 66, 0.7));
         font-family: Arial, Helvetica, sans-serif;
+        word-wrap: break-word;
+        /* z-index: -11; */
+
     }
     .card img{
         width: 100%;
         height: 200px;
         border-radius: 4px;
     }
-    .card h3{
+    .card h4{
         margin-top: 0;
         text-align: left;
+        color: rgb(218, 216, 216);
+
+
     }
     .card p{
-        margin-top: -12px;
+        margin-top: -5px;
         text-align: left;
+        font-size: 13px;
+        color: rgb(223, 223, 223);
+
 
     }
     .interested-btn,

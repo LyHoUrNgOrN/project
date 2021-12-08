@@ -1,6 +1,6 @@
 <template>
   <div class="form">
-        <label for="image"><img class="user" :src="previewProfile" /></label>
+        <label for="image" id="labelForProfile"><img class="user" :src="previewProfile"/></label>
         <form action="" enctype="multipart/form-data">
             <input type="file" id="image" accept="image/jpeg, image/png, image/gif, image/jpg" @change="selectProfile" >
             <small>{{messError.profile}}</small>
@@ -21,11 +21,9 @@
 </template>
 
 <script>
-import BottonWidget from "./../button_widget/Button.vue";
 import axios from "axios";
 const URL = 'http://127.0.0.1:8000/api'
 export default {
-    components: {'botton-widget':BottonWidget},
     emits:["sign-up"],
     data(){
         return{
