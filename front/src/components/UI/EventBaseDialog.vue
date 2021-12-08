@@ -178,7 +178,7 @@ export default {
   height: 100vh;
   width: 100%;
   background-color: rgba(0, 0, 0, 0.75);
-  z-index: 10;
+  z-index: 100;
 }
 .labelDate{
   widows: 40%;
@@ -192,11 +192,12 @@ dialog {
   border-radius: 12px;
   border: none;
   color: white;
-  background: rgba(48, 46, 46, 0.815);
+  background: rgba(204, 203, 203, 0.815);
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
   padding: 0;
   margin: 0;
   overflow: hidden;
+  z-index: 11;
 }
 
 header {

@@ -19,4 +19,9 @@ class Event extends Model
         'category_id',
         'picture',
     ];
+
+    public function users(){
+        return $this->belongsToMany(User::class,'event_joins','event_id','user_id');
+    }
+    public $table = "events";
 }

@@ -39,7 +39,6 @@ class UserController extends Controller
         $user->email = $request->email;
         $user->password = bcrypt($request->password);
         $user->profile = $request->file('profile')->hashName();
-        $user->role = $request->role;
         $user->save();
         return response()->json(["message"=>"User Created"],200);
     }
@@ -51,7 +50,6 @@ class UserController extends Controller
         $user->email = $request->email;
         $user->password = bcrypt($request->password);
         $user->profile = $request->profile;
-        $user->role = $request->role;
         $user->save();
         return response()->json(["message"=>"Post Updated","user"=>$user],201);
     }

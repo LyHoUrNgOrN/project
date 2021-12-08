@@ -1,7 +1,7 @@
 <template>
 <section>
-  <div class="main">
-    <sub-navigation></sub-navigation>
+  <!-- <div class="main"> -->
+    <!-- <sub-navigation></sub-navigation> -->
   
     <div class="mainRight">
         <event-header>
@@ -18,14 +18,14 @@
            
         </div>
     </div>
-  </div>
+  <!-- </div> -->
 </section>
 
 </template>
 
 <script>
 import axios from 'axios';
-const URL = 'http://127.0.0.1:8000/api'
+const URL = 'http://localhost:8000/api'
 
 export default {
    
@@ -37,27 +37,22 @@ export default {
     mounted(){
       this.$router.push("/Event");
       this.$router.replace(this.$route.path, {silent:true})
-      axios.get(URL+ '/events').then((res) => {
+      const id = JSON.parse(localStorage.getItem("user")).id;
+      axios.get(URL+ '/event_other/'+ parseInt(id)).then((res) => {
         this.eventList = res.data;
         console.log(this.eventList);
       })
+
 
     }
 }
 </script>
 
 <style scoped>
-  .main{
-      display: flex;
-      justify-content: space-between;
-      
-  }
-  .mainRight{
-        margin-left: 19%;
-    }
+
     
     .sidebarRight{
-        width: 83%;
+        width: 90%;
         background: rgb(22, 22, 22);
         
     }

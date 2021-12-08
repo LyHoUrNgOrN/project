@@ -65,7 +65,7 @@ header {
 
 header h2 {
   margin: 0;
-  color: orange;
+  color: rgb(44, 171, 209);
 }
 
 section {
