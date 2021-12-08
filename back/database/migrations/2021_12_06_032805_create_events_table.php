@@ -22,7 +22,6 @@ class CreateEventsTable extends Migration
             $table->string('country');
             $table->string('city');
             $table->text('description');
-            $table->foreignId('category_id')->constrained()->onDelete('CASCADE');
             $table->string('picture');
             $table->timestamps();
         });
