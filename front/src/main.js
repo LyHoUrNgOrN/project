@@ -16,7 +16,7 @@ import DialogBox from './components/UI/DialogBox.vue'
 import EventCard from './components/pages/EventCard.vue'
 import EventHeader from './components/nav/EventHeader.vue'
 import BottonWidget from "./components/UI/Button.vue";
-// import CategoryCards from './components/pages/CategoryCards.vue';
+import CategoryCards from './components/pages/CategoryCards.vue';
 import BaseButton from './components/UI/BaseButton.vue';
 import CategoryView from './components/pages/categories/category.vue';
 import EventForm from './components/pages/EventForm.vue';
@@ -33,9 +33,7 @@ app.component('menu-bar', MenuBar);
 app.component('dialog-box', DialogBox);
 app.component('event-card', EventCard);
 app.component('event-header', EventHeader);
-// app.component('sub-navigation', SubNavigation);
 app.component('botton-widget', BottonWidget);
-// app.component('category-card', CategoryCard);
 app.component('category-cards', CategoryCards);
 app.component('event-form', EventForm);
 
