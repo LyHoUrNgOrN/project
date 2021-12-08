@@ -34,7 +34,7 @@ export default {
             email: null,
             password: null,
             confirmPassword: null,
-            previewProfile: "http://127.0.0.1:8000/storage/profiles/default-profile.png",
+            previewProfile: "https://www.psi.org.kh/wp-content/uploads/2019/01/profile-icon-300x300.png",
             profile : null,
             messError : {
                 profile:null,
@@ -109,7 +109,7 @@ export default {
             this.email = null;
             this.password = null;
             this.confirmPassword = null;
-            this.previewProfile = 'http://127.0.0.1:8000/storage/profiles/default-profile.png';
+            this.previewProfile = 'https://www.psi.org.kh/wp-content/uploads/2019/01/profile-icon-300x300.png';
             this.profile = null;
         }
     }
