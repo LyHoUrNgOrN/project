@@ -14,7 +14,7 @@ class CategoryController extends Controller
      */
     public function getAllCategory()
     {
-        return Category::orderBy('name')->get();
+        return Category::latest()->get();
     }
 
     /**
@@ -25,13 +25,6 @@ class CategoryController extends Controller
      */
     public function createCategory(Request $request)
     {
-        // $user = User::where("name",$request->name)->first();
-        // if(!$user||!Hash::check($request->password,$user->password)){
-        //     return response()->json(["message"=>"Username or Password Invalid"],401);
-        // }
-        // return response()->json([
-        //     "user"=>$user,
-        // ]);
         $validate = $request->validate([
             "name"=>"required|unique:categories,name",
         ]);
