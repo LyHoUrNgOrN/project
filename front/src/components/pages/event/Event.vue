@@ -2,7 +2,12 @@
 <section>
   <!-- <div class="main"> -->
     <!-- <sub-navigation></sub-navigation> -->
-  
+    <div>
+            <input type="text" placeholder="search Event" v-model="searchByText" @keyup="findEvent">
+            <input type="text" placeholder="search city" v-model="searchByCity" @keyup="findEvent">
+            <small>{{messageRemind}}</small>
+
+    </div>
     <div class="mainRight">
         <event-header>
             <h3>All Event</h3>
@@ -24,24 +29,69 @@
 </template>
 
 <script>
-import axios from 'axios';
-const URL = 'http://localhost:8000/api'
+// import axios from 'axios';
+// const URL = 'http://localhost:8000/api'
 
 export default {
    
     data() {
       return{
-        eventList: []
+        eventList: [
+          {id:1,title:'Vue',dateStart:'2021-12-08 12:00:00',dateEnd:'2021-12-08 12:00:00',country:'Cambodia',city:'Phnom Penh',description:'I love Cambodia.',picture:'photo.jpg'},
+          {id:2,title:'JavaScript',dateStart:'2021-12-08 12:00:00',dateEnd:'2021-12-08 12:00:00',country:'Cambodia',city:'Siem Reap',description:'I love Cambodia.',picture:'photo.jpg'},
+          {id:3,title:'PHP',dateStart:'2021-12-08 12:00:00',dateEnd:'2021-12-08 12:00:00',country:'Cambodia',city:'Battambong',description:'I love Cambodia.',picture:'photo.jpg'},
+          {id:4,title:'Laravel',dateStart:'2021-12-08 12:00:00',dateEnd:'2021-12-08 12:00:00',country:'Cambodia',city:'Banteay Meanchey',description:'I love Cambodia.',picture:'photo.jpg'},
+          {id:5,title:'Database',dateStart:'2021-12-08 12:00:00',dateEnd:'2021-12-08 12:00:00',country:'Cambodia',city:'Keb',description:'I love Cambodia.',picture:'photo.jpg'},
+
+        ],
+        searchByText:'',
+        searchByCity:'',
+        messageRemind:'',
+
       }
     },
+    methods: {
+      
+      findEvent(){
+
+        this.eventList=[
+          {id:1,title:'Vue',dateStart:'2021-12-08 12:00:00',dateEnd:'2021-12-08 12:00:00',country:'Cambodia',city:'Phnom Penh',description:'I love Cambodia.',picture:'photo.jpg'},
+          {id:2,title:'JavaScript',dateStart:'2021-12-08 12:00:00',dateEnd:'2021-12-08 12:00:00',country:'Cambodia',city:'Siem Reap',description:'I love Cambodia.',picture:'photo.jpg'},
+          {id:3,title:'PHP',dateStart:'2021-12-08 12:00:00',dateEnd:'2021-12-08 12:00:00',country:'Cambodia',city:'Battambong',description:'I love Cambodia.',picture:'photo.jpg'},
+          {id:4,title:'Laravel',dateStart:'2021-12-08 12:00:00',dateEnd:'2021-12-08 12:00:00',country:'Cambodia',city:'Banteay Meanchey',description:'I love Cambodia.',picture:'photo.jpg'},
+          {id:5,title:'Database',dateStart:'2021-12-08 12:00:00',dateEnd:'2021-12-08 12:00:00',country:'Cambodia',city:'Keb',description:'I love Cambodia.',picture:'photo.jpg'},
+
+        ];
+
+        if (this.searchByText!=='' && this.searchByCity ===""){
+          this.messageRemind = "please enter the city";
+        }else if (this.searchByCity !== '' && this.searchByText !==''){
+          this.messageRemind = "";
+          let event = this.eventList.filter(events => (events.title.toLowerCase().includes(this.searchByText.toLowerCase() ) || events.title.toLowerCase() === this.searchByText.toLowerCase() ) && (events.city.toLowerCase().includes(this.searchByCity.toLowerCase() ) || (events.city.toLowerCase() === this.searchByCity.toLowerCase())));
+          this.eventList = event;
+          console.log(event);
+        }else{
+          this.messageRemind = "" 
+        }
+        
+        
+      },
+        
+        
+
+      
+      // getAllevent(){
+      //     const id = JSON.parse(localStorage.getItem("user")).id;
+      //     axios.get(URL+ '/event_other/'+ parseInt(id)).then((res) => {
+      //       this.eventList = res.data;
+      //       console.log(this.eventList);
+      //     })
+      // }
+    },
     mounted(){
-      this.$router.push("/Event");
-      this.$router.replace(this.$route.path, {silent:true})
-      const id = JSON.parse(localStorage.getItem("user")).id;
-      axios.get(URL+ '/event_other/'+ parseInt(id)).then((res) => {
-        this.eventList = res.data;
-        console.log(this.eventList);
-      })
+      // this.$router.push("/Event");
+      // this.$router.replace(this.$route.path, {silent:true})
+      // this.getAllevent();
 
 
     }

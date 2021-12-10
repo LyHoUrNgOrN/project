@@ -24,6 +24,7 @@ export default {
 </script>
 
 <style>
+   
     .moreIcon{
         width: 5%;
         padding: 8px;

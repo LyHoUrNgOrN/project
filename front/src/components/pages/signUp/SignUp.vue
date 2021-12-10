@@ -27,12 +27,11 @@ export default {
     emits:["sign-up"],
     data(){
         return{
-            // value : "Sign Up",
             userName: "",
             email: null,
             password: null,
             confirmPassword: null,
-            previewProfile: "http://127.0.0.1:8000/storage/profiles/default-profile.png",
+            previewProfile: "https://www.psi.org.kh/wp-content/uploads/2019/01/profile-icon-300x300.png",
             profile : null,
             messError : {
                 profile:null,
@@ -51,18 +50,10 @@ export default {
             }
             reader.readAsDataURL(image);
             this.profile = image;
-            // console.log(this.profile);
             
         },
         signUp(){
-            // let user = {
-            //     name : this.userName,
-            //     email: this.email,
-            //     password:this.password,
-            //     password_confirmation:this.confirmPassword,
-            //     profile : this.profile,
-            //     role:"user",
-            // }
+
             let user = new FormData();
             let author = 'user';
             user.append('name',this.userName);
@@ -73,14 +64,9 @@ export default {
 
             user.append('role',author);
 
-            // console.log(this.profile);
-            console.log(user.get('name'));
-            // console.log(user.get('password'));
-            // console.log(user.get('profile'));
             axios.post(URL+'/signup',user).then(res=>{
                 console.log(res.data.message);
                 this.$router.push('/signIn');
-                // localStorage.setItem('login',true);
             }).catch(error=>{
                 if (error.response) {
                     let messError = error.response.data.errors;
@@ -102,12 +88,11 @@ export default {
                     console.log(error.response.headers);
                 }
             });
-            // this.$emit("sign-up",user);
             this.userName = null;
             this.email = null;
             this.password = null;
             this.confirmPassword = null;
-            this.previewProfile = 'http://127.0.0.1:8000/storage/profiles/default-profile.png';
+            this.previewProfile = 'https://www.psi.org.kh/wp-content/uploads/2019/01/profile-icon-300x300.png';
             this.profile = null;
         }
     }
