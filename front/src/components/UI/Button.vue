@@ -5,13 +5,13 @@
 </template>
 <script>
 export default {
-    // props:['valueButton'],
+
 }
 </script>
-<style>
+<style scoped>
     .btn{
                 padding: 12px;
-                width: 40%;
+                width: 100px;
                 font-size: 15px;
                 font-weight: bold;
                 border: none;

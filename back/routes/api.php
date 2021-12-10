@@ -59,7 +59,7 @@ Route::get('/countries', [CountryController::class, 'getCountries']);
 // Event_Join
 Route::get("event_joins",[Event_JoinController::class, "index"]);
 Route::post("event_joins",[Event_JoinController::class, "store"]);
-Route::get("event_joins/{eventId}",[Event_JoinController::class, "getMemberJoinEvent"]);
+Route::get("event_member/{eventId}",[Event_JoinController::class, "getMemberJoinEvent"]);
 Route::get("event_user_has_joins/{userId}",[Event_JoinController::class, "getEventOfUserHasJoin"]);
 Route::get("event_users/{userId}",[Event_JoinController::class, "getEventOfUser"]);
 Route::get("event_other/{userId}",[Event_JoinController::class, "getEvent"]);

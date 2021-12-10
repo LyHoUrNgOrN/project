@@ -20,14 +20,13 @@
   </div>
 </template>
 
-<script>
-import axios from "axios";
-const URL = 'http://127.0.0.1:8000/api'
+<script scoped>
+import axios from "../../../api/api.js";
+
 export default {
     emits:["sign-up"],
     data(){
         return{
-            // value : "Sign Up",
             userName: "",
             email: null,
             password: null,
@@ -51,36 +50,18 @@ export default {
             }
             reader.readAsDataURL(image);
             this.profile = image;
-            // console.log(this.profile);
             
         },
         signUp(){
-            // let user = {
-            //     name : this.userName,
-            //     email: this.email,
-            //     password:this.password,
-            //     password_confirmation:this.confirmPassword,
-            //     profile : this.profile,
-            //     role:"user",
-            // }
             let user = new FormData();
-            let author = 'user';
             user.append('name',this.userName);
             user.append('email',this.email);
             user.append('password',this.password);
             user.append('password_confirmation',this.confirmPassword);
             user.append('profile',this.profile);
 
-            user.append('role',author);
-
-            // console.log(this.profile);
-            console.log(user.get('name'));
-            // console.log(user.get('password'));
-            // console.log(user.get('profile'));
-            axios.post(URL+'/signup',user).then(res=>{
-                console.log(res.data.message);
+            axios.post('/signup',user).then(()=>{
                 this.$router.push('/signIn');
-                // localStorage.setItem('login',true);
             }).catch(error=>{
                 if (error.response) {
                     let messError = error.response.data.errors;
@@ -97,12 +78,8 @@ export default {
                     if(messError.profile !== undefined){
                         this.messError.profile = 'Please choose a correct profile!';
                     }
-                    console.log(error.response.data);
-                    console.log(error.response.status);
-                    console.log(error.response.headers);
                 }
             });
-            // this.$emit("sign-up",user);
             this.userName = null;
             this.email = null;
             this.password = null;
@@ -116,8 +93,13 @@ export default {
 
 <style>
     body{
-        background-image: url('https://thecolonial.org/wp-content/uploads/Event-Blogging-Strategies.jpg');
+        background-image: url('https://ak.picdn.net/shutterstock/videos/9134405/thumb/1.jpg');
+        background-repeat: no-repeat;
+        background-attachment: fixed;
         background-size: cover;
+        background-position: top;
+        background-position-x: center;
+        background-position-y: top;
     }
         .form{
             background-color: rgba(41, 41, 41, 0.308);

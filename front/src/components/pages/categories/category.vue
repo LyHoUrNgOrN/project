@@ -48,9 +48,9 @@
     </div>
 </template>
 
-<script>
-import axios from "axios";
-const URL = 'http://127.0.0.1:8000/api'
+<script scoped>
+import axios from "../../../api/api.js";
+
 export default {
     data(){
         return {
@@ -64,8 +64,7 @@ export default {
     },
     methods: {
         displayAllCategory(){
-            if(this.searchName === ''){
-                
+            if(this.searchName === ''){ 
                 axios.get(URL + "/category").then(res=>{
                 this.categoryList = res.data;
                 })
@@ -78,7 +77,7 @@ export default {
 
         },
         deleteCategory(categoryId){
-            axios.delete(URL + '/category/'+categoryId).then(()=> {
+            axios.delete('/category/'+categoryId).then(()=> {
                 this.displayAllCategory();
             })
 
@@ -89,7 +88,7 @@ export default {
                     user_id:JSON.parse(localStorage.getItem("user")).id,
                     name: cat_name
                 }
-                axios.put(URL+'/category/'+cat_id, newCategory).then(()=>{
+                axios.put('/category/'+cat_id, newCategory).then(()=>{
                     this.displayAllCategory();
                 })
                 .catch(error=>{
@@ -108,7 +107,7 @@ export default {
                 user_id:JSON.parse(localStorage.getItem("user")).id,
                 name: this.newCategoryName
                 }
-                axios.post(URL + '/category', newCategory).then(res=>{
+                axios.post('/category', newCategory).then(res=>{
                     this.categoryList= res.data;
                     this.errorCategoryMessage = null;
                     this.displayAllCategory();
@@ -128,16 +127,13 @@ export default {
                 let as = this.categoryList.filter((category) => category.name === name);
                 if(as.length === 0){
                     this.errorCategoryMessage = 'ok';
-                    console.log(name);
 
                 }else{
                     this.errorCategoryMessage = 'This category already exist';
-                    console.log(123);
 
                 }
             }else{
                 this.errorCategoryMessage = 'Category name cannot be null';
-                    console.log(321);
 
             }
            

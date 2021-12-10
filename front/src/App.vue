@@ -6,9 +6,7 @@
 </template>
 
 <script>
-// import axios from 'http.js';
-// import axios from "axios";
-// const URL = 'http://127.0.0.1:8000/api'
+
 export default {
   data(){
     return{
@@ -30,12 +28,13 @@ export default {
       }
   },
   mounted() {
-    // if ((window.localStorage.getItem("user") !== null) && this.$route.path == "/signIn" || this.$route.path == "/") {
-    //   this.$router.push("/home"); // redirect to home, for example
-    // }
+    if ((window.localStorage.getItem("user") !== null) && this.$route.path == "/signIn" || this.$route.path == "/") {
+      this.$router.push("/myEvent"); // redirect to myEvent, for example
+    }
     let user = JSON.parse(localStorage.getItem("user"));
     if(user !== null){
         this.activeUser = JSON.parse(localStorage.getItem("user"));
+        this.$router.push('/myEvent');
     }
     else{
        this.activeUser = user;
@@ -43,29 +42,14 @@ export default {
     }
     window.onpopstate = event => {
       if ((window.localStorage.getItem("user") !== null) && this.$route.path == "/signIn" || this.$route.path == "/") {
-          this.$router.push("/home"); // redirect to home, for example
+          this.$router.push("/myEvent"); // redirect to myEvent, for example
       }
       console.log(event);
     };
-    // if (
-    //     (window.localStorage.getItem("user") !== null &&
-    //     this.$route.path == "/signIn") || this.$route.path == "/"
-    //   ) {
-    //     this.$router.push("/home"); // redirect to home, for example
-    //   }
     
   },
-  // computed: {
-  //   currentRouteName() {
-  //       console.log(this.$router.path);
-  //       if(this.$router.path === '/' || this.$router === '/signIn'){
-  //         localStorage.clear();
 
-  //       }
-  //       return this.$route.path;
-  //   }
-  // },
-   provide(){
+  provide(){
     return {$activeUser :()=> this.activeUser};
   }
 }

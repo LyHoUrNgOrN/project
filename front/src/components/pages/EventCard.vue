@@ -1,15 +1,12 @@
 <template>
 
     <div class="card">
-        <!-- <div class="moreIcon">
-            <i class="fa fa-ellipsis-h"></i>
-        </div> -->
-        <img src="https://cdn.pixabay.com/photo/2018/08/21/23/29/forest-3622519__340.jpg" alt="">
+        <img :src="'http://localhost:8000/storage/pictures/'+eventData.picture" alt="">
         <h4>{{ eventData.title }}</h4>
         <p>Date Start: {{ eventData.dateStart }}</p>
         <p>Date End: {{ eventData.dateEnd }}</p>
-        <p>Member: {{ eventData.member }} people</p>
-        <p>Interested: {{ eventData.interested }} people</p>
+        <p>Member: {{ memberOfEvent  }} people</p>
+        <p>Country: {{ eventData.country }} people</p>
         <div class="">
             <slot></slot>
         </div>
@@ -18,12 +15,29 @@
 </template>
 
 <script>
+import axios from "../../api/api.js";
+
 export default {
     props: ['eventData'],
+
+    data(){
+        return {
+            event: this.eventData,
+            memberOfEvent: null,
+        }
+    },
+
+    mounted(){
+        axios.get('/event_member/'+ this.event.id).then(res => {
+            this.memberOfEvent = res.data.length;
+            console.log(this.memberOfEvent);
+
+        })
+    }
 }
 </script>
 
-<style>
+<style scoped>
     .moreIcon{
         width: 5%;
         padding: 8px;
@@ -49,7 +63,6 @@ export default {
         filter: drop-shadow(0 0 10px rgba(66, 66, 66, 0.7));
         font-family: Arial, Helvetica, sans-serif;
         word-wrap: break-word;
-        /* z-index: -11; */
 
     }
     .card img{
