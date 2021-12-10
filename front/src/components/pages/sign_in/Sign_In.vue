@@ -51,7 +51,7 @@ export default {
             axios.post(URL+'/signin',user).then(res=>{
                 let user = res.data.user;
                 this.$emit("sign-in",user);
-                this.$router.push('/home');
+                this.$router.push('/myEvent');
             }).catch(error=>{
                 if (error.response) {
                     this.messageError = error.response.data.message;

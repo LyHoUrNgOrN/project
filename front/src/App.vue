@@ -30,12 +30,13 @@ export default {
       }
   },
   mounted() {
-    // if ((window.localStorage.getItem("user") !== null) && this.$route.path == "/signIn" || this.$route.path == "/") {
-    //   this.$router.push("/home"); // redirect to home, for example
-    // }
+    if ((window.localStorage.getItem("user") !== null) && this.$route.path == "/signIn" || this.$route.path == "/") {
+      this.$router.push("/myEvent"); // redirect to home, for example
+    }
     let user = JSON.parse(localStorage.getItem("user"));
     if(user !== null){
         this.activeUser = JSON.parse(localStorage.getItem("user"));
+        this.$router.push("/myEvent");
     }
     else{
        this.activeUser = user;
@@ -43,7 +44,7 @@ export default {
     }
     window.onpopstate = event => {
       if ((window.localStorage.getItem("user") !== null) && this.$route.path == "/signIn" || this.$route.path == "/") {
-          this.$router.push("/home"); // redirect to home, for example
+          this.$router.push("/myEvent"); // redirect to home, for example
       }
       console.log(event);
     };
