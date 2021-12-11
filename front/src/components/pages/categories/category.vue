@@ -65,12 +65,12 @@ export default {
     methods: {
         displayAllCategory(){
             if(this.searchName === ''){ 
-                axios.get(URL + "/category").then(res=>{
+                axios.get("/category").then(res=>{
                 this.categoryList = res.data;
                 })
                 }
             else {
-                axios.get(URL + "/category/search/"+this.searchName).then(res=>{
+                axios.get("/category/search/"+this.searchName).then(res=>{
                 this.categoryList = res.data;
                 });
             }
@@ -168,10 +168,10 @@ export default {
     ::-webkit-scrollbar {
         width: 0px;
     }
+
     .container{
         margin: auto;
         width: 70%;
-        /* background: cadetblue; */
     }
     
     .search {
@@ -184,7 +184,7 @@ export default {
 
     .searchTerm {
         width: 100%;
-        border: 3px solid #00B4CC;
+        border: 3px solid rgb(44, 171, 209);
         border-right: none;
         padding: 10px;
         height: 20px;
@@ -202,8 +202,8 @@ export default {
     .searchButton {
         width: 50px;
         /* height: 36px; */
-        border: 1px solid #00B4CC;
-        background: #00B4CC;
+        border: 1px solid rgb(44, 171, 209);
+        background: rgb(44, 171, 209);
         text-align: center;
         color: #fff;
         border-radius: 0 5px 5px 0;

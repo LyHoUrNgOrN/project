@@ -5,7 +5,7 @@
         <h4>{{ eventData.title }}</h4>
         <p>Date Start: {{ eventData.dateStart }}</p>
         <p>Date End: {{ eventData.dateEnd }}</p>
-        <p>Member: {{ memberOfEvent  }} people</p>
+        <p>Member: {{ getMember()  }} people</p>
         <p>Country: {{ eventData.country }} people</p>
         <div class="">
             <slot></slot>
@@ -26,13 +26,18 @@ export default {
             memberOfEvent: null,
         }
     },
-
-    mounted(){
-        axios.get('/event_member/'+ this.event.id).then(res => {
+    methods:{
+        getMember(){
+            axios.get('/event_member/'+ this.event.id).then(res => {
             this.memberOfEvent = res.data.length;
-            console.log(this.memberOfEvent);
+            // console.log(this.memberOfEvent);
 
-        })
+            })
+            return this.memberOfEvent;
+        }
+    },
+    mounted(){
+        
     }
 }
 </script>

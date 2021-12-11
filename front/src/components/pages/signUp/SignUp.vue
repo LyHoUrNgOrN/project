@@ -102,7 +102,7 @@ export default {
         background-position-y: top;
     }
         .form{
-            background-color: rgba(41, 41, 41, 0.308);
+            background-color: rgba(88, 88, 88, 0.308);
             border-radius: 20px;
             text-align: center;
             width: 40%;
@@ -139,7 +139,7 @@ export default {
             outline: none;
             background: none;
             color: rgb(255, 255, 255);
-            border-bottom: 1.5px solid black;
+            border-bottom: 1.5px solid rgb(236, 236, 236);
         }
         .robot{
             width: 55%;
@@ -149,19 +149,8 @@ export default {
             border-radius: 5px;
             color: white;
         }
-        .btn{
-            padding: 12px;
-            width: 40%;
-            font-size: 15px;
-            font-weight: bold;
-            border: none;
-            outline: none;
-            border-radius: 10px;
-            background: sandybrown;
-            margin-top: 15px;
-            
-        }
+
         .signIn{
-            color: sandybrown;
+            color: rgb(44, 171, 209);
         }
 </style>

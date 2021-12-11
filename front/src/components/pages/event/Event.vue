@@ -12,7 +12,6 @@
               v-for="event of eventList" :key="event.id"
               :event-data="event"
             >
-                <!-- <button class="interested-btn">Detail</button> -->
                 <button class="join-btn">Join</button>
             </event-card>
            
@@ -31,7 +30,8 @@ export default {
    
     data() {
       return{
-        eventList: []
+        eventList: [],
+        id: JSON.parse(localStorage.getItem("user")).id,
       }
     },
 
@@ -39,22 +39,27 @@ export default {
       dateFormat(date){
         return moment(date).format('YYYY-MM-DD hh:mm:ss');
       },
+      getEventOtherUser(){
+        axios.get('/event_other/'+ parseInt(this.id)).then((res) => {
+          let allData = res.data;
+          let currentDate = new Date();
+          let date = currentDate.getFullYear()+'-'+currentDate.getDate()+'-'+(currentDate.getMonth()+1)+' '+currentDate.getHours() + ":" + currentDate.getMinutes() + ":" + currentDate.getSeconds();
+          for(let eachObj of allData){
+            if(this.dateFormat(eachObj.dateEnd) >= this.dateFormat(date)){
+              this.eventList.push(eachObj);
+            }
+          }
+        });
+        axios.get('/event_user_has_joins/'+ parseInt(this.id)).then((res)=> {
+            this.userJoinEvent = res.data;
+        });
+      }
     },
 
     mounted(){
       this.$router.push("/Event");
       this.$router.replace(this.$route.path, {silent:true})
-      const id = JSON.parse(localStorage.getItem("user")).id;
-      axios.get('/event_other/'+ parseInt(id)).then((res) => {
-        let allData = res.data;
-        let currentDate = new Date();
-        let date = currentDate.getFullYear()+'-'+currentDate.getDate()+'-'+(currentDate.getMonth()+1)+' '+currentDate.getHours() + ":" + currentDate.getMinutes() + ":" + currentDate.getSeconds();
-        for(let eachObj of allData){
-          if(this.dateFormat(eachObj.dateEnd) >= this.dateFormat(date)){
-            this.eventList.push(eachObj)
-          }
-        }
-      });
+      this.getEventOtherUser();
     }
 }
 </script>
@@ -80,8 +85,11 @@ export default {
         font-weight: bold;
         color: white;
         width: 28%;
-        background: rgb(55, 175, 231);
         margin-left: 5px;
         float: right;
+        background: rgb(55, 175, 231);
+
     }
+
+
 </style>

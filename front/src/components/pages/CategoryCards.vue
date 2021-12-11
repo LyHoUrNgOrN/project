@@ -108,7 +108,7 @@ export default {
         list-style: none;
         display: flex;
         justify-content: space-between;
-        background: rgb(128, 129, 129);
+        background: rgba(61, 61, 61, 0.753);
         padding: 15px;
         border-radius: 10px;
         width: 77%;
