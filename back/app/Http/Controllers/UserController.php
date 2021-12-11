@@ -40,15 +40,20 @@ class UserController extends Controller
         $user->password = bcrypt($request->password);
         $user->profile = $request->file('profile')->hashName();
         $user->save();
-        return response()->json(["message"=>"User Created"],200);
+        return response()->json(["message"=>"User Created", 'data'=>$user],200);
     }
 
     public function updateUser(Request $request, $id)
     {
+
+        // $request->file('profile')->store('public/profiles');
+
         $user = User::findOrFail($id);
+        // $user->id = $request->id;
         $user->name = $request->name;
         $user->email = $request->email;
-        $user->password = bcrypt($request->password);
+        // $user->password = $request->password;
+        // $user->profile = $request->file('profile')->hashName();
         $user->profile = $request->profile;
         $user->save();
         return response()->json(["message"=>"Post Updated","user"=>$user],201);

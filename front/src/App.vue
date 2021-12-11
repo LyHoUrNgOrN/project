@@ -1,6 +1,6 @@
 <template>
   <section>
-    <menu-bar v-if="activeUser" @sign-out="userSignOut"></menu-bar>
+    <menu-bar v-if="activeUser" @sign-out="userSignOut" @new-data="userSignIn"></menu-bar>
     <router-view @sign-in="userSignIn"></router-view>
  </section>
 </template>
@@ -20,6 +20,7 @@ export default {
   },
   methods: {
       userSignIn(user){
+        console.log(user);
         this.activeUser = user;
         localStorage.setItem('user',JSON.stringify(user));
       },

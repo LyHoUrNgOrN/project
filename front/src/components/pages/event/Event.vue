@@ -16,6 +16,7 @@
                 
                 <button class="quit-btn"  v-if="isJoin(event.id)" @click="quitJoin(event.id)">Quit</button>
                 <button class="join-btn"  v-else @click="joinEvent(event.id)">Join</button>
+                <!-- <button class="join-btn">Join</button> -->
             </event-card>
            
         </div>
@@ -37,7 +38,6 @@ export default {
         eventHasJoined:[],
       }
     },
-
     methods: {
       dateFormat(date){
         return moment(date).format('YYYY-MM-DD hh:mm:ss');
@@ -67,8 +67,8 @@ export default {
           axios.delete("event_quit/"+idToQuit).then(response=>{
             console.log(response.data.message);
             this.getOtherEvents();
-          })
-        })
+          });
+        });
       },
       getOtherEvents(){
         axios.get("/event_user_has_joins/"+this.activeUser.id).then((response)=>{
@@ -81,7 +81,7 @@ export default {
           let events = [];
           for(let eachObj of allData){
             if(this.dateFormat(eachObj.dateEnd) >= this.dateFormat(date)){
-              events.push(eachObj)
+              events.push(eachObj);
             }
           }
           this.eventList = events;
@@ -90,16 +90,16 @@ export default {
     },
     mounted(){
       this.$router.push("/Event");
-      this.$router.replace(this.$route.path, {silent:true})
+      this.$router.replace(this.$route.path, {silent:true});
       this.getOtherEvents();
       axios.get("/event_user_has_joins/"+this.activeUser.id).then((response)=>{
         this.eventHasJoined = response.data;
       });
     },
     computed : {
-        activeUser (){
-          return this.$activeUser();
-        }
+      activeUser(){
+        return this.$activeUser();
+      }
     }
 }
 </script>
@@ -123,10 +123,11 @@ export default {
         font-weight: bold;
         color: white;
         width: 28%;
-        background: rgb(55, 175, 231);
         margin-left: 5px;
         float: right;
         cursor: pointer;
+        background: rgba(107, 180, 236, 0.719);
+
         
     }
     .quit-btn{
@@ -136,9 +137,10 @@ export default {
         font-weight: bold;
         color: white;
         width: 28%;
-        background: rgba(103, 107, 110, 0.719);
         margin-left: 5px;
         float: right;
         cursor: pointer;
+        background: rgba(103, 107, 110, 0.719);
+
     }
 </style>

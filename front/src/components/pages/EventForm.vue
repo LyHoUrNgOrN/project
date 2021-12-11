@@ -97,70 +97,67 @@ export default {
       this.image = e.target.files[0];
       console.log(this.image);
     },
-    onConfirm(){
-      if (this.title !== null && this.dateStart !== null && this.dateEnd !== null && this.eventCountry !== null && this.city !== null && this.eventCategory !== null && this.description !== null && this.image !== ''){
-          if (this.dialog_mode === 'create'){
-        let newEvent = new FormData();
-        newEvent.append("title", this.title);
-        newEvent.append("dateStart", this.dateFormat(this.dateStart));
-        newEvent.append("dateEnd", this.dateFormat(this.dateEnd));
-        newEvent.append("country", this.eventCountry);
-        newEvent.append("city", this.city);
-        newEvent.append("category_id", this.eventCategory);
-        newEvent.append("description", this.description);
-        newEvent.append("picture", this.image);
+    create_new_event(){
+      let newEvent = new FormData();
+            newEvent.append("title", this.title);
+            newEvent.append("dateStart", this.dateFormat(this.dateStart));
+            newEvent.append("dateEnd", this.dateFormat(this.dateEnd));
+            newEvent.append("country", this.eventCountry);
+            newEvent.append("city", this.city);
+            newEvent.append("category_id", this.eventCategory);
+            newEvent.append("description", this.description);
+            newEvent.append("picture", this.image);
 
-        axios
-            .post("/events", newEvent)
-            .then((res) => {
-              console.log("data", res.data);
-              let user_create = {
-                user_id: JSON.parse(localStorage.getItem("user")).id,
-                event_id: res.data.data.id,
-                role: "creator",
-              };
-              axios.post("/event_joins", user_create).then((res) => {
-                console.log(res.data.message);
-                // this.displayAllEvent();
-                this.$emit('displayEvent', true);
-              });
-            })
-            .catch((error) => {
-              console.log(error.response.data);
-            });
+            axios.post("/events", newEvent)
+                .then((res) => {
+                  console.log("data", res.data);
+                  let user_create = {
+                    user_id: JSON.parse(localStorage.getItem("user")).id,
+                    event_id: res.data.data.id,
+                    role: "creator",
+                  };
+                  axios.post("/event_joins", user_create).then((res) => {
+                    console.log(res.data.message);
+                    this.$emit('displayEvent');
+                  });
+
+                }).catch((error) => {
+                  console.log(error.response.data);
+                });
+    },
+    update_event(){
+      let editEvent = {
+        "title": this.title,
+        "dateStart": this.dateFormat(this.dateStart),
+        "dateEnd": this.dateFormat(this.dateEnd),
+        "country": this.eventCountry,
+        "city": this.city,
+        "category_id": this.eventCategory,
+        "description": this.description,
+        "picture": this.oneEvent.picture,
+      }
+      axios
+          .put("/events/" + this.eventId, editEvent)
+          .then((res) => {
+            console.log(res.data);
+              this.$emit('displayEvent', true);
+          })
+          .catch((error) => {
+            console.log(error.response);
+      });
+      this.eventId = null;
+    },
+
+    onConfirm(){
+      if (this.title !== null && this.dateStart !== null && this.dateEnd !== null && this.eventCountry !== null && this.city !== null && this.eventCategory !== null && this.description !== null){
+          if (this.dialog_mode === 'create'){
+            if ( this.image !== ''){
+              this.create_new_event();
+            }
 
         }else if (this.dialog_mode === "edit"){
-          // let newEvent = new FormData();
-          // newEvent.append("title", this.title);
-          // newEvent.append("dateStart", this.dateFormat(this.dateStart));
-          // newEvent.append("dateEnd", this.dateFormat(this.dateEnd));
-          // newEvent.append("country", this.eventCountry);
-          // newEvent.append("city", this.city);
-          // newEvent.append("category_id", this.eventCategory);
-          // newEvent.append("description", this.description);
-          // newEvent.append("picture", this.image);
-          let editEvent = {
-            "title": this.title,
-            "dateStart": this.dateFormat(this.dateStart),
-            "dateEnd": this.dateFormat(this.dateEnd),
-            "country": this.eventCountry,
-            "city": this.city,
-            "category_id": this.eventCategory,
-            "description": this.description,
-            "picture": this.oneEvent.picture,
-          }
+          this.update_event();
           
-          console.log(this.oneEvent.picture);
-          axios
-              .put("/events/" + this.eventId, editEvent)
-              .then((res) => {
-                console.log(res.data);
-                  this.$emit('displayEvent', true);
-              })
-              .catch((error) => {
-                console.log(error.response);
-              });
-            this.eventId = null;
         }
         this.$emit('close', false);
         this.message = "";

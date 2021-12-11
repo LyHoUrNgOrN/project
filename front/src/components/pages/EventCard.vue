@@ -38,9 +38,9 @@ export default {
     mounted(){
         axios.get('/event_member/'+ this.event.id).then(res => {
             this.memberOfEvent = res.data.length;
-
         })
-    }
+        
+    },
 }
 </script>
 

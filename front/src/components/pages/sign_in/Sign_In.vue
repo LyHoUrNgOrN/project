@@ -68,12 +68,9 @@ export default {
 </script>
 
 <style scoped>
-/* body{
-        background-image: url('https://thecolonial.org/wp-content/uploads/Event-Blogging-Strategies.jpg');
-        background-size: cover;
-    } */
+
 .form{
-            background-color: rgba(17, 17, 17, 0.308);
+            background-color: rgba(88, 88, 88, 0.308);
             border-radius: 20px;
             text-align: center;
             width: 40%;
@@ -95,19 +92,7 @@ form{
             outline: none;
             background: none;
             color: white;
-            border-bottom: 1.5px solid black;
-        }
-.btn{
-            padding: 12px;
-            width: 40%;
-            font-size: 15px;
-            font-weight: bold;
-            border: none;
-            outline: none;
-            border-radius: 10px;
-            background: sandybrown;
-            margin-top: 15px;
-            
+            border-bottom: 1.5px solid rgb(236, 236, 236);
         }
         form p{
             color: white;
@@ -143,14 +128,14 @@ form{
             background: rgb(255, 255, 255);
         }
         form p a{
-            color: sandybrown;
+            color: rgb(44, 171, 209);
         }
         #forogt-password{
             color: white;
             margin-left: -50%;
         }
         .signUp{
-            color: sandybrown;
+            color: rgb(44, 171, 209);
         }
         small{
             color:red;
