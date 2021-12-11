@@ -20,9 +20,9 @@
   </div>
 </template>
 
-<script>
-import axios from "axios";
-const URL = 'http://127.0.0.1:8000/api'
+<script scoped>
+import axios from "../../../api/api.js";
+
 export default {
     emits:["sign-up"],
     data(){
@@ -55,17 +55,13 @@ export default {
         signUp(){
 
             let user = new FormData();
-            let author = 'user';
             user.append('name',this.userName);
             user.append('email',this.email);
             user.append('password',this.password);
             user.append('password_confirmation',this.confirmPassword);
             user.append('profile',this.profile);
 
-            user.append('role',author);
-
-            axios.post(URL+'/signup',user).then(res=>{
-                console.log(res.data.message);
+            axios.post('/signup',user).then(()=>{
                 this.$router.push('/signIn');
             }).catch(error=>{
                 if (error.response) {
@@ -83,9 +79,6 @@ export default {
                     if(messError.profile !== undefined){
                         this.messError.profile = 'Please choose a correct profile!';
                     }
-                    console.log(error.response.data);
-                    console.log(error.response.status);
-                    console.log(error.response.headers);
                 }
             });
             this.userName = null;
@@ -101,8 +94,13 @@ export default {
 
 <style>
     body{
-        background-image: url('https://thecolonial.org/wp-content/uploads/Event-Blogging-Strategies.jpg');
+        background-image: url('https://ak.picdn.net/shutterstock/videos/9134405/thumb/1.jpg');
+        background-repeat: no-repeat;
+        background-attachment: fixed;
         background-size: cover;
+        background-position: top;
+        background-position-x: center;
+        background-position-y: top;
     }
         .form{
             background-color: rgba(41, 41, 41, 0.308);

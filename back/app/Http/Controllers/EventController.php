@@ -33,7 +33,7 @@ class EventController extends Controller
             'dateStart' => 'required|before:dateEnd',
             'dateEnd' => 'required|after:dateStart',
             'category_id'=>'required',
-            'picture' =>'required',
+            'picture' =>'image|mimes:jpg,png,jpeg,gif|max:19999',
         ]);
         $request->file('picture')->store('public/pictures');
 
@@ -48,7 +48,7 @@ class EventController extends Controller
         $event->picture = $request->file('picture')->hashName();
 
         $event->save();
-        return response()->json(['message'=> 'Event Created'], 201);
+        return response()->json(['message'=> 'Event Created', 'data'=> $event], 201);
     }
 
     /**
@@ -70,7 +70,7 @@ class EventController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function updateEvent(Request $request, $id)
-    {
+    {   
         $request->validate([
             'title' => 'required',
             'country' => 'required',
@@ -79,11 +79,14 @@ class EventController extends Controller
             'dateStart' => 'required|before:dateEnd',
             'dateEnd' => 'required|after:dateStart',
             'category_id'=>'required',
-            'picture' =>'required',
+            // 'picture' =>'image|mimes:jpg,png,jpeg,gif|max:19999',
+            'picture' => 'nullable'
         ]);
-        $request->file('picture')->store('public/pictures');
+        
+        // $request->file('picture')->store('public/pictures');
+        // $name = $request->file('image')->getClientOriginalName();
 
-        $event = Event::findorfail($id);
+        $event = Event::findOrFail($id);
         $event->title = $request->title;
         $event->dateStart = $request->dateStart;
         $event->dateEnd = $request->dateEnd;
@@ -91,10 +94,11 @@ class EventController extends Controller
         $event->city = $request->city;
         $event->description = $request->description;
         $event->category_id = $request->category_id;
-        $event->picture = $request->file('picture')->hashName();
+        $event->picture = $request->picture;
+        // $event->picture = $request->file('picture')->hashName();
 
         $event->save();
-        return response()->json(['message'=> 'Event Updated'], 200);
+        return response()->json(['message'=> 'Event Updated',"data"=>$request->picture], 201);
     }
 
     /**

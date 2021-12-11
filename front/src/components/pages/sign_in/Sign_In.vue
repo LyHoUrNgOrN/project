@@ -27,13 +27,13 @@
 </template>
 
 <script>
-import axios from "axios";
-const URL = 'http://127.0.0.1:8000/api'
+import axios from "../../../api/api.js";
+
 export default {
     emits:["sign-in"],
     data(){
         return {
-            // value : "Sign In",
+
             userName:null,
             password:null,
             userList : [],
@@ -48,7 +48,7 @@ export default {
                 name:this.userName,
                 password:this.password,
             }
-            axios.post(URL+'/signin',user).then(res=>{
+            axios.post('/signin',user).then(res=>{
                 let user = res.data.user;
                 this.$emit("sign-in",user);
                 this.$router.push('/myEvent');
@@ -67,7 +67,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 /* body{
         background-image: url('https://thecolonial.org/wp-content/uploads/Event-Blogging-Strategies.jpg');
         background-size: cover;
@@ -94,7 +94,7 @@ form{
             border: none;
             outline: none;
             background: none;
-            color: rgb(0, 0, 0);
+            color: white;
             border-bottom: 1.5px solid black;
         }
 .btn{
