@@ -20,7 +20,7 @@ export default {
         width: 90%;
         display: flex;
         justify-content: space-between;
-        align-items: end;
+        align-items: flex-end;
         position: sticky;
         top: 165px;
         z-index: 5;

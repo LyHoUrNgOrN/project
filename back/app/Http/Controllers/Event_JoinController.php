@@ -63,7 +63,7 @@ class Event_JoinController extends Controller
         $event_user = Event_Join::join('users', 'users.id', '=', 'event__joins.user_id')
               ->join('events', 'events.id', '=', 'event__joins.event_id')
               ->where([['event__joins.user_id','=',$userId],['event__joins.role','=','creator']])
-            //   ->where('event__joins.role','=','creator')
+              ->orderBy('event__joins.event_id', 'DESC')
               ->get(['events.*','event__joins.role']);
         return $event_user;
     }
@@ -73,7 +73,7 @@ class Event_JoinController extends Controller
         $event_user = Event_Join::join('users', 'users.id', '=', 'event__joins.user_id')
               ->join('events', 'events.id', '=', 'event__joins.event_id')
               ->where([['event__joins.user_id','!=',$userId],['event__joins.role','=','creator']])
-            //   ->where('event__joins.role','=','creator')
+              ->orderBy('event__joins.event_id', 'DESC')
               ->get(['events.*','users.name', 'event__joins.role']);
         return $event_user;
     }

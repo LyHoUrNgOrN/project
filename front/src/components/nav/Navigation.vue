@@ -23,7 +23,6 @@
                 <div id="myModal" class="modal">
                 <div class="modal-content">
                     <div class="modal-header">
-                       
                         <span class="close" @click="close">&times;</span>
                         </div>
                     <div class="profile">
@@ -119,7 +118,7 @@ export default {
         display: flex;
         width: 50%;
         justify-content: space-around;
-        align-items: end;
+        align-items: flex-end;
     }
     nav ul h2{
         margin-bottom: -10px;
@@ -133,8 +132,8 @@ export default {
         margin-top: 20px;
         padding-right: 4%;
         display: flex;
-        
     }
+
     nav ul li .profile {
         width: 50px;
         height: 50px;
@@ -237,45 +236,4 @@ export default {
         padding: 2px 16px;
     }
 
-    .searchBoxIcon {
-        height: 40px;
-        border-radius: 40px;
-        border: 1px solid #2f3640;
-        padding-right: 0;
-
-    }
-    .searchBoxIcon:hover{
-        border: 1px solid steelblue;
-
-    }
-    .searchBoxIcon:hover > .searchInput {
-        width: 200px;
-        padding: 0 6px;
-    }
-
-
-    .searchButton {
-        color: white;
-        float: right;
-        width: 50px;
-        border-radius: 40%;
-        background: #2f3640;
-        transition: 0.4s;
-        border: none;
-
-    }
-
-    .searchInput {
-        border:none;
-        background: none;
-        outline:none;
-        float:left;
-        padding: 0;
-        color: white;
-        font-size: 16px;
-        transition: 0.4s;
-        width: 0px;
-        border-radius: 30px;
-
-    }
 </style>

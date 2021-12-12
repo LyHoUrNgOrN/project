@@ -17,7 +17,7 @@
               v-for="event of eventList" :key="event.id"
               :event-data="event"
             >
-                <button class="interested-btn">Interested</button>
+                <!-- <button class="interested-btn">Detail</button> -->
                 <button class="join-btn">Join</button>
             </event-card>
            
@@ -31,6 +31,8 @@
 <script>
 // import axios from 'axios';
 // const URL = 'http://localhost:8000/api'
+import axios from "../../../api/api.js";
+import moment from "moment";
 
 export default {
    
@@ -73,8 +75,10 @@ export default {
         }else{
           this.messageRemind = "" 
         }
-        
-        
+      },
+
+      dateFormat(date){
+        return moment(date).format('YYYY-MM-DD hh:mm:ss');
       },
         
         
@@ -88,23 +92,32 @@ export default {
       //     })
       // }
     },
+    
+    
+
     mounted(){
-      // this.$router.push("/Event");
-      // this.$router.replace(this.$route.path, {silent:true})
-      // this.getAllevent();
-
-
+      this.$router.push("/Event");
+      this.$router.replace(this.$route.path, {silent:true})
+      const id = JSON.parse(localStorage.getItem("user")).id;
+      axios.get('/event_other/'+ parseInt(id)).then((res) => {
+        let allData = res.data;
+        let currentDate = new Date();
+        let date = currentDate.getFullYear()+'-'+currentDate.getDate()+'-'+(currentDate.getMonth()+1)+' '+currentDate.getHours() + ":" + currentDate.getMinutes() + ":" + currentDate.getSeconds();
+        for(let eachObj of allData){
+          if(this.dateFormat(eachObj.dateEnd) >= this.dateFormat(date)){
+            this.eventList.push(eachObj)
+          }
+        }
+      });
     }
 }
 </script>
 
 <style scoped>
 
-    
     .sidebarRight{
         width: 90%;
-        background: rgb(22, 22, 22);
-        
+        background: rgb(22, 22, 22); 
     }
     .sidebarContainer{
         width: 90%;
@@ -114,22 +127,15 @@ export default {
         flex-wrap: wrap;
     }
 
-    .interested-btn,
     .join-btn{
         padding: 9px;
         border: none;
         border-radius: 10px;
         font-weight: bold;
         color: white;
-    }
-    .interested-btn{
-        width: 65%;
-        background: rgb(179, 176, 176);
-        margin-right: 5px;
-    }
-    .join-btn{
         width: 28%;
         background: rgb(55, 175, 231);
         margin-left: 5px;
+        float: right;
     }
 </style>
