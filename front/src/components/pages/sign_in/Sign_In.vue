@@ -68,10 +68,6 @@ export default {
 </script>
 
 <style>
-/* body{
-        background-image: url('https://thecolonial.org/wp-content/uploads/Event-Blogging-Strategies.jpg');
-        background-size: cover;
-    } */
 .form{
             background-color: rgba(17, 17, 17, 0.308);
             border-radius: 20px;

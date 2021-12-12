@@ -4,8 +4,10 @@
         <!-- <div class="moreIcon">
             <i class="fa fa-ellipsis-h"></i>
         </div> -->
-        <img src="https://cdn.pixabay.com/photo/2018/08/21/23/29/forest-3622519__340.jpg" alt="">
+        <h4 id="category">{{ eventData.name }}</h4>
+        <img :src="'http://localhost:8000/storage/pictures/'+ eventData.picture" alt="">
         <h4>{{ eventData.title }}</h4>
+        <!-- <h4>{{eventData.description}}</h4> -->
         <p>Date Start: {{ eventData.dateStart }}</p>
         <p>Date End: {{ eventData.dateEnd }}</p>
         <p>Member: {{ eventData.member }} people</p>
@@ -18,8 +20,18 @@
 </template>
 
 <script>
+
 export default {
     props: ['eventData'],
+    data(){
+        return{
+            event: this.eventData,
+            // categoryName: {name: ''},
+        }
+    },
+    mounted(){
+            
+    }
 }
 </script>
 
@@ -87,5 +99,11 @@ export default {
     .join-btn{
         width: 28%;
         background: rgb(55, 175, 231);
+    }
+    #category {
+        position: absolute;
+        background: rgb(55, 175, 231);
+        border-radius: 5px 0 5px 0;
+        padding: 2px;
     }
 </style>

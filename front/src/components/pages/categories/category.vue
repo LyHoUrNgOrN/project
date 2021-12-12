@@ -164,7 +164,7 @@ export default {
 }
 </script>
 
-<style >
+<style scoped>
     body{
         overflow: auto;
         font-family: sans-serif;
@@ -196,12 +196,15 @@ export default {
         outline: none;
         color: black;
         font-weight: bold;
+        outline: #00B4CC;
 
     }
 
-    /* .searchTerm:focus{
-    color: #00B4CC;
-    } */
+    .searchTerm:focus{
+        border: 3px solid #00B4CC;
+        background: rgb(255, 255, 255);
+
+    }
 
     .searchButton {
         width: 50px;
@@ -238,7 +241,7 @@ export default {
         align-self: flex-end;
         font-size: 15px;
         font-weight: bold;
-        margin-left: 60%;
+        margin-left: 70%;
         margin-top: 60px;
         margin-bottom: -100px;
     }

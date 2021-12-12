@@ -103,7 +103,7 @@ export default {
         list-style: none;
         display: flex;
         justify-content: space-between;
-        background: rgb(128, 129, 129);
+        background: rgb(48, 49, 49);
         padding: 15px;
         /* padding-right: 20px; */
         border-radius: 10px;

@@ -1,11 +1,20 @@
 <template>
-<section>
-  <!-- <div class="main"> -->
-    <!-- <sub-navigation></sub-navigation> -->
-  
+<section>  
     <div class="mainRight">
         <event-header>
             <h3>All Event</h3>
+            <div class="search_event">
+              <input type="text" placeholder="Search event" id="seachBytitle" v-model="searchByText" @keyup="findEvent">
+              <select id="selectCity" v-model="searchByCity" @change="findEvent">
+                <option v-for="(city,index) of cityList"
+              :key="index"
+              :value="city"
+              @select="findEvent"
+              >
+              {{ city }}
+              </option>
+              </select>
+            </div>    
         </event-header>
         <div class="sidebarContainer">
             <event-card
@@ -18,7 +27,6 @@
            
         </div>
     </div>
-  <!-- </div> -->
 </section>
 
 </template>
@@ -31,18 +39,55 @@ export default {
    
     data() {
       return{
-        eventList: []
+        searchByText: '',
+        searchByCity: 'Phnom Penh',
+        eventList: [],
+        cityList : [],
+        listAllOfEvent: [],
+        
       }
+    },
+    methods:{
+      findEvent(){
+        if (this.searchByText !== ''){
+          console.log(this.searchByText);
+          console.log(this.searchByCity)
+          this.eventList = this.listAllOfEvent.filter(events => ((events.title.toLowerCase().includes(this.searchByText.toLowerCase())) ||(events.description.toLowerCase().includes(this.searchByText.toLowerCase())) ||(events.name.toLowerCase().includes(this.searchByText.toLowerCase()))) && (events.city === this.searchByCity)
+           );
+
+          // this.eventList = event;
+          console.log(event);
+        }else{
+          this.getEvent();
+        }
+        
+      },
+      getEvent(){
+        const id = JSON.parse(localStorage.getItem("user")).id;
+        axios.get(URL+ '/event_other/'+ parseInt(id)).then((res) => {
+          this.eventList = res.data;
+          this.listAllOfEvent = res.data;
+          console.log(this.eventList);
+        })
+      },
+      
     },
     mounted(){
       this.$router.push("/Event");
       this.$router.replace(this.$route.path, {silent:true})
-      const id = JSON.parse(localStorage.getItem("user")).id;
-      axios.get(URL+ '/event_other/'+ parseInt(id)).then((res) => {
-        this.eventList = res.data;
-        console.log(this.eventList);
+      this.getEvent();
+      axios.get(URL+'/countries').then((res) => {
+        // let country = [];
+        let all = res.data;
+        for(let countries in all){
+          for(let city of all[countries]){
+            this.cityList.push(city);
+            // console.log(city)
+          }
+          // console.log(all.countries);
+        }
+        // console.log(all);
       })
-
 
     }
 }
@@ -81,5 +126,23 @@ export default {
         width: 28%;
         background: rgb(55, 175, 231);
         margin-left: 5px;
+    }
+    .search_event{
+      display: flex;
+      width: 60%;
+      justify-content: space-between;
+    }
+    #seachBytitle{
+      padding: 10px;
+      border: 1px solid gray;
+      outline: none;
+      width: 85%;
+      border-radius: 10px 0 0 10px;
+    }
+    #selectCity{
+      border-radius: 0 10px 10px 0;
+    }
+    #seachBytitle:focus{
+      background: white;
     }
 </style>

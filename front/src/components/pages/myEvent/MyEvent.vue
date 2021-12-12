@@ -1,13 +1,10 @@
 <template>
 <section>
-  <!-- <menu-bar></menu-bar> -->
   <div class="main">
-    <!-- <sub-navigation></sub-navigation> -->
     <div class="mainRight">
         <event-header>
             <h3>All Event</h3>
             <button class="btn-create" @click="create_event">+ Create</button>
-            
         </event-header>
         <div class="sidebarContainer">
             <event-card
@@ -16,10 +13,7 @@
             >
                 <button class="cancel_btn"  @click="showCancelEvent(event.id)" :title="dialogMode">Cancel</button>
                 <button class="edit_btn"  @click="showEditEvent">Edit</button>
-
-                
             </event-card>
-            <!-- Cancel dialog -->
             <dialog-box
                   v-if="dialogDisplay"
                   :title="dialogTitleCancel"
@@ -27,18 +21,14 @@
                   >
                   <hr>
                   <h4> <i class="fa fa-exclamation-triangle"></i> Are you sure that you want to cancel this Event!!!</h4>
-
                   <template #actions>
                       <button @click="removeEvent" class="confirm_btn">Cacel</button>
                   </template>
             </dialog-box>
-
             <base-dialog
               v-if="showDialogeEvent"
               :title="dialogTitle"
-              @close="closeDialog"
-            >
-
+              @close="closeDialog">
               <template #actions>
                 <base-button @click="onConfirm">{{ dialogButtton }}</base-button>
               </template>

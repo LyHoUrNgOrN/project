@@ -72,9 +72,11 @@ class Event_JoinController extends Controller
     public function getEvent($userId){
         $event_user = Event_Join::join('users', 'users.id', '=', 'event__joins.user_id')
               ->join('events', 'events.id', '=', 'event__joins.event_id')
+              ->join('categories', 'events.category_id', '=', 'categories.id')
               ->where([['event__joins.user_id','!=',$userId],['event__joins.role','=','creator']])
             //   ->where('event__joins.role','=','creator')
-              ->get(['events.*','users.name', 'event__joins.role']);
+                // :with('name')
+              ->get(['events.*','users.name', 'event__joins.role', 'categories.name']);
         return $event_user;
     }
     /**
