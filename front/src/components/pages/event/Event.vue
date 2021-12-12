@@ -6,11 +6,7 @@
             <div class="search_event">
               <input type="text" placeholder="Search event" id="seachBytitle" v-model="searchByText" @keyup="findEvent">
               <select id="selectCity" v-model="searchByCity" @change="findEvent">
-                <option v-for="(city,index) of cityList"
-              :key="index"
-              :value="city"
-              @select="findEvent"
-              >
+                <option v-for="(city,index) of cityList" :key="index" :value="city" >
               {{ city }}
               </option>
               </select>
@@ -21,8 +17,11 @@
               v-for="event of eventList" :key="event.id"
               :event-data="event"
             >
-                <button class="interested-btn">Interested</button>
-                <button class="join-btn">Join</button>
+                <!-- <button class="interested-btn">Detail</button> -->
+                
+                <button class="quit-btn"  v-if="isJoin(event.id)" @click="quitJoin(event.id)">Quit</button>
+                <button class="join-btn"  v-else @click="joinEvent(event.id)">Join</button>
+                <!-- <button class="join-btn">Join</button> -->
             </event-card>
            
         </div>
@@ -32,11 +31,11 @@
 </template>
 
 <script>
-import axios from 'axios';
-const URL = 'http://localhost:8000/api'
+import axios from "../../../api/api.js";
+import moment from "moment";
 
 export default {
-   
+    inject:["$activeUser"],
     data() {
       return{
         searchByText: '',
@@ -44,31 +43,79 @@ export default {
         eventList: [],
         cityList : [],
         listAllOfEvent: [],
-        
+        eventHasJoined:[],
       }
     },
-    methods:{
+    methods: {
+      
+      dateFormat(date){
+        return moment(date).format('YYYY-MM-DD hh:mm:ss');
+      },
+      isJoin(eventId){
+          for (let joinEvent of this.eventHasJoined){
+            if(joinEvent.id == eventId){
+              return true;
+            }
+          }
+          return false;
+      },
+
+      joinEvent(eventId){
+        let user_create = {
+            user_id: this.activeUser.id,
+            event_id: eventId,
+            role: "member",
+        };
+        axios.post("/event_joins", user_create).then((res) => {
+          console.log(res.data.message);
+          this.getOtherEvents();
+        });
+      },
+
+      quitJoin(eventId){
+        axios.get("/event_quit_id/"+eventId+"/"+this.activeUser.id).then((response)=>{
+          let idToQuit = response.data[0].id;
+          axios.delete("event_quit/"+idToQuit).then(response=>{
+            console.log(response.data.message);
+            this.getOtherEvents();
+          });
+        });
+      },
+
+      getOtherEvents(){
+        axios.get("/event_user_has_joins/"+this.activeUser.id).then((response)=>{
+          this.eventHasJoined = response.data;
+        });
+        this.getEvent();
+      },
+
       findEvent(){
         if (this.searchByText !== ''){
-          console.log(this.searchByText);
-          console.log(this.searchByCity)
-          this.eventList = this.listAllOfEvent.filter(events => ((events.title.toLowerCase().includes(this.searchByText.toLowerCase())) ||(events.description.toLowerCase().includes(this.searchByText.toLowerCase())) ||(events.name.toLowerCase().includes(this.searchByText.toLowerCase()))) && (events.city === this.searchByCity)
-           );
-
-          // this.eventList = event;
-          console.log(event);
+          this.eventList = this.listAllOfEvent.filter(events => ((events.title.toLowerCase().includes(this.searchByText.toLowerCase())) 
+          ||(events.description.toLowerCase().includes(this.searchByText.toLowerCase())) 
+          ||(events.name.toLowerCase().includes(this.searchByText.toLowerCase()))) 
+          && (events.city === this.searchByCity));
+          console.log(this.eventList);
         }else{
           this.getEvent();
         }
         
       },
+
       getEvent(){
-        const id = JSON.parse(localStorage.getItem("user")).id;
-        axios.get(URL+ '/event_other/'+ parseInt(id)).then((res) => {
-          this.eventList = res.data;
-          this.listAllOfEvent = res.data;
-          console.log(this.eventList);
-        })
+        axios.get('/event_other/'+ parseInt(this.activeUser.id)).then((res) => {
+          let allData = res.data;
+          let currentDate = new Date();
+          let date = currentDate.getFullYear()+'-'+currentDate.getDate()+'-'+(currentDate.getMonth()+1)+' '+currentDate.getHours() + ":" + currentDate.getMinutes() + ":" + currentDate.getSeconds();
+          let events = [];
+          for(let eachObj of allData){
+            if(this.dateFormat(eachObj.dateEnd) >= this.dateFormat(date)){
+              events.push(eachObj);
+            }
+          }
+          this.eventList = events;
+          this.listAllOfEvent = events;          
+        });
       },
       
     },
@@ -76,30 +123,34 @@ export default {
       this.$router.push("/Event");
       this.$router.replace(this.$route.path, {silent:true})
       this.getEvent();
-      axios.get(URL+'/countries').then((res) => {
-        // let country = [];
+      axios.get('/countries').then((res) => {
         let all = res.data;
         for(let countries in all){
           for(let city of all[countries]){
             this.cityList.push(city);
-            // console.log(city)
           }
-          // console.log(all.countries);
         }
-        // console.log(all);
       })
 
+      // this.$router.replace(this.$route.path, {silent:true});
+      this.getOtherEvents();
+      // axios.get("/event_user_has_joins/"+this.activeUser.id).then((response)=>{
+      //   this.eventHasJoined = response.data;
+      // });
+      localStorage.setItem('path', this.$route.path);
+
+    },
+    computed : {
+      activeUser(){
+        return this.$activeUser();
+      }
     }
 }
 </script>
-
 <style scoped>
-
-    
     .sidebarRight{
         width: 90%;
-        background: rgb(22, 22, 22);
-        
+        background: rgb(22, 22, 22); 
     }
     .sidebarContainer{
         width: 90%;
@@ -109,23 +160,32 @@ export default {
         flex-wrap: wrap;
     }
 
-    .interested-btn,
     .join-btn{
         padding: 9px;
         border: none;
         border-radius: 10px;
         font-weight: bold;
         color: white;
-    }
-    .interested-btn{
-        width: 65%;
-        background: rgb(179, 176, 176);
-        margin-right: 5px;
-    }
-    .join-btn{
         width: 28%;
-        background: rgb(55, 175, 231);
         margin-left: 5px;
+        float: right;
+        cursor: pointer;
+        background: rgba(107, 180, 236, 0.719);
+
+        
+    }
+    .quit-btn{
+        padding: 9px;
+        border: none;
+        border-radius: 10px;
+        font-weight: bold;
+        color: white;
+        width: 28%;
+        margin-left: 5px;
+        float: right;
+        cursor: pointer;
+        background: rgba(103, 107, 110, 0.719);
+
     }
     .search_event{
       display: flex;

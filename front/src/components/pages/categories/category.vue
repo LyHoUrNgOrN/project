@@ -48,9 +48,9 @@
     </div>
 </template>
 
-<script>
-import axios from "axios";
-const URL = 'http://127.0.0.1:8000/api'
+<script scoped>
+import axios from "../../../api/api.js";
+
 export default {
     data(){
         return {
@@ -64,21 +64,20 @@ export default {
     },
     methods: {
         displayAllCategory(){
-            if(this.searchName === ''){
-                
-                axios.get(URL + "/category").then(res=>{
+            if(this.searchName === ''){ 
+                axios.get("/category").then(res=>{
                 this.categoryList = res.data;
                 })
                 }
             else {
-                axios.get(URL + "/category/search/"+this.searchName).then(res=>{
+                axios.get("/category/search/"+this.searchName).then(res=>{
                 this.categoryList = res.data;
                 });
             }
 
         },
         deleteCategory(categoryId){
-            axios.delete(URL + '/category/'+categoryId).then(()=> {
+            axios.delete('/category/'+categoryId).then(()=> {
                 this.displayAllCategory();
             })
 
@@ -89,7 +88,7 @@ export default {
                     user_id:JSON.parse(localStorage.getItem("user")).id,
                     name: cat_name
                 }
-                axios.put(URL+'/category/'+cat_id, newCategory).then(()=>{
+                axios.put('/category/'+cat_id, newCategory).then(()=>{
                     this.displayAllCategory();
                 })
                 .catch(error=>{
@@ -108,7 +107,7 @@ export default {
                 user_id:JSON.parse(localStorage.getItem("user")).id,
                 name: this.newCategoryName
                 }
-                axios.post(URL + '/category', newCategory).then(res=>{
+                axios.post('/category', newCategory).then(res=>{
                     this.categoryList= res.data;
                     this.errorCategoryMessage = null;
                     this.displayAllCategory();
@@ -128,16 +127,13 @@ export default {
                 let as = this.categoryList.filter((category) => category.name === name);
                 if(as.length === 0){
                     this.errorCategoryMessage = 'ok';
-                    console.log(name);
 
                 }else{
                     this.errorCategoryMessage = 'This category already exist';
-                    console.log(123);
 
                 }
             }else{
                 this.errorCategoryMessage = 'Category name cannot be null';
-                    console.log(321);
 
             }
            
@@ -159,7 +155,9 @@ export default {
 
     },
     mounted() {
-        this.displayAllCategory();            
+        this.displayAllCategory();  
+        localStorage.setItem('path', this.$route.path);
+
     },
 }
 </script>
@@ -172,10 +170,10 @@ export default {
     ::-webkit-scrollbar {
         width: 0px;
     }
+
     .container{
         margin: auto;
         width: 70%;
-        /* background: cadetblue; */
     }
     
     .search {
@@ -188,7 +186,7 @@ export default {
 
     .searchTerm {
         width: 100%;
-        border: 3px solid #00B4CC;
+        border: 3px solid rgb(44, 171, 209);
         border-right: none;
         padding: 10px;
         height: 20px;
@@ -209,8 +207,8 @@ export default {
     .searchButton {
         width: 50px;
         /* height: 36px; */
-        border: 1px solid #00B4CC;
-        background: #00B4CC;
+        border: 1px solid rgb(44, 171, 209);
+        background: rgb(44, 171, 209);
         text-align: center;
         color: #fff;
         border-radius: 0 5px 5px 0;

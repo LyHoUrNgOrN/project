@@ -5,20 +5,20 @@
 </template>
 <script>
 export default {
-    // props:['valueButton'],
+
 }
 </script>
-<style>
+<style scoped>
     .btn{
-                padding: 12px;
-                width: 40%;
-                font-size: 15px;
-                font-weight: bold;
-                border: none;
-                outline: none;
-                border-radius: 10px;
-                background: rgb(44, 171, 209);
-                margin-top: 15px;
-                color: white;
-            }
+        padding: 12px;
+        width: 100px;
+        font-size: 15px;
+        font-weight: bold;
+        border: none;
+        outline: none;
+        border-radius: 10px;
+        background: rgb(44, 171, 209);
+        margin-top: 15px;
+        color: white;
+    }
 </style>

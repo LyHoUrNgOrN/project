@@ -1,17 +1,12 @@
 <template>
 
-    <div class="card">
-        <!-- <div class="moreIcon">
-            <i class="fa fa-ellipsis-h"></i>
-        </div> -->
-        <h4 id="category">{{ eventData.name }}</h4>
-        <img :src="'http://localhost:8000/storage/pictures/'+ eventData.picture" alt="">
-        <h4>{{ eventData.title }}</h4>
-        <!-- <h4>{{eventData.description}}</h4> -->
-        <p>Date Start: {{ eventData.dateStart }}</p>
-        <p>Date End: {{ eventData.dateEnd }}</p>
-        <p>Member: {{ eventData.member }} people</p>
-        <p>Interested: {{ eventData.interested }} people</p>
+    <div class="card" >
+        <img :src="'http://localhost:8000/storage/pictures/'+eventData.picture" alt="" @click="eventDetail(eventData)">
+        <h4 @click="eventDetail(eventData)">{{ eventData.title }}</h4>
+        <p @click="eventDetail(eventData)">Date Start: {{ eventData.dateStart }}</p>
+        <p @click="eventDetail(eventData)">Date End: {{ eventData.dateEnd }}</p>
+        <p @click="eventDetail(eventData)">Member: {{ getMembers() }} people</p>
+        <p @click="eventDetail(eventData)">Country: {{ eventData.city }} in {{ eventData.country }}</p>
         <div class="">
             <slot></slot>
         </div>
@@ -20,22 +15,41 @@
 </template>
 
 <script>
+import axios from "../../api/api.js";
 
 export default {
     props: ['eventData'],
     data(){
-        return{
+        return {
             event: this.eventData,
-            // categoryName: {name: ''},
+            memberOfEvent: null,
         }
     },
+    methods:{
+        getMembers(){
+            axios.get('/event_member/'+ this.event.id).then(res => {
+                this.memberOfEvent = res.data.length;
+            });
+            return this.memberOfEvent;
+        },
+        eventDetail(detailEvent){
+            const path = localStorage.getItem('path');
+            this.$router.push(path + '/' + detailEvent.title); 
+            localStorage.setItem('event_detail', JSON.stringify(detailEvent));
+
+        }
+    },
+
     mounted(){
-            
-    }
+        axios.get('/event_member/'+ this.event.id).then(res => {
+            this.memberOfEvent = res.data.length;
+        })
+    },
+
 }
 </script>
-
-<style>
+   
+<style scoped>
     .moreIcon{
         width: 5%;
         padding: 8px;
@@ -50,7 +64,6 @@ export default {
     .moreIcon:hover {
         background: rgba(112, 114, 112, 0.726);
     }
-
     .card{
         width: 30%;
         background: rgb(51, 51, 51);
@@ -61,13 +74,24 @@ export default {
         filter: drop-shadow(0 0 10px rgba(66, 66, 66, 0.7));
         font-family: Arial, Helvetica, sans-serif;
         word-wrap: break-word;
-        /* z-index: -11; */
 
     }
     .card img{
         width: 100%;
         height: 200px;
         border-radius: 4px;
+        margin: auto;
+    }
+    img:hover{
+        opacity: 0.7;
+    }
+    .card:hover img{
+        opacity: .7;
+    }
+    .card:hover h4{
+        opacity: 1;
+        /* font-size: 20px; */
+        color: white;
     }
     .card h4{
         margin-top: 0;

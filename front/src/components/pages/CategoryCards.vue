@@ -59,20 +59,24 @@ export default {
             this.$emit('validate', this.categoryNameEdit);
 
         },
+
         showMore(){
             this.isShow = !this.isShow;
         },
+
         closeDialog() {
             this.dialogDisplayed = false;
             this.isShow = false;
             this.$emit('removeErrorMessage', null);
 
         },
+
         showEditCategory() {
             this.categoryNameEdit = this.category.name;
             this.dialogMode = 'edit';
             this.dialogDisplayed = true;
         },
+
         showDeleteCategory() {
             this.dialogMode = 'delete';
             this.dialogDisplayed = true;
@@ -88,6 +92,7 @@ export default {
 
             this.closeDialog();
         },
+
         selectCategory(){
             this.$emit('category', this.category);
         },
@@ -105,7 +110,6 @@ export default {
         justify-content: space-between;
         background: rgb(48, 49, 49);
         padding: 15px;
-        /* padding-right: 20px; */
         border-radius: 10px;
         width: 77%;
         margin: auto;
@@ -119,7 +123,6 @@ export default {
         align-items: center;
         font-size: 22px;
         width: 7%;
-        /* margin-right: 20px; */
 
     }
     .fa-trash{

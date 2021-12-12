@@ -27,13 +27,13 @@
 </template>
 
 <script>
-import axios from "axios";
-const URL = 'http://127.0.0.1:8000/api'
+import axios from "../../../api/api.js";
+
 export default {
     emits:["sign-in"],
     data(){
         return {
-            // value : "Sign In",
+
             userName:null,
             password:null,
             userList : [],
@@ -48,10 +48,10 @@ export default {
                 name:this.userName,
                 password:this.password,
             }
-            axios.post(URL+'/signin',user).then(res=>{
+            axios.post('/signin',user).then(res=>{
                 let user = res.data.user;
                 this.$emit("sign-in",user);
-                this.$router.push('/home');
+                this.$router.push('/myEvent');
             }).catch(error=>{
                 if (error.response) {
                     this.messageError = error.response.data.message;
@@ -62,14 +62,17 @@ export default {
             });
             this.userName = null;
             this.password = null;
+            localStorage.setItem('path', '/myEvent');
+
         }
     },   
 }
 </script>
 
-<style>
+<style scoped>
+
 .form{
-            background-color: rgba(17, 17, 17, 0.308);
+            background-color: rgba(88, 88, 88, 0.308);
             border-radius: 20px;
             text-align: center;
             width: 40%;
@@ -90,20 +93,8 @@ form{
             border: none;
             outline: none;
             background: none;
-            color: rgb(0, 0, 0);
-            border-bottom: 1.5px solid black;
-        }
-.btn{
-            padding: 12px;
-            width: 40%;
-            font-size: 15px;
-            font-weight: bold;
-            border: none;
-            outline: none;
-            border-radius: 10px;
-            background: sandybrown;
-            margin-top: 15px;
-            
+            color: white;
+            border-bottom: 1.5px solid rgb(236, 236, 236);
         }
         form p{
             color: white;
@@ -139,14 +130,14 @@ form{
             background: rgb(255, 255, 255);
         }
         form p a{
-            color: sandybrown;
+            color: rgb(44, 171, 209);
         }
         #forogt-password{
             color: white;
             margin-left: -50%;
         }
         .signUp{
-            color: sandybrown;
+            color: rgb(44, 171, 209);
         }
         small{
             color:red;

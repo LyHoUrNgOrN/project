@@ -14,7 +14,6 @@
             placeholder="Event name..."
             id="eventTitle"
             v-model="name"
-           
           />
           
           <div class="placeInput">

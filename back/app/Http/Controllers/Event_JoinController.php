@@ -42,20 +42,20 @@ class Event_JoinController extends Controller
     public function getMemberJoinEvent($eventId)
     {
         // When you provide Id of the event you will get all member user that join event
-        $event_joins = Event_Join::join('users', 'users.id', '=', 'event__joins.user_id')
+        $event_join_members = Event_Join::join('users', 'users.id', '=', 'event__joins.user_id')
               ->join('events', 'events.id', '=', 'event__joins.event_id')
               ->where([['event__joins.event_id','=',$eventId],['event__joins.role','=','member']])
               ->get(['users.*','event__joins.role']);
-        return $event_joins;
+        return $event_join_members;
     }
 
     // When you provide Id of the user you will get all event of that user has joined
     public function getEventOfUserHasJoin($userId){
-        $event_user = Event_Join::join('users', 'users.id', '=', 'event__joins.user_id')
+        $event_user_joined = Event_Join::join('users', 'users.id', '=', 'event__joins.user_id')
               ->join('events', 'events.id', '=', 'event__joins.event_id')
               ->where([['event__joins.user_id','=',$userId],['event__joins.role','=','member']])
-              ->get(['events.*','event__joins.role']);
-        return $event_user;
+              ->get(['events.id']);
+        return $event_user_joined;
     }
 
     // When you provide Id of the user you will get all event of that user has created
@@ -63,8 +63,8 @@ class Event_JoinController extends Controller
         $event_user = Event_Join::join('users', 'users.id', '=', 'event__joins.user_id')
               ->join('events', 'events.id', '=', 'event__joins.event_id')
               ->where([['event__joins.user_id','=',$userId],['event__joins.role','=','creator']])
-            //   ->where('event__joins.role','=','creator')
-              ->get(['events.*','event__joins.role']);
+              ->orderBy('event__joins.event_id', 'DESC')
+              ->get(['events.*','event__joins.role', 'users.name']);
         return $event_user;
     }
 
@@ -74,12 +74,21 @@ class Event_JoinController extends Controller
               ->join('events', 'events.id', '=', 'event__joins.event_id')
               ->join('categories', 'events.category_id', '=', 'categories.id')
               ->where([['event__joins.user_id','!=',$userId],['event__joins.role','=','creator']])
-            //   ->where('event__joins.role','=','creator')
-                // :with('name')
               ->get(['events.*','users.name', 'event__joins.role', 'categories.name']);
+
         return $event_user;
     }
+
+    // Get Id To quit from event
+    public function getEvent_Join_Id($eventId,$userId){
+        $event_join_id = Event_Join::join('users', 'users.id', '=', 'event__joins.user_id')
+              ->join('events', 'events.id', '=', 'event__joins.event_id')
+              ->where([['event__joins.event_id','=',$eventId],['event__joins.user_id','=',$userId],['event__joins.role','=','member']])
+              ->get(['event__joins.id']);
+        return $event_join_id;
+    }
     /**
+     * 
      * Display the specified resource.
      *
      * @param  int  $id
@@ -108,8 +117,12 @@ class Event_JoinController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function quitEvent($id)
     {
-        //
+        $isDelete = Event_Join::destroy($id);
+        if($isDelete){
+            return response()->json(["message"=>"quited"],201);
+        }
+        return response()->json(["message"=>"quit_error"],404);
     }
 }
