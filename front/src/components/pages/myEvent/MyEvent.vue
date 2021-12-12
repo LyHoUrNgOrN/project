@@ -34,7 +34,7 @@
               want to cancel this Event!!!
             </h4>
             <template #actions>
-              <button @click="removeEvent" class="confirm_btn">Cacel</button>
+              <botton-widget @click="removeEvent" class="confirm_btn">Cancel</botton-widget>
             </template>
           </dialog-box>
 
@@ -44,9 +44,8 @@
               :dialog-buttton='dialogButtton'
               :dialog-mode="dialogMode"
               @close="close"
-              @display-event="displayEvent"
+              @display-event="displayAllEvent"
             >
-
             </event-form>
         </div>
       </div>
@@ -120,7 +119,6 @@ export default {
     displayEvent(display){
       console.log(display);
       this.displayAllEvent();
-      // this.eventList = display;
     },
     displayAllEvent() {
       const id = JSON.parse(localStorage.getItem("user")).id;
@@ -131,6 +129,8 @@ export default {
   },
   mounted() {
     this.displayAllEvent();
+    localStorage.setItem('path', this.$route.path);
+
   },
   provide(){
     return {$oneEvent :()=> this.oneEvent};
@@ -139,6 +139,8 @@ export default {
 </script>
 
 <style scoped>
+
+
 .sidebarRight {
   width: 83%;
   background: rgb(22, 22, 22);
@@ -190,6 +192,14 @@ export default {
 }
 h4 {
   font-size: 22px;
+}
+.fa-exclamation-triangle{
+  color: red;
+  font-size: 30px;
+  margin-right: 10px;
+}
+.fa-pencil-square-o{
+  margin-right: 10px;
 }
 
 </style>

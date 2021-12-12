@@ -17,6 +17,7 @@ import BottonWidget from "./components/UI/Button.vue";
 import CategoryCards from './components/pages/CategoryCards.vue';
 import CategoryView from './components/pages/categories/category.vue';
 import EventForm from './components/pages/EventForm.vue';
+import EventDetail from './components/pages/eventDetail/EventDetail.vue';
 
 const app = createApp(App);
 app.component("sign-in", SignIn);
@@ -28,6 +29,7 @@ app.component('event-header', EventHeader);
 app.component('botton-widget', BottonWidget);
 app.component('category-cards', CategoryCards);
 app.component('event-form', EventForm);
+// app.component('event-detail', EventDetail);
 
 
 
@@ -40,8 +42,9 @@ const router = createRouter({
       { path: '/category', component: CategoryView },
       { path: '/myEvent', component: MyEvent , props: true},
       { path: '/event', component: Event },
-      { path: '/event/:sub', component: Event },
-      { path: '/myEvent/:sub', component: MyEvent },
+      { path: '/event/:eventTitle', component: EventDetail,props: true },
+      { path: '/myEvent/:eventTitle', component: EventDetail,props: true },
+ 
     ]
 })
 

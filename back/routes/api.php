@@ -63,4 +63,7 @@ Route::get("event_member/{eventId}",[Event_JoinController::class, "getMemberJoin
 Route::get("event_user_has_joins/{userId}",[Event_JoinController::class, "getEventOfUserHasJoin"]);
 Route::get("event_users/{userId}",[Event_JoinController::class, "getEventOfUser"]);
 Route::get("event_other/{userId}",[Event_JoinController::class, "getEvent"]);
+Route::delete("event_quit/{userId}",[Event_JoinController::class, "quitEvent"]);
+Route::get("event_quit_id/{eventid}/{userid}",[Event_JoinController::class, "getEvent_Join_Id"]);
+// Route::get("getEventJoin/{userId}",[Event_JoinController::class, "getEvent"]);
 

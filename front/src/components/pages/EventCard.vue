@@ -1,12 +1,13 @@
 <template>
 
-    <div class="card">
-        <img :src="'http://localhost:8000/storage/pictures/'+eventData.picture" alt="">
-        <h4>{{ eventData.title }}</h4>
-        <p>Date Start: {{ eventData.dateStart }}</p>
-        <p>Date End: {{ eventData.dateEnd }}</p>
-        <p>Member: {{ memberOfEvent  }} people</p>
-        <p>Country: {{ eventData.country }} people</p>
+    <div class="card" >
+        <div class="card_hover"></div>
+        <img :src="'http://localhost:8000/storage/pictures/'+eventData.picture" alt="" @click="eventDetail(eventData)">
+        <h4 @click="eventDetail(eventData)">{{ eventData.title }}</h4>
+        <p @click="eventDetail(eventData)">Date Start: {{ eventData.dateStart }}</p>
+        <p @click="eventDetail(eventData)">Date End: {{ eventData.dateEnd }}</p>
+        <p @click="eventDetail(eventData)">Member: {{ getMembers() }} people</p>
+        <p @click="eventDetail(eventData)">Country: {{ eventData.country }} people</p>
         <div class="">
             <slot></slot>
         </div>
@@ -19,21 +20,33 @@ import axios from "../../api/api.js";
 
 export default {
     props: ['eventData'],
-
     data(){
         return {
             event: this.eventData,
             memberOfEvent: null,
         }
     },
+    methods:{
+        getMembers(){
+            axios.get('/event_member/'+ this.event.id).then(res => {
+                this.memberOfEvent = res.data.length;
+            });
+            return this.memberOfEvent;
+        },
+        eventDetail(detailEvent){
+            const path = localStorage.getItem('path');
+            this.$router.push(path + '/' + detailEvent.title); 
+            localStorage.setItem('event_detail', JSON.stringify(detailEvent));
+
+        }
+    },
 
     mounted(){
         axios.get('/event_member/'+ this.event.id).then(res => {
             this.memberOfEvent = res.data.length;
-            console.log(this.memberOfEvent);
-
         })
-    }
+    },
+
 }
 </script>
    
@@ -52,7 +65,6 @@ export default {
     .moreIcon:hover {
         background: rgba(112, 114, 112, 0.726);
     }
-
     .card{
         width: 30%;
         background: rgb(51, 51, 51);
@@ -69,6 +81,18 @@ export default {
         width: 100%;
         height: 200px;
         border-radius: 4px;
+        margin: auto;
+    }
+    img:hover{
+        opacity: 0.7;
+    }
+    .card:hover img{
+        opacity: .7;
+    }
+    .card:hover h4{
+        opacity: 1;
+        /* font-size: 20px; */
+        color: white;
     }
     .card h4{
         margin-top: 0;

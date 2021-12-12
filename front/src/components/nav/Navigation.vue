@@ -4,64 +4,81 @@
             <h2>Event-Me</h2>
         </ul>
         <ul>
-            <!-- <li><router-link id="menu" to="/home">Home</router-link></li> -->
             <li><router-link id="menu" to="/event">Event</router-link></li>
             <li><router-link id="menu" to="/myEvent">My Event</router-link></li>
             <li><router-link id="menu" to="/category">Category</router-link></li>
-            
-             <!-- <li class="searchBoxIcon">
-                    <input class="searchInput" type="text" name="" placeholder="Search Event">
-                    <button class="searchButton" href="#">
-                        <i class="fa fa-search"></i>
-                    </button>
-                </li> -->
             <li>
                 <img class="profile" :src="displayProfile()" alt="" @click="openProfile">
             </li>
 
         </ul>
-                <div id="myModal" class="modal">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <span class="close" @click="close">&times;</span>
-                        </div>
-                    <div class="profile">
-                        <img :src="displayProfile()" alt="">
-                    
+            <div id="myModal" class="modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <span class="close" @click="close">&times;</span>
                     </div>
-                    
-                    <div class="modal-body">
-                        <p class="name">
-                            <i class="fa fa-user-circle-o"></i>
-                             {{activeUser.name}}
-                        </p>
-                        <p class="email">
-                            <i class="fa fa-envelope"></i>
-                             {{activeUser.email}}
-                        </p>
-                        <p class="phone">
-                            <i class="fa fa-phone-square"></i>
-                             +855 969494090
-                        </p>
-                        <p class="address">
-                            <i class="fa fa-map-marker"></i>
-                             Phnom Penh
-                        </p>
-                        <router-link to='/signIn' @click="signOut"><botton-widget>Sign Out</botton-widget></router-link>
-     
-                    </div>
+                <div class="profile">
+                    <img :src="displayProfile()" alt="">
+                
                 </div>
+                
+                <div class="modal-body">
+                    <p class="name">
+                        <i class="fa fa-user-circle-o"></i>
+                            {{activeUser.name}}
+                    </p>
+                    <p class="email">
+                        <i class="fa fa-envelope"></i>
+                            {{activeUser.email}}
+                    </p>
+                    
+                    <p class="editData" @click="editData"><i class="fa fa-sliders"></i> Update your personal data</p>
+                    <router-link to='/signIn' @click="signOut"><botton-widget>Sign Out</botton-widget></router-link>
+                    
+                    <dialog-box
+                        v-if="diplayedDialog"
+                        :title="dialogTitle"
+                        @close="closeDialog"
+                        >
+                        <hr>
+                        <!-- <label for="description" >Category Name</label> -->
+                        <!-- <img :src="imageProfile" alt="" class="newProfile"> -->
+                        <!-- <label for="profile" class="editProfile">
+                            <i class="fa fa-camera" aria-hidden="true"></i>
+                        </label> -->
+                        <label for="">Your Name</label>
+                        <input type="text" v-model="newName" placeholder="New Name" id="username"/>
+                        <label for="">Your Email</label>
+                        <input type="text" v-model="newEmail" placeholder="New Email" id="yourEmail"/>
+                        <input type="file" id="profile" @change="chooseNewImage" />
+                        <!-- <small class="ok" v-if="errorCategoryMessage === 'ok'"><i class="fa fa-check-circle-o" ></i>{{errorCategoryMessage}}</small> -->
+                        <small class="errorMessage" >{{ errorMessage }}</small>
+
+                        <template #actions>
+                            <botton-widget class="update_btn" @click="updateData">Update</botton-widget>
+                        </template>
+                    </dialog-box>
+                </div>
+            </div>
         </div>
     </nav>
 </template>
 
 <script>
+import axios from "../../api/api.js";
+
 export default {
     inject:["$activeUser"],
-    emits:['sign-out'],
+    emits:['sign-out', 'newData'],
     data(){
         return{
-            
+            diplayedDialog: false,
+            dialogTitle: "Update your Data",
+            newName: '',
+            newEmail: '',
+            profile: '',
+            errorMessage: '',
+
         }
     },
     methods: {
@@ -80,10 +97,41 @@ export default {
             this.$router.push('/signIn');
         },
         displayProfile(){
-            console.log(this.activeUser.profile);
             return "http://127.0.0.1:8000/storage/profiles/" + this.activeUser.profile;
-        }
+        },
+        closeDialog(){
+            this.diplayedDialog = false;
+            this.errorMessage = "";
+        },
+        editData(){
+            this.diplayedDialog = true;
+            this.newName = this.activeUser.name;
+            this.newEmail = this.activeUser.email;
+            this.imageProfile = 'http://127.0.0.1:8000/storage/profiles/' + this.activeUser.profile;
+        },
+        updateData(){
+            console.log(this.activeUser.id);
+            if(this.newName !== '' && this.newEmail !== ''){
+                const newData = {
+                    name: this.newName,
+                    email: this.newEmail,
+                    profile: this.activeUser.profile
+                }
+                axios.put('/users/'+ parseInt(this.activeUser.id), newData).then(()=> {
+                    // console.log(newData);
+                    newData['id'] = this.activeUser.id;
+                    localStorage.setItem('user', JSON.stringify(newData));
+                    this.$emit('newData', newData);
+                    this.activeUser = newData;
+
+                })
+                this.closeDialog();
+            }else{
+                this.errorMessage = "Your data cannot be null";
+            }
+        },
     },
+
     computed : {
         activeUser (){
             return this.$activeUser();
@@ -137,9 +185,9 @@ export default {
     nav ul li .profile {
         width: 50px;
         height: 50px;
-        background: yellow;
+        background: rgb(43, 43, 42);
         border-radius: 50%;
-        border: 1px solid gray;
+        /* border: 1px solid gray; */
 
     }
 
@@ -150,10 +198,15 @@ export default {
     .modal-body>p{
         border-bottom: 1px solid gray;
     }
+    .editData{
+        cursor: pointer;
+        /* color: cornflowerblue; */
+    }
     .modal-body>.name,
     .modal-body>.address,
     .modal-body>.email,
-    .modal-body>.phone{
+    .modal-body>.country,
+    .modal-body>.editData{
         
         width: 100%; 
         padding: 10px; 
@@ -163,8 +216,9 @@ export default {
     }
     .fa-user-circle-o,
     .fa-envelope,
-    .fa-phone-square,
-    .fa-map-marker {
+    .fa-globe,
+    .fa-map-marker,
+    .fa-sliders {
         font-size: 20px;
         margin-right: 10px;
     }
@@ -234,6 +288,40 @@ export default {
 
     .modal-body {
         padding: 2px 16px;
+    }
+    .editProfile{
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: absolute;
+        top: 145px;
+        left: 35px;
+        font-size: 22px;
+        color: rgba(116, 113, 113, 0.911);
+    }
+    .newProfile{
+        width: 120px;
+        height: 120px;
+        border-radius: 50%;
+        margin: auto;
+        margin-left: 40%;
+    }
+    #profile{
+        display: none;
+    }
+    #username,
+    #yourEmail{
+        /* padding: 1px; */
+        margin: auto;
+        width: 70%;
+        margin-top: 10px;
+        outline: none;
+    }
+    .errorMessage {
+        color: red;
+        margin-left: 12%;
+        margin-top: 15px;
     }
 
 </style>

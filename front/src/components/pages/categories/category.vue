@@ -155,7 +155,9 @@ export default {
 
     },
     mounted() {
-        this.displayAllCategory();            
+        this.displayAllCategory();  
+        localStorage.setItem('path', this.$route.path);
+
     },
 }
 </script>
@@ -168,10 +170,10 @@ export default {
     ::-webkit-scrollbar {
         width: 0px;
     }
+
     .container{
         margin: auto;
         width: 70%;
-        /* background: cadetblue; */
     }
     
     .search {
@@ -184,7 +186,7 @@ export default {
 
     .searchTerm {
         width: 100%;
-        border: 3px solid #00B4CC;
+        border: 3px solid rgb(44, 171, 209);
         border-right: none;
         padding: 10px;
         height: 20px;
@@ -202,8 +204,8 @@ export default {
     .searchButton {
         width: 50px;
         /* height: 36px; */
-        border: 1px solid #00B4CC;
-        background: #00B4CC;
+        border: 1px solid rgb(44, 171, 209);
+        background: rgb(44, 171, 209);
         text-align: center;
         color: #fff;
         border-radius: 0 5px 5px 0;
