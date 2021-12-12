@@ -10,5 +10,10 @@ class Category extends Model
     use HasFactory;
     protected $fillable = ['name'];
 
+
+    public function event(){
+        return $this->hasMany(Event::class);
+    }
+    public $table = "categories";
    
 }

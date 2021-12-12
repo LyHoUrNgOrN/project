@@ -124,6 +124,13 @@ export default {
         background: #154360;
 
     }
+    li:hover .fa-trash,
+    li:hover .fa-pencil-square-o{
+        display: block;
+    }
+    li:hover{
+        background: #536570;
+    }
     .btn_category {
         display: flex;
         justify-content: space-between;
@@ -134,9 +141,11 @@ export default {
     }
     .fa-trash{
         color: rgb(187, 33, 33);
+        display: none;
     }
     .fa-pencil-square-o{
-        color: #F1C40F
+        color: #F1C40F;
+        display: none;
     }
 
     /* ............................................... */
@@ -155,11 +164,12 @@ export default {
     input{
         display: block;
         width: 95%;
-        border: 1px solid #ccc;
+        border: 1px solid #154360;
         font: inherit;
         padding: 15px;
         border-radius: 5px;
         margin-top: 7px;
+        outline: none;
     }
     .fa-exclamation-triangle{
         color: red;
@@ -168,7 +178,7 @@ export default {
     input:focus{
         background-color: #f0e6fd;
         outline: none;
-        border-color: #3d008d;
+        border-color: #536570;
     }
 
     h3 {

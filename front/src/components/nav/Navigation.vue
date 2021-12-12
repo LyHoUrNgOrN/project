@@ -91,7 +91,6 @@ export default {
             this.$router.push('/signIn');
         },
         displayProfile(){
-            console.log(this.activeUser.profile);
             return "http://127.0.0.1:8000/storage/profiles/" + this.activeUser.profile;
         },
         closeDialog(){
@@ -126,6 +125,7 @@ export default {
             }
         },
     },
+
     computed : {
         activeUser (){
             return this.$activeUser();

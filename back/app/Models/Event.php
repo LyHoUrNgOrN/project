@@ -23,5 +23,10 @@ class Event extends Model
     public function users(){
         return $this->belongsToMany(User::class,'event_joins','event_id','user_id');
     }
+    public function category(){
+        return $this->belongsTo(Category::class);
+    }
+
+
     public $table = "events";
 }

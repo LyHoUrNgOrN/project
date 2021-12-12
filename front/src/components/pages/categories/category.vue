@@ -130,7 +130,7 @@ export default {
         },
         validateMessageError(name){
             if (name !== ''){
-                let as = this.categoryList.filter((category) => category.name === name);
+                let as = this.categoryList.filter((category) => category.name.toLowerCase() === name.toLowerCase());
                 if(as.length === 0){
                     this.errorCategoryMessage = 'ok';
 
@@ -161,7 +161,9 @@ export default {
 
     },
     mounted() {
-        this.displayAllCategory();            
+        this.displayAllCategory();  
+        localStorage.setItem('path', this.$route.path);
+
     },
 }
 </script>
@@ -223,6 +225,7 @@ export default {
         outline: none;
         color: black;
         font-weight: bold;
+        outline: #00B4CC;
 
     }
 
@@ -243,28 +246,6 @@ export default {
     }
     
 
-    /* .category{
-        color: rgb(207, 207, 207);
-        font-weight: bold;
-        width: 80%;
-        border-bottom: 2px solid gray;
-        margin: auto;
-        margin-top: 40px;
-        margin-bottom: -20px;
-        font-size: 18px;
-        /* float: left; */
-        /* text-align: left;
-    } */
-
-    /* .create_category {
-        width: 100px;
-        align-self: flex-end;
-        font-size: 15px;
-        font-weight: bold;
-        margin-left: 60%;
-        margin-top: 60px;
-        margin-bottom: -100px;
-    } */
     .create_category{
         margin-top: 50px;
     }
@@ -280,11 +261,15 @@ export default {
     input{
         display: block;
         width: 95%;
-        border: 1px solid #ccc;
+        border: 1px solid #154360;
         font: inherit;
         padding: 15px;
         border-radius: 5px;
         margin-top: 7px;
+        outline: none;
+    }
+    input:focus{
+        background: #2a546e3a;
     }
     .create_category_btn {
         margin-top: 0;

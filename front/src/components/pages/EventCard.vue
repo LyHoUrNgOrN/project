@@ -1,13 +1,13 @@
 <template>
 
-    <div class="card">
-        <img :src="'http://localhost:8000/storage/pictures/'+eventData.picture" alt="">
-        <h4>{{ eventData.title }}</h4>
-        <p>Date Start: {{ eventData.dateStart }}</p>
-        <p>Date End: {{ eventData.dateEnd }}</p>
-        <p>Member: {{ getMember()  }} people</p>
-        <p>Country: {{ eventData.country }} people</p>
-        <div class="">
+    <div class="card" >
+        <img :src="'http://localhost:8000/storage/pictures/'+eventData.picture" alt="" @click="eventDetail(eventData)">
+        <h4 @click="eventDetail(eventData)">{{ eventData.title }}</h4>
+        <p @click="eventDetail(eventData)">Date Start: {{ eventData.dateStart }}</p>
+        <p @click="eventDetail(eventData)">Date End: {{ eventData.dateEnd }}</p>
+        <p @click="eventDetail(eventData)">Member: {{ getMembers() }} people</p>
+        <p @click="eventDetail(eventData)">Country: {{ eventData.city }} in {{ eventData.country }}</p>
+        <div class="btn">
             <slot></slot>
         </div>
     </div>
@@ -19,7 +19,6 @@ import axios from "../../api/api.js";
 
 export default {
     props: ['eventData'],
-
     data(){
         return {
             event: this.eventData,
@@ -27,21 +26,29 @@ export default {
         }
     },
     methods:{
-        getMember(){
+        getMembers(){
             axios.get('/event_member/'+ this.event.id).then(res => {
-            this.memberOfEvent = res.data.length;
-            // console.log(this.memberOfEvent);
-
-            })
+                this.memberOfEvent = res.data.length;
+            });
             return this.memberOfEvent;
+        },
+        eventDetail(detailEvent){
+            const path = localStorage.getItem('path');
+            this.$router.push(path + '/' + detailEvent.title); 
+            localStorage.setItem('event_detail', JSON.stringify(detailEvent));
+
         }
     },
+
     mounted(){
-        
-    }
+        axios.get('/event_member/'+ this.event.id).then(res => {
+            this.memberOfEvent = res.data.length;
+        })
+    },
+
 }
 </script>
-
+   
 <style scoped>
     .moreIcon{
         width: 5%;
@@ -57,7 +64,6 @@ export default {
     .moreIcon:hover {
         background: rgba(112, 114, 112, 0.726);
     }
-
     .card{
         width: 30%;
         background: #154360;
@@ -76,6 +82,19 @@ export default {
         width: 100%;
         height: 200px;
         /* border-radius: 4px; */
+        border-radius: 4px;
+        margin: auto;
+    }
+    img:hover{
+        opacity: 0.7;
+    }
+    .card:hover img{
+        opacity: .7;
+    }
+    .card:hover h4{
+        opacity: 1;
+        /* font-size: 20px; */
+        color: white;
     }
     .card h4{
         margin-top: 0;
@@ -92,4 +111,13 @@ export default {
         margin-left: 15px;
     }
 
-</style>
+    #category {
+        position: absolute;
+        background: rgb(55, 175, 231);
+        border-radius: 5px 0 5px 0;
+        padding: 2px;
+    }
+    .btn{
+        margin-bottom: 0;
+    }
+</style> 

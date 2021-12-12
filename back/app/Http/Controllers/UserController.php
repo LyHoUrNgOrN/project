@@ -28,12 +28,6 @@ class UserController extends Controller
         //move image to storage
         $request->file('profile')->store('public/profiles');
 
-        //Get original image to storage
-        // $original= $request->file('profile')->getClientOriginalName();
-
-        // Get image size 
-        // $imgSize = $request->file('image')->getSize();
-        
         $user = new User();
         $user->name = $request->name;
         $user->email = $request->email;

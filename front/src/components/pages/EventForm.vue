@@ -157,6 +157,7 @@ export default {
         "description": this.description,
         "picture": this.oneEvent.picture,
       }
+      console.log(this.eventId);
       axios
           .put("/events/" + this.eventId, editEvent)
           .then((res) => {
@@ -206,6 +207,7 @@ export default {
         this.city = this.oneEvent.city;
         this.eventCategory = this.oneEvent.category_id;
         this.eventId = this.oneEvent.id;
+        console.log(this.eventId);
         this.description = this.oneEvent.description;
         this.isEdit = false;
       }

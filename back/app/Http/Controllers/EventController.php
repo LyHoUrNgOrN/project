@@ -82,9 +82,6 @@ class EventController extends Controller
             // 'picture' =>'image|mimes:jpg,png,jpeg,gif|max:19999',
             'picture' => 'nullable'
         ]);
-        
-        // $request->file('picture')->store('public/pictures');
-        // $name = $request->file('image')->getClientOriginalName();
 
         $event = Event::findOrFail($id);
         $event->title = $request->title;
@@ -98,7 +95,7 @@ class EventController extends Controller
         // $event->picture = $request->file('picture')->hashName();
 
         $event->save();
-        return response()->json(['message'=> 'Event Updated',"data"=>$request->picture], 201);
+        return response()->json(['message'=> 'Event Updated', 'data'=>$event], 201);
     }
 
     /**

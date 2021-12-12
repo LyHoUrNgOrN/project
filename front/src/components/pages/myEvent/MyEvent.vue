@@ -1,12 +1,7 @@
 <template>
   <section>
-    <!-- <menu-bar></menu-bar> -->
     <div class="main">
-      <!-- <sub-navigation></sub-navigation> -->
       <div class="mainRight">
-        <!-- <header>
-          <li class="header">All Event</li>
-        </header> -->
         <event-header
         :title="event_title"
         ></event-header>
@@ -23,8 +18,6 @@
               <button class="cancel_btn" @click="showCancelEvent(event.id)"> Cancel</button>
               <button class="edit_btn" @click="showEditEvent(event)"><i class="fa fa-pencil-square-o"></i>Edit</button>
             <!-- </div> -->
-
-            
           </event-card>
 
           <!-- Cancel dialog -->
@@ -51,7 +44,6 @@
               @close="close"
               @display-event="displayAllEvent"
             >
-
             </event-form>
         </div>
       </div>
@@ -99,6 +91,7 @@ export default {
       this.display = true;
       this.dialogMode = "edit";
       this.oneEvent = event;
+      console.log(this.oneEvent);
     },
     closeDialog() {
       this.dialogDisplay = false;
@@ -124,6 +117,10 @@ export default {
       this.display = true;
       this.dialogMode = "create";
     },
+    displayEvent(display){
+      console.log(display);
+      this.displayAllEvent();
+    },
     displayAllEvent() {
       const id = JSON.parse(localStorage.getItem("user")).id;
       axios.get("/event_users/" + parseInt(id)).then((res) => {
@@ -133,6 +130,8 @@ export default {
   },
   mounted() {
     this.displayAllEvent();
+    localStorage.setItem('path', this.$route.path);
+
   },
   provide(){
     return {$oneEvent :()=> this.oneEvent};

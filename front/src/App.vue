@@ -1,3 +1,4 @@
+
 <template>
   <section>
     <menu-bar v-if="activeUser" @sign-out="userSignOut" @new-data="userSignIn"></menu-bar>
@@ -23,23 +24,32 @@ export default {
         console.log(user);
         this.activeUser = user;
         localStorage.setItem('user',JSON.stringify(user));
+        localStorage.setItem('path', '/myEvent');
       },
       userSignOut(){
         this.activeUser = null;
       }
   },
   mounted() {
-    if ((window.localStorage.getItem("user") !== null) && this.$route.path == "/signIn" || this.$route.path == "/") {
-      this.$router.push("/myEvent"); // redirect to myEvent, for example
+    if ((window.localStorage.getItem("user") !== null) && this.$route.path == "/signIn" ) {
+      // || this.$route.path == "/"
+      let pathed = localStorage.getItem('path');
+      console.log(pathed);
+      this.$router.push(pathed); // redirect to myEvent, for example
+      this.activeUser = JSON.parse(localStorage.getItem("user"));
+
     }
     let user = JSON.parse(localStorage.getItem("user"));
     if(user !== null){
         this.activeUser = JSON.parse(localStorage.getItem("user"));
-        this.$router.push('/myEvent');
+        const pathed = localStorage.getItem('path');
+        this.$router.push(pathed);
     }
     else{
        this.activeUser = user;
        this.$router.push('/signIn');
+      localStorage.setItem('path', '/');
+
     }
     window.onpopstate = event => {
       if ((window.localStorage.getItem("user") !== null) && this.$route.path == "/signIn" || this.$route.path == "/") {

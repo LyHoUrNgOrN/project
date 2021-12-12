@@ -4,12 +4,12 @@
         <form action="#">
             <h1>Sign In Here</h1>
             <div class="textbox">
-                <label for="name" id="userName_icon"><i class="fa fa-user" aria-hidden="true"></i></label>
-                <input type="text" id="name" v-model="userName" placeholder="Username ">
+                <label :for="nameId" :id="idIcon"><i class="fa fa-user" aria-hidden="true"></i></label>
+                <input type="text" :id="nameId" v-model="userName" placeholder="Username ">
             </div>
             <div class="textbox">
-                <label for="password" id="password_icon"><i class="fa fa-lock" aria-hidden="true"></i></label>
-                <input :type="type" id="password" v-model="password" placeholder="Password">
+                <label :for="passwordId" :id="passwordIcon"><i class="fa fa-lock" aria-hidden="true"></i></label>
+                <input :type="type" :id="passwordId" v-model="password" placeholder="Password">
             </div>
             <small>{{messageError}}</small>
             <br>
@@ -38,36 +38,54 @@ export default {
     emits:["sign-in"],
     data(){
         return {
-            userName:null,
-            password:null,
+            userName:'',
+            password:'',
             userList : [],
             loginResult: false,
             messageError:null,
             type: 'password',
             btnText: 'Show Password',
+            idIcon: 'userName_icon',
+            nameId:'name',
+            passwordId: 'password',
+            passwordIcon: 'password_icon',
         }
     },
     methods: {
         signIn(event){
-            event.preventDefault();
-            let user = {
-                name:this.userName,
-                password:this.password,
-            }
-            axios.post('/signin',user).then(res=>{
-                let user = res.data.user;
-                this.$emit("sign-in",user);
-                this.$router.push('/myEvent');
-            }).catch(error=>{
-                if (error.response) {
-                    this.messageError = error.response.data.message;
-                    console.log(error.response.data.message);
-                    console.log(error.response.status);
-                    console.log(error.response.headers);
+            
+            if (this.userName !== '' && this.password !== ''){
+                event.preventDefault();
+                let user = {
+                    name:this.userName,
+                    password:this.password,
                 }
-            });
-            this.userName = null;
-            this.password = null;
+                axios.post('/signin',user).then(res=>{
+                    let user = res.data.user;
+                    this.$emit("sign-in",user);
+                    this.$router.push('/myEvent');
+                }).catch(error=>{
+                    if (error.response) {
+                        this.messageError = error.response.data.message;
+                        console.log(error.response.data.message);
+                        console.log(error.response.status);
+                        console.log(error.response.headers);
+                    }
+                });
+                this.userName = '';
+                this.password = null;
+            }else{
+                if(this.name === '' ){
+                    this.idIcon = 'nameMissing';
+                    this.nameId = 'nameError';
+                }
+                if(this.password === '' ){
+                    this.passwordIcon = 'passwordMissing';
+                    this.passwordId = 'passwordError';
+                }
+                
+                console.log(123);
+            }
         },
         showOrHidePass(){
             if(this.type === 'password') {
@@ -115,6 +133,16 @@ export default {
         margin-top: 10px;
         outline: none;
     }
+    #nameError,
+    #passwordError{
+         width: 50%;
+        padding: 15px;
+        border: 1px solid red;
+        background: #2a546e3a;
+        font-size: 18px;
+        margin-top: 10px;
+        outline: none;
+    }
     
     .textbox{
         /* width: 80%; */
@@ -135,6 +163,20 @@ export default {
         margin-left: 16%;
         margin-top: 10px;
 
+    }
+    #nameMissing,
+    #passwordMissing{
+        width: 50px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background: white;
+        border-right: none;
+        font-size: 24px;
+        color: red;
+        border: 1px solid red;
+        margin-left: 16%;
+        margin-top: 10px;
     }
 
     hr{
