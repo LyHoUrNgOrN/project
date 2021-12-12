@@ -17,7 +17,7 @@ export default {
         border: none;
         outline: none;
         border-radius: 10px;
-        background: rgb(44, 171, 209);
+        background: #154360;
         margin-top: 15px;
         color: white;
     }

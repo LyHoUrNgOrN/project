@@ -1,18 +1,22 @@
 <template>
-    <div class="form">
+   <div class="con">
+        <div class="form">
         <form action="#">
             <h1>Sign In Here</h1>
             <div class="textbox">
-                <i class="fa fa-user" aria-hidden="true"></i>
+                <label for="name" id="userName_icon"><i class="fa fa-user" aria-hidden="true"></i></label>
                 <input type="text" id="name" v-model="userName" placeholder="Username ">
             </div>
             <div class="textbox">
-                <i class="fa fa-lock" aria-hidden="true"></i>
-                <input type="password" id="password" v-model="password" placeholder="Password">
+                <label for="password" id="password_icon"><i class="fa fa-lock" aria-hidden="true"></i></label>
+                <input :type="type" id="password" v-model="password" placeholder="Password">
             </div>
             <small>{{messageError}}</small>
             <br>
-            <a id="forogt-password" href="#">Forgot password</a>
+            <div class="showPassword">
+                <input type="checkbox" id="showPass" name="showPass" @change="showOrHidePass">
+                <label for="showPass">{{btnText}}</label> 
+            </div>
             <br>
             <router-link  to='/' @click="signIn"><botton-widget >Sign In</botton-widget></router-link>
             <div class="or">
@@ -24,21 +28,23 @@
 
         </form>
     </div>
+   </div>
 </template>
 
-<script>
+<script scoped>
 import axios from "../../../api/api.js";
 
 export default {
     emits:["sign-in"],
     data(){
         return {
-
             userName:null,
             password:null,
             userList : [],
             loginResult: false,
             messageError:null,
+            type: 'password',
+            btnText: 'Show Password',
         }
     },
     methods: {
@@ -62,83 +68,116 @@ export default {
             });
             this.userName = null;
             this.password = null;
-        }
+        },
+        showOrHidePass(){
+            if(this.type === 'password') {
+                this.type = 'text'
+                this.btnText = 'Hide Password'
+            } else {
+                this.type = 'password'
+                this.btnText = 'Show Password'
+            }
+        },
     },   
 }
 </script>
 
 <style scoped>
 
-.form{
-            background-color: rgba(88, 88, 88, 0.308);
-            border-radius: 20px;
-            text-align: center;
-            width: 40%;
-            margin: auto;
-            padding: 10px;
-            margin-top: 100px;
-        }
-form{
-            width: 50%;
-            margin: auto;
-            
-        }
-        #name,
-        #password{
-            width: 90%;
-            padding: 15px;
-            margin-bottom: 10px;
-            border: none;
-            outline: none;
-            background: none;
-            color: white;
-            border-bottom: 1.5px solid rgb(236, 236, 236);
-        }
-        form p{
-            color: white;
-        }
-        .textbox{
-            display: flex;
-        }
-        form h1{
-            color: white;
-        }
-        .textbox i{
-            margin-top: 15px;
-            font-size: 20px;
-            color: white;
-        }
+    .con{
+        background-image: url('https://coreybradshaw.files.wordpress.com/2019/04/network-transformation-optimizednfv-16x9.jpg.rendition.intel_.web_.480.270.jpg');
+        background-size: cover;
+        padding-top: 5px;
+        margin: 0;
+        padding-bottom: 110px;
+    }
+    .form{
+        background-color: white;
+        border-radius: 40px;
+        text-align: center;
+        width: 35%;
+        margin: auto;
+        padding: 10px;
+        margin-top: 80px;
+    }
+    form{
+        /* width: 50%; */
+        margin: auto;
+        
+    }
+    #name,
+    #password{
+        width: 50%;
+        padding: 15px;
+        border: 1px solid #154360;
+        background: #2a546e3a;
+        font-size: 18px;
+        margin-top: 10px;
+        outline: none;
+    }
+    
+    .textbox{
+        /* width: 80%; */
+        display: flex;
+    }
+    #userName_icon,
+    #password_icon{
+        width: 50px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border: 1px solid #154360;
+        color: #154360;
+        background: white;
+        border-right: none;
+        font-size: 24px;
+        border: 1px 0 1px 1px solid #154360;
+        margin-left: 16%;
+        margin-top: 10px;
 
+    }
 
-        .or{
-            display: flex;
-            justify-content: space-between;
-        }
-        .or p{
-            border: 1px solid white;
-            padding: 3px;
-            padding-left: 6px;
-            padding-right: 6px;
-            border-radius: 50%;
-        }
-        .or #ruler{
-            height: 1px;
-            width: 44%;
-            margin-top: 30px;
-            background: rgb(255, 255, 255);
-        }
-        form p a{
-            color: rgb(44, 171, 209);
-        }
-        #forogt-password{
-            color: white;
-            margin-left: -50%;
-        }
-        .signUp{
-            color: rgb(44, 171, 209);
-        }
-        small{
-            color:red;
-            margin:2px;
-        }
+    hr{
+        width: 60%;
+        margin: auto;
+        margin-top: 10px;
+    }
+    #haveAccount{
+        color: rgb(49, 49, 49);
+    }
+    .signUp{
+        color: #154360;
+    }
+
+    .or{
+        width: 50%;
+        margin: auto;
+        display: flex;
+        /* justify-content: space-between; */
+
+    }
+    .or p{
+        border: 1px solid #154360;
+        padding: 3px;
+        padding-left: 6px;
+        padding-right: 6px;
+        border-radius: 50%;
+    }
+    .or #ruler{
+        height: 1px;
+        width: 50%;
+        margin-top: 30px;
+        background: #154360;
+    }
+
+    small{
+        color:red;
+        margin:2px;
+    }
+
+    .showPassword{
+        color: #154360;
+        margin-left: -40%;
+        font-size: 16px;
+    }
 </style>

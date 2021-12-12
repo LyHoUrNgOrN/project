@@ -1,12 +1,12 @@
 <template>
   <nav>
         <ul>
-            <h2>Event-Me</h2>
+            <img id="logo" src="https://scontent.xx.fbcdn.net/v/t1.15752-9/p168x128/264169873_606371380695158_665677976128419885_n.png?_nc_cat=111&ccb=1-5&_nc_sid=aee45a&_nc_eui2=AeF7J8eYkRPaNmQen0YO5VgbZ-i4psbY8Gln6LimxtjwacRER8rbBd-AuK-BGgT8qfCxmajadsoanVRR9VRIVuPE&_nc_ohc=mbqYKtLq310AX8On0i1&_nc_ad=z-m&_nc_cid=0&_nc_ht=scontent.xx&oh=03_AVJvsoWYKvLJzTTl5du0MuE6rzbee1TxgP0VceOAQQSiMg&oe=61DAEED8" alt="">
         </ul>
         <ul>
-            <li><router-link id="menu" to="/event">Event</router-link></li>
-            <li><router-link id="menu" to="/myEvent">My Event</router-link></li>
-            <li><router-link id="menu" to="/category">Category</router-link></li>
+            <router-link id="menu" to="/event">Event</router-link>
+            <router-link id="menu" to="/myEvent">My Event</router-link>
+            <router-link id="menu" to="/category">Category</router-link>
             <li>
                 <img class="profile" :src="displayProfile()" alt="" @click="openProfile">
             </li>
@@ -18,10 +18,8 @@
                     <span class="close" @click="close">&times;</span>
                     </div>
                 <div class="profile">
-                    <img :src="displayProfile()" alt="">
-                
+                    <img :src="displayProfile()" alt="">              
                 </div>
-                
                 <div class="modal-body">
                     <p class="name">
                         <i class="fa fa-user-circle-o"></i>
@@ -30,27 +28,23 @@
                     <p class="email">
                         <i class="fa fa-envelope"></i>
                             {{activeUser.email}}
-                    </p>
-                    
+                    </p>    
                     <p class="editData" @click="editData"><i class="fa fa-sliders"></i> Update your personal data</p>
                     <router-link to='/signIn' @click="signOut"><botton-widget>Sign Out</botton-widget></router-link>
-                    
                     <dialog-box
                         v-if="diplayedDialog"
                         :title="dialogTitle"
                         @close="closeDialog"
                         >
                         <hr>
-                        <!-- <label for="description" >Category Name</label> -->
-                        <!-- <img :src="imageProfile" alt="" class="newProfile"> -->
-                        <!-- <label for="profile" class="editProfile">
-                            <i class="fa fa-camera" aria-hidden="true"></i>
-                        </label> -->
-                        <label for="">Your Name</label>
-                        <input type="text" v-model="newName" placeholder="New Name" id="username"/>
-                        <label for="">Your Email</label>
-                        <input type="text" v-model="newEmail" placeholder="New Email" id="yourEmail"/>
-                        <input type="file" id="profile" @change="chooseNewImage" />
+                        <div class="box">
+                            <label for="username">Your Name</label><br>
+                            <input type="text" v-model="newName" placeholder="New Name" id="username"/>
+                        </div>
+                        <div class="box">
+                            <label for="yourEmail">Your Email</label><br>
+                            <input type="text" v-model="newEmail" placeholder="New Email" id="yourEmail"/>  
+                        </div>
                         <!-- <small class="ok" v-if="errorCategoryMessage === 'ok'"><i class="fa fa-check-circle-o" ></i>{{errorCategoryMessage}}</small> -->
                         <small class="errorMessage" >{{ errorMessage }}</small>
 
@@ -140,26 +134,31 @@ export default {
 }
 </script>
 <style scoped>
+    #logo{
+        width: 120px;
+        margin-bottom: -35px;
+        margin-left: -70%;
+    }
     #menu{
-        color: white;
+        color: #154360;
         text-decoration: none;
         font-weight: bold;
     }
-    #menu:hover {
+    /* #menu:hover {
         color: rgb(15, 135, 233);
         padding-bottom: 5px;
-    }
+    } */
     nav{
         margin-top: -8px;
         display: flex;
         justify-content: space-between;
         border-bottom: 1px solid rgb(214, 212, 212);
-        color: white;
+        /* color: rgb(0, 0, 0); */
+        background: white;
         position: sticky;
         top: 0;
-        background-image: url('https://ak.picdn.net/shutterstock/videos/9134405/thumb/1.jpg');
-        background-size: cover;
         z-index: 11;
+
     }
     
     nav ul {
@@ -180,6 +179,11 @@ export default {
         margin-top: 20px;
         padding-right: 4%;
         display: flex;
+    }
+    .router-link-active{
+        background: #15436057;
+        padding: 15px;
+        border-radius: 10px;
     }
 
     nav ul li .profile {
@@ -252,11 +256,12 @@ export default {
         margin: auto;
         padding: 0;
         width: 80%;
-        box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
+        /* box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19); */
         -webkit-animation-name: animatetop;
         -webkit-animation-duration: 0.4s;
         animation-name: animatetop;
-        animation-duration: 0.4s
+        animation-duration: 0.4s;
+        color: white;
     }
 
     /* / Add Animation / */
@@ -310,13 +315,23 @@ export default {
     #profile{
         display: none;
     }
+    .box{
+        
+        margin-top: 20px;
+        margin-left: 20%;
+    }
     #username,
     #yourEmail{
-        /* padding: 1px; */
+        padding: 15px;
+        outline: none;
         margin: auto;
         width: 70%;
-        margin-top: 10px;
         outline: none;
+        border: 1px solid #154360;
+        background: #2a546e3a;
+        color: #154360;
+        font-size: 16px;
+
     }
     .errorMessage {
         color: red;

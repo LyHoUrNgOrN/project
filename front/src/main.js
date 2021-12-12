@@ -12,7 +12,6 @@ import Event from './components/pages/event/Event.vue'
 import MyEvent from './components/pages/myEvent/MyEvent.vue'
 import DialogBox from './components/UI/DialogBox.vue'
 import EventCard from './components/pages/EventCard.vue'
-import EventHeader from './components/nav/EventHeader.vue'
 import BottonWidget from "./components/UI/Button.vue";
 import CategoryCards from './components/pages/CategoryCards.vue';
 import CategoryView from './components/pages/categories/category.vue';
@@ -24,7 +23,6 @@ app.component('sign-up', SignUp);
 app.component('menu-bar', MenuBar);
 app.component('dialog-box', DialogBox);
 app.component('event-card', EventCard);
-app.component('event-header', EventHeader);
 app.component('botton-widget', BottonWidget);
 app.component('category-cards', CategoryCards);
 app.component('event-form', EventForm);

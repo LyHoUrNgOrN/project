@@ -1,18 +1,22 @@
 <template>
   <div class="container">
-        <!-- <button >Create</button> -->
-        <botton-widget class="create_category" @click="displayFormCategory">+ Create</botton-widget>
-        <div class="wrap">
-            <div class="search">
-               <input type="text" class="searchTerm" placeholder="What are you looking for?" v-model="searchName" @keyup="searchCategory">
-               <button type="submit" class="searchButton">
-                 <i class="fa fa-search"></i>
-              </button>
+        <header>
+            <li class="header">All Categories</li>
+        </header>
+        <!-- <botton-widget class="create_category" @click="displayFormCategory">+ Create</botton-widget> -->
+        <!-- <div class="wrap"> -->
+            <div class="forSearch">
+                <div class="search">
+                    <button type="submit" class="searchButton" @click="searchCategory">
+                        <i class="fa fa-search"></i>
+                    </button>
+                    <input type="text" class="searchTerm" placeholder="What are you looking for?" v-model="searchName" @keyup="searchCategory">
+               
+                </div>
+                <botton-widget class="create_category" @click="displayFormCategory">+ Create</botton-widget>
+
             </div>
-         </div>
-         <div class="category">
-             All CTEGORIES
-         </div>
+         <!-- </div> -->
         <div class="category_card">
             <category-cards
                 v-for="category of categoryList" :key="category.id"
@@ -50,6 +54,7 @@
 
 <script scoped>
 import axios from "../../../api/api.js";
+// import EventHeader from '../../UI/Header.vue'
 
 export default {
     data(){
@@ -59,7 +64,8 @@ export default {
             diplayedDialog: false,
             newCategoryName: "",
             searchName:"",
-            dialogTitle: "Create New Category"
+            dialogTitle: "Create New Category",
+            event_title: "All categories",
         }
     },
     methods: {
@@ -160,7 +166,26 @@ export default {
 }
 </script>
 
-<style >
+<style scoped>
+
+    header{
+      /* list-style: none; */
+      padding: 20px;
+      background: #154360;
+      color: white;
+      position: sticky;
+      top: 143px;
+      z-index: 2;
+    }
+    .header{
+      list-style: none;
+      display: flex;
+      justify-self: start;
+      align-items: flex-start;
+      margin-left: 20px;
+      font-size: 20px;
+
+    }
     body{
         overflow: auto;
         font-family: sans-serif;
@@ -171,42 +196,44 @@ export default {
 
     .container{
         margin: auto;
-        width: 70%;
+        width: 100%;
     }
-    
+
     .search {
         width: 80%;
-        position: relative;
+        /* position: relative; */
         display: flex;
         margin: auto;
         margin-top: 40px;
+        margin-left: -0.1%;
     }
-
+    .forSearch{
+        width: 80%;
+        display: flex;
+        justify-content: space-between;
+        margin: auto;
+    }
     .searchTerm {
-        width: 100%;
-        border: 3px solid rgb(44, 171, 209);
-        border-right: none;
+        width: 50%;
+        border: 3px solid #154360;
+        border-left: none;
         padding: 10px;
         height: 20px;
-        border-radius: 5px 0 0 5px;
+        border-radius: 0 5px 5px 0;
         outline: none;
         color: black;
         font-weight: bold;
 
     }
 
-    /* .searchTerm:focus{
-    color: #00B4CC;
-    } */
-
     .searchButton {
         width: 50px;
         /* height: 36px; */
-        border: 1px solid rgb(44, 171, 209);
-        background: rgb(44, 171, 209);
+        border: 1px solid #154360;
+        background: #154360;
         text-align: center;
         color: #fff;
-        border-radius: 0 5px 5px 0;
+        border-radius: 5px 0 0 5px;
         cursor: pointer;
         font-size: 20px;
         margin-top: 7px;
@@ -216,7 +243,7 @@ export default {
     }
     
 
-    .category{
+    /* .category{
         color: rgb(207, 207, 207);
         font-weight: bold;
         width: 80%;
@@ -226,10 +253,10 @@ export default {
         margin-bottom: -20px;
         font-size: 18px;
         /* float: left; */
-        text-align: left;
-    }
+        /* text-align: left;
+    } */
 
-    .create_category {
+    /* .create_category {
         width: 100px;
         align-self: flex-end;
         font-size: 15px;
@@ -237,8 +264,10 @@ export default {
         margin-left: 60%;
         margin-top: 60px;
         margin-bottom: -100px;
+    } */
+    .create_category{
+        margin-top: 50px;
     }
-
     label {
         font-weight: bold;
         display: block;

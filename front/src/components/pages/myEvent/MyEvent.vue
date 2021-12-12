@@ -4,20 +4,25 @@
     <div class="main">
       <!-- <sub-navigation></sub-navigation> -->
       <div class="mainRight">
-        <event-header>
-          <h3>All Event</h3>
-          <button class="btn-create" @click="create_event">+ Create</button>
-        </event-header>
+        <!-- <header>
+          <li class="header">All Event</li>
+        </header> -->
+        <event-header
+        :title="event_title"
+        ></event-header>
+        <div class="create">
+          <botton-widget @click="create_event"><i class="fa fa-plus-circle" ></i>Create</botton-widget>
+        </div>
         <div class="sidebarContainer">
           <event-card
             v-for="event of eventList"
             :key="event.id"
             :event-data="event"
           >
-            <div class="btn_edit_cacel">
+            <!-- <div class="btn_edit_cacel"> -->
               <button class="cancel_btn" @click="showCancelEvent(event.id)"> Cancel</button>
               <button class="edit_btn" @click="showEditEvent(event)"><i class="fa fa-pencil-square-o"></i>Edit</button>
-            </div>
+            <!-- </div> -->
 
             
           </event-card>
@@ -57,11 +62,12 @@
 <script>
 import axios from "../../../api/api.js";
 import EventForm from "../myEvent/MyEvent.vue";
-
+import EventHeader from '../../UI/Header.vue'
 
 export default {
   components:{
-    EventForm
+    EventForm,
+    EventHeader
   },
   data() {
     return {
@@ -73,6 +79,7 @@ export default {
       dialogTitleCancel: "Cancel Your Event",
       eventList: [],
       oneEvent: [{}],
+      event_title: "All My Event",
     };
   },
 
@@ -133,12 +140,14 @@ export default {
 };
 </script>
 
-<style scoped>
-
-
-.sidebarRight {
+<style >
+::-webkit-scrollbar {
+    width: 0px;
+}
+.sidebarRight ,
+.create{
   width: 83%;
-  background: rgb(22, 22, 22);
+  /* background: rgb(22, 22, 22); */
 }
 .sidebarContainer {
   width: 86%;
@@ -181,9 +190,19 @@ export default {
   margin-right: 5px;
   background: rgb(138, 138, 138);
 }
-.edit_btn {
-  margin-left: 5px;
-  background: rgb(58, 151, 204);
+.edit_btn{
+    padding: 9px;
+    border: none;
+    border-radius: 10px;
+    font-weight: bold;
+    color: white;
+    width: 28%;
+    margin-left: 5px;
+    /* float: right; */
+    background: #F1C40F;
+    font-size: 15px;
+    margin-bottom: 10px;
+
 }
 h4 {
   font-size: 22px;
@@ -195,6 +214,18 @@ h4 {
 }
 .fa-pencil-square-o{
   margin-right: 10px;
+}
+
+.fa-plus-circle{
+  margin-right: 10px;
+  font-size: 18px;
+}
+.create{
+  /* width: 1000px; */
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-end;
+  margin: auto;
 }
 
 </style>

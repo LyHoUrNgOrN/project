@@ -40,6 +40,7 @@ div {
   width: 100%;
   background-color: rgba(0, 0, 0, 0.75);
   z-index: 11;
+
 }
 
 dialog {
@@ -54,6 +55,8 @@ dialog {
   padding: 0;
   margin: 0;
   overflow: hidden;
+  font-family: sans-serif;
+
 }
 
 header {
@@ -61,6 +64,7 @@ header {
   color: white;
   width: 100%;
   padding: 1rem;
+  text-align: center;
 }
 
 header h2 {

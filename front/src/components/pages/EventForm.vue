@@ -3,35 +3,56 @@
     <hr>
     <div class="a">
       <form action="">
+        <label for="title" id="eventTitle">Event title</label>
         <input type="text" placeholder="Event title" id="title" v-model="title">
         <div class="dateTime">
-          <label for="">Date Start</label>
-          <input type="datetime-local" placeholder="Date Start" id="date" v-model="dateStart">
+          <div class="startDate">
+            <label for="">Date Start</label><br>
+            <input type="datetime-local" placeholder="Date Start" id="date" v-model="dateStart">
+          </div>
+          <div class="endDate">
+            <label for="">Date End</label><br>
+            <input type="datetime-local" placeholder="Date Start" id="date" v-model="dateEnd">
+          </div>
+          
         </div>
-        <div class="dateTime">
-          <label for="">Date End</label>
-          <input type="datetime-local" placeholder="Date Start" id="date" v-model="dateEnd">
-        </div>
-        <select name="country" id="country" v-model="eventCountry">
-          <option disabled value="">Please select a country</option>
-          <option v-for="(city, eachCountry) of countries" :key="eachCountry" :value="eachCountry" > {{ eachCountry }} </option>
-        </select>
-        <select name="city" id="city" v-model="city">
-          <option disabled value="">Please select a country frist</option>
-          <option v-for="(city, country) of countries[eventCountry]" :key="country" :value="city">
-            {{ city }}
-          </option>
-        </select>
 
-        <select name="category" id="category" v-model="eventCategory">
-          <option disabled value="">Please select a category of your event</option>
-          <option v-for="(value, id) of categories" :key="id" :value="value.id">
-            {{ value.name }}
-          </option>
-        </select>
-        <textarea name="" id="" cols="40" rows="5" placeholder="Description" v-model="description"></textarea>
+        <div id="select">
+          <label for="country" >Country</label>
+          <select name="country" id="country" v-model="eventCountry">
+            <option disabled value="">Please select a country</option>
+            <option v-for="(city, eachCountry) of countries" :key="eachCountry" :value="eachCountry" > {{ eachCountry }} </option>
+          </select>
+        </div>
+
+        <div id="select">
+          <label for="city" >City</label>
+          <select name="city" id="city" v-model="city">
+            <option disabled value="">Please select a country frist</option>
+            <option v-for="(city, country) of countries[eventCountry]" :key="country" :value="city">
+              {{ city }}
+            </option>
+          </select>
+        </div>
+        
+        <div id="select">
+          <label for="category" >Category</label>
+          <select name="category" id="category" v-model="eventCategory">
+            <option disabled value="">Please select a category of your event</option>
+            <option v-for="(value, id) of categories" :key="id" :value="value.id">
+              {{ value.name }}
+            </option>
+          </select>
+        </div>
+        <div id="textarea">
+          <label for="description" >Description</label>
+          <textarea name="" id="description" cols="43" rows="3" placeholder="Description" v-model="description"></textarea>
+        </div>
+        
       </form>
-      <label for="img" id="chooseImage" v-if="isEdit"><img class="image" :src="previewImage"></label>
+      <label for="img" id="chooseImage" v-if="isEdit">
+        <img class="image" :src="previewImage">      
+      </label>
       <input type="file" id="img" accept="image/jpeg, image/png, image/gif" @change="selectImage">
     </div>
     <template #actions>
@@ -194,73 +215,115 @@ export default {
 
 <style scoped>
 
-  input,
+  /* input,
   textarea {
     display: block;
     width: 100%;
     border: 1px solid #ccc;
     font: inherit;
-  }
+  } */
 
-  select{
+  /* select{
       width: 111%;
       
-  }
-  textarea{
+  } */
+  /* textarea{
     margin-bottom: -90px;
     width: 105%;
-  }
-  select,
+  } */
+
+  /* select,
   textarea{
-      padding: 10px;
-      margin-top: 7px;
-      border-radius: 5px;
-      border: 1px solid rgb(194, 194, 194);
-    }
-    #title{
-      width: 105%;
-    }
-    #title,
-    #date{
-      padding: 10px;
-      outline: none;
-    }
-    .dateTime{
-      display: flex;
-      width: 111%;
-    }
-    .dateTime label{
-      width: 30%;
-      margin-top: 20px;
-    }
+    padding: 10px;
+    /* margin-top: 7px; */
+    /* border-radius: 5px; */
+    /* border: 1px solid rgb(194, 194, 194); */
+  /* } */
+  #country,
+  #city,
+  #category{
+    width: 111%;
+    padding: 10px;
+    border: 1px solid #15436057;
+    background: #2a546e3a;
+  }
+  #title{
+    padding: 10px;
+    width: 100%;
+  }
 
-    form{
-      width: 55%;
-      margin-left: -5px;
-    }
-    .image{
-      width: 100%;
-      height: 50vh;
-      border: 1px solid rgb(180, 180, 180);
-      border-radius: 20px;
-      margin: auto;
-    }
-    .a{
-      display: flex;
-      justify-content: space-between;
-    }
+  .dateTime,
+  #eventTitle,
+  #select,
+  #description{
+    margin-top: 10px;
+    outline: none;
 
-    #img{
-      display: none;
-    }
-    #chooseImage{
-      margin-left: 10%;
-      width: 40%;
-    }
-    #error {
-      color: red;
-      position: absolute;
-      bottom: 70px;
-      right: 25px;
-    }
+  }
+  #description{
+    font-size: 14px;
+    border: 1px solid #15436057;
+    background: #2a546e3a;
+  }
+  #title{
+    width: 105%;
+    border: 1px solid #15436057;
+    background: #2a546e3a;
+
+  }
+  
+  #date{
+    width: 110%;
+    outline: none;
+    height: 40px;
+    border: 1px solid #15436057;
+    background: #2a546e3a;
+
+  }
+  .dateTime{
+    display: flex;
+    justify-content: space-between;
+  }
+  .startDate,
+  .endDate{
+    width: 48%;
+  }
+  .endDate{
+    margin-left: 30px;
+  }
+  form{
+    width: 55%;
+    margin-left: -5px;
+  }
+  .image{
+    width: 100%;
+    height: 50vh;
+    border: 1px solid #15436057;
+    border-radius: 20px;
+    margin: auto;
+  }
+  .a{
+    display: flex;
+    justify-content: space-between;
+  }
+
+  #img{
+    display: none;
+  }
+  #chooseImage{
+    margin-left: 10%;
+    width: 40%;
+
+  }
+  #error {
+    color: red;
+    position: absolute;
+    bottom: 70px;
+    right: 25px;
+  }
+
+  .creat_btn{
+    margin-top: -80px;
+    margin-bottom: 30px;
+  }
 </style>

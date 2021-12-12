@@ -1,23 +1,40 @@
 <template>
-  <div class="form">
+    
+    <div class="con">
+      <div class="form">
+        
         <label for="image" id="labelForProfile"><img class="user" :src="previewProfile"/></label>
         <form action="" enctype="multipart/form-data">
             <input type="file" id="image" accept="image/jpeg, image/png, image/gif, image/jpg" @change="selectProfile" >
             <small>{{messError.profile}}</small>
-            <input type="text" id="name" placeholder="User Name" v-model="userName">
-            <small>{{messError.name}}</small>
-            <input type="email" id="email" placeholder="Email" v-model="email">
-            <small>{{messError.email}}</small>
-            <input type="password" id="password" placeholder="Password" v-model="password">
-            <input type="password" id="confirmPasswprd" placeholder="Confirm Password" v-model="confirmPassword">
-            <small>{{messError.password}}</small>
-            <br>
-            <router-link to='/signUp' @click="signUp"><botton-widget>Sign Up</botton-widget></router-link>
-            <p>Have account: <router-link class="signIn" to="/signIn" >Sign In</router-link></p>
-        </form>
+            <div class="name">
+                <label for="name" class="userName_icon"><i class="fa fa-user-circle" aria-hidden="true"></i></label>
+                <input type="text" id="name" placeholder="User Name" v-model="userName">
+                <small>{{messError.name}}</small>
+            </div>
 
-        
-  </div>
+            <div class="email">
+                <label for="email" class="emial_icon"><i class="fa fa-envelope-open"></i></label>
+                <input type="email" id="email" placeholder="Email" v-model="email">
+                <small>{{messError.email}}</small>
+            </div>
+            
+            <div class="password">
+                <label for="password" class="password_icon"><i class="fa fa-lock" ></i></label>
+                <input type="password" id="password" placeholder="Password" v-model="password">
+            </div>
+            <div class="confirmPassword">
+                <label for="confirmPasswprd" class="confirm_password"><i class="fa fa-lock" ></i></label>
+                <input type="password" id="confirmPasswprd" placeholder="Confirm Password" v-model="confirmPassword">
+                <small>{{messError.password}}</small>
+            </div>
+            
+            <router-link to='/signUp' @click="signUp"><botton-widget>Sign Up</botton-widget></router-link>
+            <hr>
+            <p id="haveAccount">Have account: <router-link class="signIn" to="/signIn" >Sign In</router-link></p>
+        </form>        
+      </div>
+    </div>
 </template>
 
 <script scoped>
@@ -31,7 +48,7 @@ export default {
             email: null,
             password: null,
             confirmPassword: null,
-            previewProfile: "http://127.0.0.1:8000/storage/profiles/default-profile.png",
+            previewProfile: "https://www.prajwaldesai.com/wp-content/uploads/2021/02/Find-Users-Last-Logon-Time-using-4-Easy-Methods.jpg",
             profile : null,
             messError : {
                 profile:null,
@@ -91,66 +108,98 @@ export default {
 }
 </script>
 
-<style>
-    body{
-        background-image: url('https://ak.picdn.net/shutterstock/videos/9134405/thumb/1.jpg');
-        background-repeat: no-repeat;
-        background-attachment: fixed;
+<style scoped>
+    .con{
+        background-image: url('https://scontent.xx.fbcdn.net/v/t1.15752-9/s350x350/266335939_439003174420670_823171244838047334_n.jpg?_nc_cat=105&ccb=1-5&_nc_sid=aee45a&_nc_eui2=AeGIit7m9Pf5oq8F8Zv_ahU-1vxazjnAywzW_FrOOcDLDJ-htPHqWk2_E1Pmop-5C8tpzL-PTCrYDMxXyoONjjIC&_nc_ohc=0bdk0-H-qdQAX-H8hDY&_nc_ad=z-m&_nc_cid=0&_nc_ht=scontent.xx&oh=03_AVJvFLMMY_3hLstUrLYimaQG1P8V3OEZkBTq3SjdFJyDmQ&oe=61D9B477');
         background-size: cover;
-        background-position: top;
-        background-position-x: center;
-        background-position-y: top;
+        padding-top: 5px;
+        margin: 0;
+        padding-bottom: 72px;
     }
-        .form{
-            background-color: rgba(88, 88, 88, 0.308);
-            border-radius: 20px;
-            text-align: center;
-            width: 40%;
-            margin: auto;
-            padding: 10px;
-            margin-top: 40px;
-        }
-        .user{
-            background-size: cover;
-            width: 30%;
-            height: 25vh;
-            border-radius: 50%;
-            margin: auto;
-            margin-top: 10px;
-        }
-        #image{
-            display: none;
-        }
-        form{
-            width: 50%;
-            margin: auto;
-        }
-        form p{
-            color: white;
-        }
-        #name,
-        #email,
-        #password,
-        #confirmPasswprd{
-            width: 90%;
-            padding: 15px;
-            margin-bottom: 10px;
-            border: none;
-            outline: none;
-            background: none;
-            color: rgb(255, 255, 255);
-            border-bottom: 1.5px solid rgb(236, 236, 236);
-        }
-        .robot{
-            width: 55%;
-            padding: 15px;
-            font-size: 20px;
-            background: rgba(246, 247, 250, 0.377);
-            border-radius: 5px;
-            color: white;
-        }
+    .form{
+        background-color: white;
+        border-radius: 40px;
+        text-align: center;
+        width: 35%;
+        margin: auto;
+        padding: 10px;
+        margin-top: 80px;
+    }
+    .user{
+        background-size: cover;
+        width: 22%;
+        height: 15vh;
+        border-radius: 50%;
+        margin: auto;
+        border-bottom: 8px solid #154360;
+        border-top: 8px solid #ffffff;
+        border-left: 8px solid #154360;
+        border-right: 8px solid #ffffff;
+        margin-top: -60px;
+        /* margin-top: 10px; */
+    }
+    #image{
+        display: none;
+    }
+    form{
+        /* width: 50%; */
+        margin: auto;
+    }
+    form p{
+        color: white;
+    }
+    #name,
+    #email,
+    #password,
+    #confirmPasswprd{
+        width: 50%;
+        padding: 15px;
+        border: 1px solid #154360;
+        background: #2a546e3a;
+        font-size: 18px;
+        margin-top: 10px;
+        outline: none;
+    
+    }
 
-        .signIn{
-            color: rgb(44, 171, 209);
+    .name,
+    .email,
+    .password,
+    .confirmPassword {
+        /* width: 80%; */
+        display: flex;
+    }
+    .userName_icon,
+    .emial_icon,
+    .password_icon,
+    .confirm_password {
+        width: 50px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border: 1px solid #154360;
+        color: #154360;
+        background: white;
+        border-right: none;
+        font-size: 24px;
+        border: 1px 0 1px 1px solid #154360;
+        margin-left: 16%;
+        margin-top: 10px;
+
+    }
+    hr{
+        width: 60%;
+        margin: auto;
+        margin-top: 10px;
+    }
+    #haveAccount{
+        color: rgb(49, 49, 49);
+    }
+    .signIn{
+        color: #154360;
+    }
+    small{
+            color:red;
+            margin:2px;
         }
 </style>

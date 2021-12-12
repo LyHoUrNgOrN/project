@@ -2,7 +2,7 @@
         <li>
             <h3> {{ category.name }}</h3>
             <div class="btn_category">
-                <i class="fa fa-pencil" @click="showEditCategory"></i>
+                <i class="fa fa-pencil-square-o" @click="showEditCategory"></i>
                 <i class="fa fa-trash" @click="showDeleteCategory"></i>
             </div>
 
@@ -24,7 +24,7 @@
                 <h4 v-if="dialogMode !== 'edit'"> <i class="fa fa-exclamation-triangle"></i> Are you sure that you want to delete this category!</h4>
 
                 <template #actions>
-                    <button @click="onConfirm">{{ dialogButtton }}</button>
+                    <botton-widget @click="onConfirm">{{ dialogButtton }}</botton-widget>
                 </template>
             </dialog-box>
         </li>
@@ -108,14 +108,21 @@ export default {
         list-style: none;
         display: flex;
         justify-content: space-between;
-        background: rgba(61, 61, 61, 0.753);
         padding: 15px;
         border-radius: 10px;
         width: 77%;
         margin: auto;
-        margin-bottom: 10px;
+        margin-bottom: 15px;
         box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
         color: white;
+    }
+    li:nth-child(odd){
+        background: #899eac;
+
+    }
+    li:nth-child(even){
+        background: #154360;
+
     }
     .btn_category {
         display: flex;
@@ -128,8 +135,8 @@ export default {
     .fa-trash{
         color: rgb(187, 33, 33);
     }
-    .fa-pencil{
-        color: rgb(3, 117, 146);
+    .fa-pencil-square-o{
+        color: #F1C40F
     }
 
     /* ............................................... */
