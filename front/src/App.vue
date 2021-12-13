@@ -7,7 +7,6 @@
 </template>
 
 <script>
-
 export default {
   data(){
     return{
@@ -34,7 +33,6 @@ export default {
     if ((window.localStorage.getItem("user") !== null) && this.$route.path == "/signIn" ) {
       // || this.$route.path == "/"
       let pathed = localStorage.getItem('path');
-      console.log(pathed);
       this.$router.push(pathed); // redirect to myEvent, for example
       this.activeUser = JSON.parse(localStorage.getItem("user"));
 

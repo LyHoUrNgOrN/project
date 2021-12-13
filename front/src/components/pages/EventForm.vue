@@ -1,5 +1,5 @@
 <template>
-  <dialog-box v-if="display" :title="titleForm" @close="closeDialog" class="create_box">
+  <dialog-box v-if="display" :title="titleForm" @close="closeDialog(false)" class="create_box">
     <hr>
     <div class="a">
       <form action="">
@@ -102,8 +102,8 @@ export default {
       }
   },
   methods: {
-    closeDialog() {
-      this.$emit('close', false);
+    closeDialog(isTrue) {
+      this.$emit('close', isTrue);
     },
     dateFormat(date) {
       return moment(date).format("YYYY-MM-DD hh:mm:ss");
@@ -139,11 +139,13 @@ export default {
                   };
                   axios.post("/event_joins", user_create).then((res) => {
                     console.log(res.data.message);
-                    this.$emit('displayEvent');
+                    this.closeDialog(false);
                   });
 
                 }).catch((error) => {
-                  console.log(error.response.data);
+                  this.closeDialog(true);
+                  this.message = error.response.data.message;
+
                 });
     },
     update_event(){
@@ -157,17 +159,18 @@ export default {
         "description": this.description,
         "picture": this.oneEvent.picture,
       }
-      console.log(this.eventId);
       axios
-          .put("/events/" + this.eventId, editEvent)
+          .put("/events/" + parseInt(this.eventId), editEvent)
           .then((res) => {
             console.log(res.data);
-              this.$emit('displayEvent', true);
+            this.closeDialog(false);
+            this.eventId = null;
+
           })
           .catch((error) => {
-            console.log(error.response);
+            this.closeDialog(true);
+            this.message = error.response.data.message;
       });
-      this.eventId = null;
     },
 
     onConfirm(){
@@ -181,7 +184,7 @@ export default {
           this.update_event();
           
         }
-        this.$emit('close', false);
+        // this.$emit('close', false);
         this.message = "";
       }else{
         this.message = "You should complete all information";
@@ -217,30 +220,6 @@ export default {
 
 <style scoped>
 
-  /* input,
-  textarea {
-    display: block;
-    width: 100%;
-    border: 1px solid #ccc;
-    font: inherit;
-  } */
-
-  /* select{
-      width: 111%;
-      
-  } */
-  /* textarea{
-    margin-bottom: -90px;
-    width: 105%;
-  } */
-
-  /* select,
-  textarea{
-    padding: 10px;
-    /* margin-top: 7px; */
-    /* border-radius: 5px; */
-    /* border: 1px solid rgb(194, 194, 194); */
-  /* } */
   #country,
   #city,
   #category{
@@ -266,6 +245,7 @@ export default {
     font-size: 14px;
     border: 1px solid #15436057;
     background: #2a546e3a;
+    margin-bottom: -50px;
   }
   #title{
     width: 105%;
@@ -326,6 +306,6 @@ export default {
 
   .creat_btn{
     margin-top: -80px;
-    margin-bottom: 30px;
+    margin-bottom: 0px;
   }
 </style>

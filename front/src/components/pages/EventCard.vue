@@ -2,9 +2,10 @@
 
     <div class="card" >
         <img :src="'http://localhost:8000/storage/pictures/'+eventData.picture" alt="" @click="eventDetail(eventData)">
-        <h4 @click="eventDetail(eventData)">{{ eventData.title }}</h4>
-        <p @click="eventDetail(eventData)">Date Start: {{ eventData.dateStart }}</p>
-        <p @click="eventDetail(eventData)">Date End: {{ eventData.dateEnd }}</p>
+        <p id="category">{{ event.name }}</p>
+        <h4 @click="eventDetail(eventData)">{{ cuteTitle(eventData.title) }}</h4>
+        <p @click="eventDetail(eventData)">Date Start: {{ formatDate(eventData.dateStart) }}</p>
+        <p @click="eventDetail(eventData)">Date End: {{ formatDate(eventData.dateEnd) }}</p>
         <p @click="eventDetail(eventData)">Member: {{ getMembers() }} people</p>
         <p @click="eventDetail(eventData)">Country: {{ eventData.city }} in {{ eventData.country }}</p>
         <div class="btn">
@@ -16,6 +17,7 @@
 
 <script>
 import axios from "../../api/api.js";
+import moment from "moment";
 
 export default {
     props: ['eventData'],
@@ -26,6 +28,27 @@ export default {
         }
     },
     methods:{
+        cuteTitle(title){
+            let arrayOfTitle = title.split(" ");
+            if (arrayOfTitle.length > 4){
+                let title = '';
+                for(let index in arrayOfTitle){
+                    if (index <= 3){
+                        title += arrayOfTitle[index] + ' '
+                    }
+                }
+                return title + "....";
+            }else{
+                let title = '';
+                for(let word of arrayOfTitle){
+                    title += word + ' '
+                }
+                return title;
+            }
+        },
+        formatDate(date){
+            return moment(date).format("MMM Do YY");
+        },
         getMembers(){
             axios.get('/event_member/'+ this.event.id).then(res => {
                 this.memberOfEvent = res.data.length;
@@ -70,10 +93,6 @@ export default {
         margin-top: 10px;
         border-radius: 0 0 10px 10px;
         border: 1px solid #154360;
-        /* padding: 10px; */
-        /* box-shadow: 0 0 10px rgba(0, 0, 0, 0.7); */
-        /* filter: drop-shadow(0 0 10px rgba(66, 66, 66, 0.7)); */
-        /* font-family: Arial, Helvetica, sans-serif; */
         word-wrap: break-word;
 
     }
@@ -81,9 +100,9 @@ export default {
     .card img{
         width: 100%;
         height: 200px;
-        /* border-radius: 4px; */
         border-radius: 4px;
         margin: auto;
+
     }
     img:hover{
         opacity: 0.7;
@@ -93,7 +112,6 @@ export default {
     }
     .card:hover h4{
         opacity: 1;
-        /* font-size: 20px; */
         color: white;
     }
     .card h4{
@@ -101,6 +119,7 @@ export default {
         text-align: left;
         color: rgb(218, 216, 216);
         margin-left: 15px;
+        margin-bottom: 15px;
 
     }
     .card p{
@@ -112,10 +131,16 @@ export default {
     }
 
     #category {
-        position: absolute;
-        background: rgb(55, 175, 231);
+        /* position: absolute; */
+        margin-top: 10px;
+        background: #154360;
         border-radius: 5px 0 5px 0;
-        padding: 2px;
+        padding: 3px;
+        /* top: 250px; */
+        color: #F1C40F;
+        margin-top: -200px;
+        margin-bottom: 190px;
+        z-index: 111111;
     }
     .btn{
         margin-bottom: 0;

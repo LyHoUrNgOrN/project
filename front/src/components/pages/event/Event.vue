@@ -1,7 +1,5 @@
 <template>
 <section>
-    
-   
     <!-- <div class="mainRight"> -->
     <header>
       <li class="header">All Explore Event</li>
@@ -22,7 +20,6 @@
           >                
               <button class="quit-btn"  v-if="isJoin(event.id)" @click="quitJoin(event.id)">Quit</button>
               <button class="join-btn"  v-else @click="joinEvent(event.id)">Join</button>
-              <!-- <button class="join-btn">Join</button> -->
           </event-card>
           
       </div>
@@ -35,11 +32,12 @@
 import axios from "../../../api/api.js";
 import moment from "moment";
 import EventHeader from '../../UI/Header.vue'
-// import Header from '../../UI/Header.vue';
 
 export default {
     inject:["$activeUser"],
-    components: [EventHeader],
+    components: [
+      EventHeader, 
+    ],
     data() {
       return{
         searchByText: '',
@@ -73,7 +71,9 @@ export default {
         };
         axios.post("/event_joins", user_create).then((res) => {
           console.log(res.data.message);
-          this.getOtherEvents();
+          this.getEventJoinByUser();
+          this.findEvent();
+          this.isJoin(eventId);
         });
       },
 
@@ -82,46 +82,49 @@ export default {
           let idToQuit = response.data[0].id;
           axios.delete("event_quit/"+idToQuit).then(response=>{
             console.log(response.data.message);
-            this.getOtherEvents();
+            this.findEvent();
+            this.getEventJoinByUser();
+            this.isJoin(eventId);
           });
         });
       },
 
-      getOtherEvents(){
+      getEventJoinByUser(){
         axios.get("/event_user_has_joins/"+this.activeUser.id).then((response)=>{
           this.eventHasJoined = response.data;
+          // this.isJoin()
         });
-        this.getEvent();
+        this.findEvent();
       },
 
       findEvent(){
-        if (this.searchByText !== ''){
+        if (this.searchByText !== '' || this.searchByCity !== ''){
           this.eventList = this.listAllOfEvent.filter(events => ((events.title.toLowerCase().includes(this.searchByText.toLowerCase())) 
           ||(events.description.toLowerCase().includes(this.searchByText.toLowerCase())) 
           ||(events.name.toLowerCase().includes(this.searchByText.toLowerCase()))) 
           && (events.city === this.searchByCity));
-          console.log(this.eventList);
+          
         }else{
-          this.getEvent();
+          // this.getEvent();
+          this.eventList = this.listAllOfEvent;
         }
         
-      },
-      checkdateFormat(date){
-        return moment(date).format('YYYY-MM-DD hh:mm:ss');
       },
       getEvent(){
         axios.get('/event_other/'+ parseInt(this.activeUser.id)).then((res) => {
           let allData = res.data;
           let currentDate = new Date();
-          let date = currentDate.getFullYear()+'-'+currentDate.getDate()+'-'+(currentDate.getMonth()+1)+' '+currentDate.getHours() + ":" + currentDate.getMinutes() + ":" + currentDate.getSeconds();
+          let date = currentDate.getFullYear()+'-'+currentDate.getDay()+'-'+(currentDate.getMonth()+1)+' '+currentDate.getHours() + ":" + currentDate.getMinutes() + ":" + currentDate.getSeconds();
           let events = [];
           for(let eachObj of allData){
-            if(this.checkdateFormat(eachObj.dateEnd) >= this.checkdateFormat(date)){
+            if(this.dateFormat(eachObj.dateEnd) >= this.dateFormat(date)){
               events.push(eachObj);
             }
           }
-          this.eventList = res.data;
-          this.listAllOfEvent = events;          
+          this.eventList = events;
+          this.listAllOfEvent = events;   
+          this.findEvent();
+
         });
       },
       
@@ -139,11 +142,7 @@ export default {
         }
       })
 
-      // this.$router.replace(this.$route.path, {silent:true});
-      this.getOtherEvents();
-      // axios.get("/event_user_has_joins/"+this.activeUser.id).then((response)=>{
-      //   this.eventHasJoined = response.data;
-      // });
+      this.getEventJoinByUser();
       localStorage.setItem('path', this.$route.path);
 
     },
@@ -168,12 +167,12 @@ export default {
       top: 142px;
       z-index: 2;
       display: flex;
-      justify-content: start;
+      justify-content: flex-start;
     }
     .header{
       list-style: none;
       display: flex;
-      justify-self: start;
+      justify-self: flex-start;
       align-items: flex-start;
       margin-left: 20px;
       font-size: 20px;
@@ -200,7 +199,6 @@ export default {
         color: white;
         width: 28%;
         margin-left: 5px;
-        /* float: right; */
         background: #F1C40F;
         font-size: 15px;
         margin-bottom: 10px;
@@ -214,8 +212,6 @@ export default {
         font-weight: bold;
         color: white;
         width: 28%;
-        margin-left: 5px;
-        float: right;
         cursor: pointer;
         background: rgba(103, 107, 110, 0.719);
 
@@ -233,7 +229,7 @@ export default {
     #seachBytitle,
     #selectCity{
       padding: 10px;
-      border: 3px solid rgb(255, 255, 255);
+      border: 2px solid rgb(255, 255, 255);
       outline: none;
       /* border-radius: 10px 0 0 10px; */
       font-size: 18px;

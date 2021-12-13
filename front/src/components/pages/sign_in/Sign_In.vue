@@ -75,16 +75,19 @@ export default {
                 this.userName = '';
                 this.password = null;
             }else{
-                if(this.name === '' ){
+                if(this.userName === '' ){
                     this.idIcon = 'nameMissing';
                     this.nameId = 'nameError';
+                    console.log(123);
+
                 }
                 if(this.password === '' ){
                     this.passwordIcon = 'passwordMissing';
                     this.passwordId = 'passwordError';
+                    console.log(321);
+
                 }
                 
-                console.log(123);
             }
         },
         showOrHidePass(){
@@ -119,7 +122,6 @@ export default {
         margin-top: 80px;
     }
     form{
-        /* width: 50%; */
         margin: auto;
         
     }

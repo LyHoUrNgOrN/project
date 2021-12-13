@@ -144,20 +144,17 @@ export default {
         text-decoration: none;
         font-weight: bold;
     }
-    /* #menu:hover {
-        color: rgb(15, 135, 233);
-        padding-bottom: 5px;
-    } */
+    
     nav{
         margin-top: -8px;
         display: flex;
         justify-content: space-between;
         border-bottom: 1px solid rgb(214, 212, 212);
-        /* color: rgb(0, 0, 0); */
         background: white;
         position: sticky;
         top: 0;
         z-index: 11;
+        
 
     }
     

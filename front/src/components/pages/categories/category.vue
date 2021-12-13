@@ -3,20 +3,19 @@
         <header>
             <li class="header">All Categories</li>
         </header>
-        <!-- <botton-widget class="create_category" @click="displayFormCategory">+ Create</botton-widget> -->
-        <!-- <div class="wrap"> -->
-            <div class="forSearch">
-                <div class="search">
-                    <button type="submit" class="searchButton" @click="searchCategory">
-                        <i class="fa fa-search"></i>
-                    </button>
-                    <input type="text" class="searchTerm" placeholder="What are you looking for?" v-model="searchName" @keyup="searchCategory">
-               
-                </div>
-                <botton-widget class="create_category" @click="displayFormCategory">+ Create</botton-widget>
-
+        <div class="forSearch">
+            <div class="search">
+                <button type="submit" class="searchButton" @click="searchCategory">
+                    <i class="fa fa-search"></i>
+                </button>
+                <input type="text" class="searchTerm" placeholder="What are you looking for?" v-model="searchName" @keyup="searchCategory">
+            
             </div>
-         <!-- </div> -->
+            <div class="create_category">
+                <botton-widget class="" @click="displayFormCategory">+ Create</botton-widget>
+            </div>
+
+        </div>
         <div class="category_card">
             <category-cards
                 v-for="category of categoryList" :key="category.id"
@@ -54,12 +53,12 @@
 
 <script scoped>
 import axios from "../../../api/api.js";
-// import EventHeader from '../../UI/Header.vue'
 
 export default {
     data(){
         return {
             categoryList: [],
+            allOfCategory: [],
             errorCategoryMessage : null,
             diplayedDialog: false,
             newCategoryName: "",
@@ -70,16 +69,12 @@ export default {
     },
     methods: {
         displayAllCategory(){
-            if(this.searchName === ''){ 
-                axios.get("/category").then(res=>{
+            axios.get("/category").then(res=>{
                 this.categoryList = res.data;
-                })
-                }
-            else {
-                axios.get("/category/search/"+this.searchName).then(res=>{
-                this.categoryList = res.data;
-                });
-            }
+                this.allOfCategory - res.data;
+            })
+            console.log(this.categoryList);
+            
 
         },
         deleteCategory(categoryId){
@@ -156,12 +151,19 @@ export default {
         },
         searchCategory(){
             this.displayAllCategory();
-            
+            if(this.searchName === ''){ 
+                this.categoryList = this.allOfCategory;
+            }else {
+                axios.get("/category/search/"+this.searchName).then(res=>{
+                this.categoryList = res.data;
+                });
+            }
         },
 
     },
     mounted() {
-        this.displayAllCategory();  
+        this.displayAllCategory(); 
+         
         localStorage.setItem('path', this.$route.path);
 
     },
@@ -171,7 +173,6 @@ export default {
 <style scoped>
 
     header{
-      /* list-style: none; */
       padding: 20px;
       background: #154360;
       color: white;
@@ -203,7 +204,6 @@ export default {
 
     .search {
         width: 80%;
-        /* position: relative; */
         display: flex;
         margin: auto;
         margin-top: 40px;
@@ -213,6 +213,7 @@ export default {
         width: 80%;
         display: flex;
         justify-content: space-between;
+        align-self: center;
         margin: auto;
     }
     .searchTerm {
@@ -220,7 +221,6 @@ export default {
         border: 3px solid #154360;
         border-left: none;
         padding: 10px;
-        height: 20px;
         border-radius: 0 5px 5px 0;
         outline: none;
         color: black;
@@ -231,7 +231,6 @@ export default {
 
     .searchButton {
         width: 50px;
-        /* height: 36px; */
         border: 1px solid #154360;
         background: #154360;
         text-align: center;
@@ -247,7 +246,8 @@ export default {
     
 
     .create_category{
-        margin-top: 50px;
+        margin-top: 30px;
+        /* margin-bottom: 10px; */
     }
     label {
         font-weight: bold;
@@ -272,7 +272,7 @@ export default {
         background: #2a546e3a;
     }
     .create_category_btn {
-        margin-top: 0;
+        margin-top: 0px;
         width: 100px;
     }
 

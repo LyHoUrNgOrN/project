@@ -9,26 +9,24 @@
             <small>{{messError.profile}}</small>
             <div class="name">
                 <label for="name" class="userName_icon"><i class="fa fa-user-circle" aria-hidden="true"></i></label>
-                <input type="text" id="name" placeholder="User Name" v-model="userName">
-                <small>{{messError.name}}</small>
+                <input type="text" id="name" placeholder="User Name" v-model="userName"><br>
             </div>
-
+            <small>{{messError.name}}</small>
             <div class="email">
                 <label for="email" class="emial_icon"><i class="fa fa-envelope-open"></i></label>
-                <input type="email" id="email" placeholder="Email" v-model="email">
-                <small>{{messError.email}}</small>
+                <input type="email" id="email" placeholder="Email" v-model="email"><br>
             </div>
-            
+            <small>{{messError.email}}</small>
             <div class="password">
                 <label for="password" class="password_icon"><i class="fa fa-lock" ></i></label>
-                <input type="password" id="password" placeholder="Password" v-model="password">
+                <input type="password" id="password" placeholder="Password" v-model="password"><br>
             </div>
             <div class="confirmPassword">
                 <label for="confirmPasswprd" class="confirm_password"><i class="fa fa-lock" ></i></label>
-                <input type="password" id="confirmPasswprd" placeholder="Confirm Password" v-model="confirmPassword">
-                <small>{{messError.password}}</small>
+                <input type="password" id="confirmPasswprd" placeholder="Confirm Password" v-model="confirmPassword"><br>
             </div>
-            
+            <small>{{messError.password}}</small><br>
+        
             <router-link to='/signUp' @click="signUp"><botton-widget>Sign Up</botton-widget></router-link>
             <hr>
             <p id="haveAccount">Have account: <router-link class="signIn" to="/signIn" >Sign In</router-link></p>
@@ -102,7 +100,7 @@ export default {
             this.email = null;
             this.password = null;
             this.confirmPassword = null;
-            this.previewProfile = 'https://www.psi.org.kh/wp-content/uploads/2019/01/profile-icon-300x300.png';
+            this.previewProfile = "https://www.prajwaldesai.com/wp-content/uploads/2021/02/Find-Users-Last-Logon-Time-using-4-Easy-Methods.jpg";
             this.profile = null;
         }
     }
