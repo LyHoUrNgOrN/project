@@ -1,6 +1,5 @@
 <template>
 <section>
-    <!-- <div class="mainRight"> -->
     <header>
       <li class="header">All Explore Event</li>
         <div class="search_event">
@@ -69,8 +68,7 @@ export default {
             event_id: eventId,
             role: "member",
         };
-        axios.post("/event_joins", user_create).then((res) => {
-          console.log(res.data.message);
+        axios.post("/event_joins", user_create).then(() => {
           this.getEventJoinByUser();
           this.findEvent();
           this.isJoin(eventId);
@@ -80,8 +78,7 @@ export default {
       quitJoin(eventId){
         axios.get("/event_quit_id/"+eventId+"/"+this.activeUser.id).then((response)=>{
           let idToQuit = response.data[0].id;
-          axios.delete("event_quit/"+idToQuit).then(response=>{
-            console.log(response.data.message);
+          axios.delete("event_quit/"+idToQuit).then(()=>{
             this.findEvent();
             this.getEventJoinByUser();
             this.isJoin(eventId);
@@ -92,7 +89,6 @@ export default {
       getEventJoinByUser(){
         axios.get("/event_user_has_joins/"+this.activeUser.id).then((response)=>{
           this.eventHasJoined = response.data;
-          // this.isJoin()
         });
         this.findEvent();
       },
@@ -105,7 +101,6 @@ export default {
           && (events.city === this.searchByCity));
           
         }else{
-          // this.getEvent();
           this.eventList = this.listAllOfEvent;
         }
         
@@ -159,7 +154,6 @@ export default {
         width: 0px;
     }
      header{
-      /* list-style: none; */
       padding: 20px;
       background: #154360;
       color: white;
@@ -231,17 +225,12 @@ export default {
       padding: 10px;
       border: 2px solid rgb(255, 255, 255);
       outline: none;
-      /* border-radius: 10px 0 0 10px; */
       font-size: 18px;
       background: #2a546e3a;
       color: white;
     }
     #selectCity{
-      /* border-radius: 0 10px 10px 0; */
       width: 30%;
       border-left: none;
     }
-    /* #seachBytitle:focus{
-      background: white;
-    } */
 </style>

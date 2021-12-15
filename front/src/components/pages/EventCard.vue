@@ -131,12 +131,10 @@ export default {
     }
 
     #category {
-        /* position: absolute; */
         margin-top: 10px;
         background: #154360;
         border-radius: 5px 0 5px 0;
         padding: 3px;
-        /* top: 250px; */
         color: #F1C40F;
         margin-top: -200px;
         margin-bottom: 190px;

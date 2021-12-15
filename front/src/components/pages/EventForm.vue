@@ -116,7 +116,6 @@ export default {
       };
       reader.readAsDataURL(image);
       this.image = e.target.files[0];
-      console.log(this.image);
     },
     create_new_event(){
       let newEvent = new FormData();
@@ -131,14 +130,12 @@ export default {
 
             axios.post("/events", newEvent)
                 .then((res) => {
-                  console.log("data", res.data);
                   let user_create = {
                     user_id: JSON.parse(localStorage.getItem("user")).id,
                     event_id: res.data.data.id,
                     role: "creator",
                   };
-                  axios.post("/event_joins", user_create).then((res) => {
-                    console.log(res.data.message);
+                  axios.post("/event_joins", user_create).then(() => {
                     this.closeDialog(false);
                   });
 
@@ -161,8 +158,7 @@ export default {
       }
       axios
           .put("/events/" + parseInt(this.eventId), editEvent)
-          .then((res) => {
-            console.log(res.data);
+          .then(() => {
             this.closeDialog(false);
             this.eventId = null;
 
@@ -184,7 +180,6 @@ export default {
           this.update_event();
           
         }
-        // this.$emit('close', false);
         this.message = "";
       }else{
         this.message = "You should complete all information";
@@ -210,7 +205,6 @@ export default {
         this.city = this.oneEvent.city;
         this.eventCategory = this.oneEvent.category_id;
         this.eventId = this.oneEvent.id;
-        console.log(this.eventId);
         this.description = this.oneEvent.description;
         this.isEdit = false;
       }

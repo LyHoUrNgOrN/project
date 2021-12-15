@@ -20,7 +20,7 @@ export default {
   },
   methods: {
       userSignIn(user){
-        console.log(user);
+     
         this.activeUser = user;
         localStorage.setItem('user',JSON.stringify(user));
         localStorage.setItem('path', '/myEvent');
@@ -31,7 +31,6 @@ export default {
   },
   mounted() {
     if ((window.localStorage.getItem("user") !== null) && this.$route.path == "/signIn" ) {
-      // || this.$route.path == "/"
       let pathed = localStorage.getItem('path');
       this.$router.push(pathed); // redirect to myEvent, for example
       this.activeUser = JSON.parse(localStorage.getItem("user"));
@@ -49,11 +48,10 @@ export default {
       localStorage.setItem('path', '/');
 
     }
-    window.onpopstate = event => {
+    window.onpopstate = () => {
       if ((window.localStorage.getItem("user") !== null) && this.$route.path == "/signIn" || this.$route.path == "/") {
           this.$router.push("/myEvent"); // redirect to myEvent, for example
       }
-      console.log(event);
     };
     
   },
@@ -72,6 +70,5 @@ export default {
   text-align: center;
   color: #2c3e50;
   font-family: sans-serif;
-  /* / margin-top: 60px; / */
 }
 </style>

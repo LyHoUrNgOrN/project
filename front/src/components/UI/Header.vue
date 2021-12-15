@@ -12,7 +12,6 @@ export default {
 
 <style scoped>
     header{
-      /* list-style: none; */
       padding: 20px;
       background: #154360;
       color: white;

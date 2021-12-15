@@ -81,7 +81,6 @@ export default {
             }).catch(error=>{
                 if (error.response) {
                     let messError = error.response.data.errors;
-                    console.log(messError);
                     if(messError.name !== undefined){
                         this.messError.name = messError.name[0];
                     }
@@ -135,13 +134,11 @@ export default {
         border-left: 8px solid #154360;
         border-right: 8px solid #ffffff;
         margin-top: -60px;
-        /* margin-top: 10px; */
     }
     #image{
         display: none;
     }
     form{
-        /* width: 50%; */
         margin: auto;
     }
     form p{
@@ -165,7 +162,6 @@ export default {
     .email,
     .password,
     .confirmPassword {
-        /* width: 80%; */
         display: flex;
     }
     .userName_icon,

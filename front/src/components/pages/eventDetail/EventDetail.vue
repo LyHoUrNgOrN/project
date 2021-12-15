@@ -93,23 +93,18 @@ export default {
                     event_id: eventId,
                     role: "member",
                 };
-                console.log(user_create);
-                axios.post("/event_joins", user_create).then((res) => {
-                    console.log(res.data.message);
+                axios.post("/event_joins", user_create).then(() => {
                     this.getOtherEvents();
                     this.getEventMember();
-
                 });
 
             },
             quitJoin(eventId){
                 axios.get("/event_quit_id/"+eventId+"/"+this.id).then((response)=>{
                     let idToQuit = response.data[0].id;
-                    axios.delete("event_quit/"+idToQuit).then(response=>{
-                        console.log(response.data.message);
+                    axios.delete("event_quit/"+idToQuit).then(()=>{
                         this.getOtherEvents();
                         this.getEventMember();
-
                     });
                 });
             
@@ -123,7 +118,6 @@ export default {
             getEventMember(){
                 axios.get('/event_member/'+ parseInt(this.event.id)).then(res => {
                     this.members = res.data;
-                    console.log(res.data);
                 });
             }
         },
@@ -190,7 +184,6 @@ export default {
 
     }
     .content{
-        /* background: rgb(51, 51, 51); */
         padding-bottom: 20px;
         padding-top: -100px;
     }
@@ -219,18 +212,6 @@ export default {
         margin-bottom: 20px;
     }
 
-
-    /* .btn .join{
-        background: darkcyan;
-        padding: 13px;
-        border-radius: 10px;
-        text-align: center;
-        color: white;
-        border: none;
-        float: right;
-        margin-right: 10px;
-        margin: 10px;
-    } */
     #about{
         margin-bottom: 7px;
 
@@ -324,7 +305,6 @@ export default {
     }
     .member p{
         width: 20%;
-        /* text-align: center; */
         font-size: 20px;
     }
 

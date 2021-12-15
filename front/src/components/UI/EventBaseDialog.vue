@@ -134,13 +134,7 @@ export default {
         forAdd.append('category_id',this.eventCategory.id), 
         forAdd.append('description',this.description), 
         forAdd.append('picture',this.picture), 
-      // let a = this.startDate +' '+ this.startTime;
-      // this.allData.push(forAdd);
-      console.log(forAdd);
-      axios.post(URL+'events',forAdd).then(res=>{
-        console.log('data',res.data)
-      });
-      // this.$emit("close");
+      axios.post(URL+'events',forAdd).then(()=>{});
     },
     dateFormat(date){
       return moment(date).format('YYYY-MM-DD hh:mm:ss');
@@ -158,12 +152,9 @@ export default {
   mounted() {
     axios.get(URL+'countries').then(res=>{
       this.countries = res.data;
-      console.log(this.countries)
-      console.log("hello")
     });
     axios.get(URL+'category').then(res=>{
       this.category = res.data;
-      console.log(this.category)
     })
   },
 };

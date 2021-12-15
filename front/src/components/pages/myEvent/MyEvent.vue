@@ -89,7 +89,6 @@ export default {
       this.display = true;
       this.dialogMode = "edit";
       this.oneEvent = event;
-      console.log(this.oneEvent);
     },
     closeDialog() {
       this.dialogDisplay = false;

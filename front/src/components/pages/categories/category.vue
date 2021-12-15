@@ -73,7 +73,6 @@ export default {
                 this.categoryList = res.data;
                 this.allOfCategory - res.data;
             })
-            console.log(this.categoryList);
             
 
         },

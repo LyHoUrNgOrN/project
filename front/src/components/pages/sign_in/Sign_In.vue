@@ -67,9 +67,6 @@ export default {
                 }).catch(error=>{
                     if (error.response) {
                         this.messageError = error.response.data.message;
-                        console.log(error.response.data.message);
-                        console.log(error.response.status);
-                        console.log(error.response.headers);
                     }
                 });
                 this.userName = '';
@@ -78,13 +75,11 @@ export default {
                 if(this.userName === '' ){
                     this.idIcon = 'nameMissing';
                     this.nameId = 'nameError';
-                    console.log(123);
 
                 }
                 if(this.password === '' ){
                     this.passwordIcon = 'passwordMissing';
                     this.passwordId = 'passwordError';
-                    console.log(321);
 
                 }
                 
@@ -147,7 +142,6 @@ export default {
     }
     
     .textbox{
-        /* width: 80%; */
         display: flex;
     }
     #userName_icon,
@@ -197,7 +191,6 @@ export default {
         width: 50%;
         margin: auto;
         display: flex;
-        /* justify-content: space-between; */
 
     }
     .or p{

@@ -45,7 +45,6 @@
                             <label for="yourEmail">Your Email</label><br>
                             <input type="text" v-model="newEmail" placeholder="New Email" id="yourEmail"/>  
                         </div>
-                        <!-- <small class="ok" v-if="errorCategoryMessage === 'ok'"><i class="fa fa-check-circle-o" ></i>{{errorCategoryMessage}}</small> -->
                         <small class="errorMessage" >{{ errorMessage }}</small>
 
                         <template #actions>
@@ -72,7 +71,6 @@ export default {
             newEmail: '',
             profile: '',
             errorMessage: '',
-
         }
     },
     methods: {
@@ -104,7 +102,6 @@ export default {
             this.imageProfile = 'http://127.0.0.1:8000/storage/profiles/' + this.activeUser.profile;
         },
         updateData(){
-            console.log(this.activeUser.id);
             if(this.newName !== '' && this.newEmail !== ''){
                 const newData = {
                     name: this.newName,
@@ -112,7 +109,6 @@ export default {
                     profile: this.activeUser.profile
                 }
                 axios.put('/users/'+ parseInt(this.activeUser.id), newData).then(()=> {
-                    // console.log(newData);
                     newData['id'] = this.activeUser.id;
                     localStorage.setItem('user', JSON.stringify(newData));
                     this.$emit('newData', newData);

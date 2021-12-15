@@ -55,7 +55,6 @@ export default {
     },
     methods: {
         validateError(){
-            console.log(this.categoryNameEdit);
             this.$emit('validate', this.categoryNameEdit);
 
         },
@@ -86,7 +85,6 @@ export default {
             if (this.dialogMode === 'delete') {
                 this.$emit('delete', this.category.id);
             } else if (this.dialogMode === 'edit') {
-                console.log(' edited ');
                 this.$emit('category-name', this.category.id, this.categoryNameEdit);
             }
 
